@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "288655839843",
+    "project_id": "faroshgah",
+    "storage_bucket": "faroshgah.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288655839843:android:14820c77307c4d59e35e56",
+        "android_client_info": {
+          "package_name": "com.tipitopsinc.faroshgah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "288655839843-iv623s3fhjspfgksntuap2rqevkn6s4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkyQp_4GEf7ctet8cja7g7jVMZsF9ZU3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "288655839843-iv623s3fhjspfgksntuap2rqevkn6s4l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

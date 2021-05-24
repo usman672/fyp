@@ -1,0 +1,267 @@
+import * as types from '../types/index';
+import Actions from '../actions';
+import AsyncStorage from '@react-native-community/async-storage';
+import {
+  addRooms,
+  editRoom,
+  addProduct,
+  editProduct,
+  getUserRooms,
+  likeDislikeProduct,
+  getLikeProduct,
+  getAllRecentProducts,
+  getProductByCategoryId,
+  getProductByKeyword,
+  savedSearch,
+  deleteRoom,
+  getProductsByUser,
+} from '../../services/apiList';
+
+export const addRoomsAction = (data,id) => {
+  // console.log(data, 'data');
+  return async (dispatch, getState) => {
+    // dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await addRooms(data,id);
+    console.log(res,'response')
+    if (res.success) {
+     
+    }
+    // await dispatch(
+    //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    // );
+    return res;
+  };
+};
+export const addProductAction = (data,id) => {
+  // console.log(data, 'data');
+  return async (dispatch, getState) => {
+    console.log(data,'response')
+    
+    // dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await addProduct(data,id);
+    console.log(res,'response')
+    if (res.success) {
+     
+    }
+    // await dispatch(
+    //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    // );
+    return res;
+  };
+};
+export const editProductAction = (data, product) => {
+  // console.log(data, 'data');
+  return async (dispatch, getState) => {
+    // dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    console.log(data,product)
+    const res = await editProduct(data,product);
+    return res;
+  };
+};
+export const getUserRoomsAction = (data) => {
+  return async (dispatch, getState) => {
+    console.log('datatataa products .......:', data);
+    //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    
+    const res = await getUserRooms(data);
+    console.log('ew', res);
+    if (res.success) {
+        dispatch({
+          type: types.HOSTELROOMS,
+          payload: {
+            rooms: res.data,
+          },
+        });
+      }
+    
+    //await dispatch(
+    //await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    //);
+    return res;
+  };
+};
+export const getProductsAction = (data, user_id) => {
+  return async (dispatch, getState) => {
+    dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await getProductsByUser(data, user_id);
+    if (res.code === 0) {
+      dispatch({
+        type: types.USERPRODUCT,
+        payload: {
+          products: res.data.products,
+        },
+      });
+    }
+    await dispatch(
+      await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    );
+    return res;
+  };
+};
+export const getAllRecentProductsAction = (data) => {
+  return async (dispatch, getState) => {
+    //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await getAllRecentProducts(data);
+    if (res.success) {
+      dispatch({
+        type: types.GETRECENTPRODUCT,
+        payload: {
+          getAllRecentproducts: res.data.recentProducts,
+        },
+      });
+    }
+    // await dispatch(
+    //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    // );
+    return res;
+  };
+};
+export const likeDislikeProductAction = (data) => {
+  return async (dispatch, getState) => {
+    dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await likeDislikeProduct(data);
+    await dispatch(
+      await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    );
+    return res;
+  };
+};
+export const getLikeProductAction = () => {
+  return async (dispatch, getState) => {
+    //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await getLikeProduct();
+    if (res.code === 0) {
+      dispatch({
+        type: types.USERLIKEPRODUCT,
+        payload: {
+          likedproducts: res.data.products,
+        },
+      });
+    }
+    // await dispatch(
+    //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    // );
+    return res;
+  };
+};
+export const getProductByCategoryIdAction = (data) => {
+  return async (dispatch, getState) => {
+    dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await getProductByCategoryId(data);
+    if (res.code === 0) {
+      if (res.data.products.length > 0) {
+        dispatch({
+          type: types.GETPRODUCTSBYCATEGORIES,
+          payload: {
+            productsByCategoryId: res.data.products,
+          },
+        });
+      } else {
+        dispatch({
+          type: types.GETPRODUCTSBYCATEGORIES,
+          payload: {
+            productsByCategoryId: [],
+          },
+        });
+      }
+    }
+    await dispatch(
+      await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    );
+    return res;
+  };
+};
+export const getProductByKeywordAction = (data) => {
+  return async (dispatch, getState) => {
+    dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await getProductByKeyword(data);
+    if (res.code === 0) {
+      if (res.data.products.length > 0) {
+        dispatch({
+          type: types.SEARCHEDPRODUCT,
+          payload: {
+            searchproducts: res.data.products,
+          },
+        });
+      } else {
+        // console.log(123456);
+        dispatch({
+          type: types.SEARCHEDPRODUCT,
+          payload: {
+            searchproducts: [],
+          },
+        });
+      }
+    } else {
+      // console.log(54321);
+      dispatch({
+        type: types.SEARCHEDPRODUCT,
+        payload: {
+          searchproducts: [],
+        },
+      });
+    }
+    await dispatch(
+      await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    );
+    return res;
+  };
+};
+export const deleteRoomAction = (id, index) => {
+  return async (dispatch, getState) => {
+    dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    // console.log(data, 'delete product');
+    const res = await deleteRoom(id);
+    // console.log(res, 'delete product');
+
+    if (res.success) {
+      dispatch({
+        type: types.DELETEPRODUCT,
+        payload: {
+          index: index,
+        },
+      });
+    }
+
+    await dispatch(
+      await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    );
+    return res;
+  };
+};
+export const savedSearchAction = (data) => {
+  return async (dispatch, getState) => {
+    dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await savedSearch(data);
+    if (res.code === 0) {
+      dispatch({
+        type: types.SAVEDSEARCHED,
+        payload: {
+          savedSearches: res.data.keywords,
+        },
+      });
+    }
+    await dispatch(
+      await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    );
+    return res;
+  };
+};
+export const similarProductAction = (data) => {
+  return async (dispatch, getState) => {
+    dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await getProductByCategoryId(data);
+    if (res.code === 0) {
+      dispatch({
+        type: types.SIMILERPRODUCTS,
+        payload: {
+          similerProduct: res.data.products,
+        },
+      });
+    }
+    await dispatch(
+      await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    );
+    return res;
+  };
+};
