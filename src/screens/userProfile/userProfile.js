@@ -158,7 +158,7 @@ class UserProfile extends Component {
           latitude: JSON.parse(user).data.jobs.latitude,
         });
       else
-        this.props.navigation.navigate('Profile', {
+        this.props.navigation.navigate('twillio', {
           setting: false,
           type: 'job',
         });

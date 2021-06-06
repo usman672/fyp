@@ -58,6 +58,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { markLogedin } from './src/redux/actions/userActions';
 import PushNotification from 'react-native-push-notification';
 import messaging from '@react-native-firebase/messaging';
+import JobPost from './src/screens/twilio/twilio';
+
 import { logoutAction } from './src/redux/actions/userActions';
 
 const Stack = createStackNavigator();
@@ -557,6 +559,11 @@ export default class App extends React.Component {
                   options={{ headerShown: false }}
                   name="PDFExample"
                   component={PDFExample}
+                />
+               <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="twillio"
+                  component={JobPost}
                 />
               </>
             )}

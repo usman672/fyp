@@ -2,14 +2,15 @@ import * as types from '../types/index';
 import Actions from '../actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import {
-  saveBankAccount,
+  postJob,
   updateBankAccount,
   getUser,
 } from '../../services/apiList';
-export const saveBankAccountAction = (data) => {
+export const postJobAction = (data) => {
   return async (dispatch, getState) => {
+    console.log(data)
     //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
-    const res = await saveBankAccount(data);
+    const res = await postJob(data);
     // await dispatch(
     //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
     // );

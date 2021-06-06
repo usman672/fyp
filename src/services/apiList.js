@@ -84,9 +84,10 @@ export const updateDeviceToken = async (token) => {
   let res = await api(url, method, true, formData);
   return res;
 };
-export const saveBankAccount = async (data) => {
-  let url = baseUrl + 'bankAccount';
+export const postJob = async (data) => {
+  let url = baseUrl + 'jobs';
   let method = 'POST';
+  console.log(url,data)
   let res = await api(url, method, true, data);
   return res;
 };

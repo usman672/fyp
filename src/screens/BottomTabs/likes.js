@@ -1,25 +1,16 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
-  Dimensions,
   FlatList,
-  TouchableOpacity,
 } from 'react-native';
-import { s, color } from '../../libs/styles';
+import { s } from '../../libs/styles';
 import { Search, Header } from '../../components';
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
-import { getCartProductsAction } from '../../redux/actions/cartAction';
-import { getHostelsAction } from '../../redux/actions/userActions';
 import {
-  searchHostelsAction,
   getAllRecentProductsAction,
 } from '../../redux/actions/productAction';
 
 import { connect } from 'react-redux';
-import Actions from '../../redux/actions';
-import AsyncStorage from '@react-native-community/async-storage';
 import storage from '../../libs/storage';
 import ReviewCard from '../../components/buyer/reviewCard';
 class Home extends Component {
@@ -39,7 +30,7 @@ class Home extends Component {
     this.setSeller();
   }
   getShops = async () => {
-    await this.props.getAllRecentProductsAction({ search: '' });
+    await this.props.getShopsAction({search:""});
   };
   setSeller = async () => {
     const user = await storage._retrieveData('user');
