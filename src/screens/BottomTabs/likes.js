@@ -12,7 +12,7 @@ import {
 
 import { connect } from 'react-redux';
 import storage from '../../libs/storage';
-import ReviewCard from '../../components/buyer/reviewCard';
+import JobCard from '../../components/buyer/jobsCard';
 class Home extends Component {
   static navigationOptions = {
     header: null,
@@ -30,7 +30,7 @@ class Home extends Component {
     this.setSeller();
   }
   getShops = async () => {
-    await this.props.getShopsAction({search:""});
+    //await this.props.getShopsAction({search:""});
   };
   setSeller = async () => {
     const user = await storage._retrieveData('user');
@@ -40,19 +40,20 @@ class Home extends Component {
     await this.setState({
       image: JSON.parse(user).data.user.photo,
     });
-    this.getShops();
+    console.log('jkljsdnsdjuinfksduijkisdnkhsidhkisdkih')
+   // this.getShops();
   };
 
   componentWillMount() {
     this.props.navigation.addListener('focus', (payload) => {
       //   this.getCartProducts();
-      this.setSeller();
+     // this.setSeller();
       //   this.setState({ badgeCount: this.props.cartProducts.length });
     });
   }
   onBlur = async (productName) => {
     console.log(productName);
-    await this.props.getAllRecentProductsAction({ search: productName });
+    //await this.props.getAllRecentProductsAction({ search: productName });
   };
   render() {
     const { index, routes } = this.state;
@@ -70,7 +71,7 @@ class Home extends Component {
           data={this.props.getAllRecentProducts}
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
-            <ReviewCard
+            <JobCard
               type="shops"
               navigation={this.props.navigation}
               review={item}

@@ -30,7 +30,7 @@ export default class Pickerr extends Component {
 
 const styles = StyleSheet.create({
   PickerView: {
-    height: 60,
+    height: 49,
     justifyContent: 'center',
   },
 });

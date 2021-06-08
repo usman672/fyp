@@ -11,7 +11,7 @@ export default class Pickerr extends Component {
 
   render() {
     return (
-      <View style={s.inputView}>
+      <View style={styles.inputView}>
         <Text style={s.inputHeading}>{this.props.heading}</Text>
         <CardView
           style={s.inputCard}
@@ -37,4 +37,8 @@ export default class Pickerr extends Component {
   }
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  inputView:{
+    backgroundColor:'red'
+  }
+});

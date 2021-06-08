@@ -2,6 +2,7 @@ import * as types from '../types';
 
 const initialState = {
   isLogedin: false,
+  allJobs: [],
 };
 
 function bankReducer(state = initialState, action) {
@@ -9,6 +10,11 @@ function bankReducer(state = initialState, action) {
     case types.BANKACCOUNT:
       return {
         ...state,
+      };
+    case types.ALLJOBS:
+      return {
+        ...state,
+        allJobs: action.payload.allJobs,
       };
   }
 

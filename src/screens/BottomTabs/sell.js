@@ -11,14 +11,14 @@ import { s, color } from '../../libs/styles';
 import { Search, Header } from '../../components';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import { getCartProductsAction } from '../../redux/actions/cartAction';
-import { getHostelsAction } from '../../redux/actions/userActions';
+import { getJobsAction } from '../../redux/actions/bankAction';
 import { searchHostelsAction } from '../../redux/actions/productAction';
 
 import { connect } from 'react-redux';
 import Actions from '../../redux/actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import storage from '../../libs/storage';
-import ReviewCard from '../../components/buyer/reviewCard';
+import JobsCard from '../../components/buyer/jobsCard';
 class Home extends Component {
   static navigationOptions = {
     header: null,
@@ -35,30 +35,31 @@ class Home extends Component {
     };
     this.setSeller();
   }
-  getHostels = async () => {
-    await this.props.getShopsAction({search:""});
-  };
+ 
   setSeller = async () => {
     const user = await storage._retrieveData('user');
+    console.log(user,'sjfji')
     await this.setState({
       userName: JSON.parse(user).data.user.name,
     });
     await this.setState({
       image: JSON.parse(user).data.user.photo,
     });
-    this.getHostels();
+    this.getAllJobs();
+  };
+
+  getAllJobs = async () => {
+    await this.props.getJobsAction({search:""});
   };
 
   componentWillMount() {
     this.props.navigation.addListener('focus', (payload) => {
-      //   this.getCartProducts();
-      this.setSeller();
-      //   this.setState({ badgeCount: this.props.cartProducts.length });
-    });
+       this.setSeller();
+     });
   }
   onBlur = async (productName) => {
-    console.log(productName);
-     await this.props.getShopsAction({search:productName});
+    //console.log(productName);
+    // await this.props.getShopsAction({search:productName});
   };
   render() {
     const { index, routes } = this.state;
@@ -73,13 +74,13 @@ class Home extends Component {
         <Search navigation={this.props.navigation} onBlur={this.onBlur} />
         <FlatList
           style={{ width: '100%', height: '70%' }}
-          data={this.props.hostels}
+          data={this.props.allJobs}
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
-            <ReviewCard
+            <JobsCard
               type="shops"
               navigation={this.props.navigation}
-              review={item}
+              job={item}
             />
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -89,14 +90,13 @@ class Home extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state.UserReducer.hostels[0]);
+  console.log(state.BankReducer.allJobs[0],'jefojsoefiojsioj');
   return {
-    hostels: state.UserReducer.hostels,
+    allJobs: state.BankReducer.allJobs,
   };
 };
 const mapDispatchToProps = {
-  getHostelsAction,
-  searchHostelsAction,
+  getJobsAction,
 
 };
 

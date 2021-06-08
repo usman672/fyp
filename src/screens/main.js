@@ -36,10 +36,10 @@ export default class Main extends Component {
             alignItems: 'center',
             width: '100%',
           }}>
-          <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',borderColor:'red',borderWidth:1,paddingLeft:15,paddingRight:15,borderRadius:5}}>
-          <Text style={{fontSize:40,color:'red',fontWeight:'bold'}}>FAR</Text>
-          <Text style={{fontSize:40,color:'red',backgroundColor:'black',borderRadius:18,height:36,width:36,textAlign:'center',borderColor:'red',borderWidth:5}}></Text>
-          <Text style={{fontSize:40,color:'red',fontWeight:'bold'}}>SHGAH</Text>
+          <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center',borderColor:color.brandRed,borderWidth:1,paddingLeft:15,paddingRight:15,borderRadius:5}}>
+          <Text style={{fontSize:40,color:color.brandRed,fontWeight:'bold'}}>FAR</Text>
+          <Text style={{fontSize:40,color:color.brandRed,backgroundColor:'black',borderRadius:18,height:36,width:36,textAlign:'center',borderColor:color.brandRed,borderWidth:5}}></Text>
+          <Text style={{fontSize:40,color:color.brandRed,fontWeight:'bold'}}>SHGAH</Text>
           
           
           </View>

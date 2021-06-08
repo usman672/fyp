@@ -91,6 +91,16 @@ export const postJob = async (data) => {
   let res = await api(url, method, true, data);
   return res;
 };
+
+export const getJobs = async (data) => {
+  let url = baseUrl + 'jobs';
+  let method = 'GET';
+  console.log(url,data)
+  let res = await api(url, method, true, data);
+  return res;
+};
+
+
 export const updateBankAccount = async (data) => {
   let url = baseUrl + 'bankAccount';
   let method = 'PUT';
@@ -470,3 +480,4 @@ export const userLogout = async (data) => {
   let res = await api(url, method, true, data);
   return res;
 };
+

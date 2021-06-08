@@ -355,9 +355,8 @@ class sellItem extends Component {
         quantity: this.state.stock,
         price: this.state.price,
         name: this.state.name,
-        color:this.state.color,
-        category:this.state.category,
-
+        color: this.state.color,
+        category: this.state.category,
       },
       this.props.route.params.product._id,
     );
@@ -515,37 +514,24 @@ class sellItem extends Component {
                   margintop={'2%'}
                   width={'100%'}
                 />
-          
+
                 <Picker
                   heading=""
                   list={this.state.pickerColors}
                   onSelect={this.onSelectItem}
                   selectedState={this.state.selectedColorIndex}
                 />
-                <CustomSeparator
-                  heightt={1}
-                  colorr={color.lightGrey2}
-                  margintop={'2%'}
-                  width={'100%'}
-                />
-                <Payout title="Add Stock" />
-  
-                <Picker
-                  heading=""
-                  list={this.state.quantity}
-                  onSelect={this.onSelectQuantity}
-                  selectedState={this.state.selectedQuantityIndex}
-                />
-
-                <CustomSeparator
-                  heightt={1}
-                  colorr={color.lightGrey2}
-                  margintop={'2%'}
-                  width={'100%'}
-                />
-
               </View>
             </View>
+
+            <Payout title="Add Stock" />
+
+            <Picker
+              heading=""
+              list={this.state.quantity}
+              onSelect={this.onSelectQuantity}
+              selectedState={this.state.selectedQuantityIndex}
+            />
             <Payout title="Pricing" />
             <View style={styles.categoryMainExternal}>
               <View style={styles.categoryMainInternal}>
@@ -645,7 +631,7 @@ const mapStateToProps = (state) => {
   return {};
 };
 
-const mapDispatchToProps = { 
+const mapDispatchToProps = {
   addProductAction: Actions.addProductAction,
   editProductAction: Actions.editProductAction,
   imageUploadAction: Actions.imageUploadAction,

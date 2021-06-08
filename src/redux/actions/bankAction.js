@@ -5,12 +5,33 @@ import {
   postJob,
   updateBankAccount,
   getUser,
+  getJobs
 } from '../../services/apiList';
 export const postJobAction = (data) => {
   return async (dispatch, getState) => {
     console.log(data)
     //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     const res = await postJob(data);
+    // await dispatch(
+    //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    // );
+    return res;
+  };
+};
+export const getJobsAction = (data) => {
+  return async (dispatch, getState) => {
+    console.log(data)
+    //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await getJobs(data);
+    console.log(res.data,'kkk')
+    dispatch({
+      type: types.ALLJOBS,
+      payload: {
+        allJobs: res.data,
+      },
+    });
+
+
     // await dispatch(
     //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
     // );

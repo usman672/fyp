@@ -27,6 +27,7 @@ class Header extends Component {
     this.props.navigation.navigate('userProfile')
   }
   render() {
+    console.log(this.props.image,'jsdfjij')
     return (
       <CardView
         style={[s.headerCard, { backgroundColor: color.black }]}

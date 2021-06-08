@@ -14,7 +14,7 @@ var Spinner = require('react-native-spinkit');
 import { s, color, neomorph } from '../../libs/styles';
 import { connect } from 'react-redux';
 import Actions from '../../redux/actions';
-
+import Picker from '../../components/input/withoutDesignPicker';
 var isLoading = false;
 class EditAddress extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class EditAddress extends Component {
       isCliked: false,
       position: '',
       experience: '',
-      jobCat: '',
+      selectedJobType: 'Senior',
       salary: '',
       location: '',
       description: '',
@@ -34,16 +34,17 @@ class EditAddress extends Component {
       isLocation: false,
       isDescription: false,
       statesList: [],
-      data: [
-        {
-          value: 'Banana',
-        },
-        {
-          value: 'Mango',
-        },
-        {
-          value: 'Pear',
-        },
+      selectedEmpType: 'Full Time',
+      companyName: '',
+      isCompanyName: false,
+      empType: [
+        { name: 'Full Time', value: 0 },
+        { name: 'Part Time', value: 1 },
+        { name: 'Remoter', value: 2 },
+      ], jobType: [
+        { name: 'Senior', value: 0 },
+        { name: 'junior', value: 1 },
+        { name: 'intern', value: 2 },
       ],
       countriesList: [],
     };
@@ -56,6 +57,18 @@ class EditAddress extends Component {
       isCliked: clicked,
     });
   };
+  onSelectEmpType = (index, type) => {
+    console.log(this.state.empType[index].name, 'efergft45g  ', index);
+    this.setState({
+      selectedEmpType: this.state.empType[index].name,
+    });
+  };
+  onSelectJobType = (index, type) => {
+    console.log(this.state.jobType[index].name, 'efergft45g  ', index);
+    this.setState({
+      selectedJobType: this.state.jobType[index].name,
+    });
+  };
   editAddress = async () => {};
   saveJob = async () => {
     this.buttonClicked();
@@ -66,61 +79,70 @@ class EditAddress extends Component {
       jobType: this.state.jobCat,
       experience: this.state.experience,
       address: this.state.location,
-    })
-   const res= await this.props.postJobAction({
+    });
+    const res = await this.props.postJobAction({
       title: this.state.position,
       description: this.state.description,
       salary: parseInt(this.state.salary),
-      jobType: this.state.jobCat,
+      jobType: this.state.selectedJobType,
       experience: this.state.experience,
       address: this.state.location,
+      company: this.state.companyName,
+      employmentType:this.state.selectedEmpType
     });
-    if(res){
-      console.log(res)
+    if (res) {
+      console.log(res);
     }
   };
 
   onChangeposition = (newText) => {
-    console.log(newText)
+    console.log(newText);
     if (newText) {
       this.setState({ position: newText, isPositon: true });
     } else {
       this.setState({ position: newText, isPossiton: false });
     }
   };
-  onChangeExperience = (newText) => { console.log(newText)
+  onChangeExperience = (newText) => {
+    console.log(newText);
     if (newText) {
       this.setState({ experience: newText, isExperience: true });
     } else {
       this.setState({ experience: newText, isExperience: false });
     }
   };
-  onChangeJobCategory = (newText) => { console.log(newText)
-    if (newText) {
-      this.setState({ jobCat: newText, isJobCat: true });
-    } else {
-      this.setState({ jobCat: newText, isJobCat: false });
-    }
-  };
-  onChangeSalary = (newText) => { console.log(newText)
+
+  onChangeSalary = (newText) => {
+    console.log(newText);
     if (newText) {
       this.setState({ salary: newText, isSalary: true });
     } else {
       this.setState({ salary: newText, isSalary: false });
     }
   };
-  onChangeLocation = (newText) => { console.log(newText)
+  onChangeLocation = (newText) => {
+    console.log(newText);
     if (newText) {
       this.setState({ location: newText, isLocation: true });
     } else {
       this.setState({ location: newText, isLocation: false });
     }
   };
-  onChangeDescription = (newText) => { console.log(newText)
+  onChangeDescription = (newText) => {
+    console.log(newText);
     if (newText) {
       this.setState({ description: newText, isDescription: true });
     } else {
       this.setState({ description: newText, isDescription: false });
+    }
+  };
+
+  onChangeCompanyName = (newText) => {
+    console.log(newText);
+    if (newText) {
+      this.setState({ companyName: newText, isCompanyName: true });
+    } else {
+      this.setState({ companyName: newText, isCompanyName: false });
     }
   };
 
@@ -129,9 +151,9 @@ class EditAddress extends Component {
       this.state.isDescription &&
       this.state.isLocation &&
       this.state.isSalary &&
-      this.state.isJobCat &&
       this.state.isExperience &&
-      this.state.isPositon
+      this.state.isPositon &&
+      this.state.isCompanyName
     ) {
       return true;
     } else {
@@ -176,8 +198,8 @@ class EditAddress extends Component {
                 Platform.OS === 'ios' ? { zIndex: 1 } : {},
               ]}>
               <View style={{ flexDirection: 'row', width: '100%' }}>
-                <Text style={{ margin: 12, width: '50%' }}>Possition</Text>
-                <Text style={{ margin: 12, width: '30%' }}> Experience</Text>
+                <Text style={{ margin: 12, width: '50%' }}>Job Title</Text>
+                <Text style={{ margin: 12, width: '30%' }}> Job type</Text>
               </View>
               <View
                 style={{
@@ -213,16 +235,18 @@ class EditAddress extends Component {
                     paddingBottom: 2,
                     alignSelf: 'center',
                   }}>
-                  <TextInput
-                    style={styles.input}
-                    keyboardType="numeric"
-                    onChangeText={this.onChangeExperience}
-                    value={this.state.experience}
+                  <Picker
+                    heading=""
+                    list={this.state.jobType}
+                    onSelect={this.onSelectJobType}
+                    selectedState={this.state.selectedJobType}
                   />
                 </View>
               </View>
               <View style={{ flexDirection: 'row', width: '100%' }}>
-                <Text style={{ margin: 12, width: '50%' }}>Job Category</Text>
+                <Text style={{ margin: 12, width: '50%' }}>
+                  Employment Type
+                </Text>
                 <Text style={{ margin: 12, width: '30%' }}>Salary</Text>
               </View>
               <View
@@ -242,10 +266,11 @@ class EditAddress extends Component {
                     paddingBottom: 2,
                     alignSelf: 'center',
                   }}>
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={this.onChangeJobCategory}
-                    value={this.state.jobCat}
+                  <Picker
+                    heading=""
+                    list={this.state.empType}
+                    onSelect={this.onSelectEmpType}
+                    selectedState={this.state.selectedEmpType}
                   />
                 </View>
 
@@ -267,7 +292,52 @@ class EditAddress extends Component {
                   />
                 </View>
               </View>
+              <View style={{ flexDirection: 'row', width: '100%' }}>
+                <Text style={{ margin: 12, width: '50%' }}>Company Name</Text>
+                <Text style={{ margin: 12, width: '30%' }}> Experience </Text>
+              </View>
+              <View
+                style={{
+                  alignSelf: 'center',
+                  flexDirection: 'row',
+                  width: '95%',
+                  justifyContent: 'space-between',
+                }}>
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    width: '55%',
+                    borderColor: color.lightGrey1,
+                    borderWidth: 0.3,
+                    borderRadius: 5,
+                    paddingBottom: 2,
+                    alignSelf: 'center',
+                  }}>
+                  <TextInput
+                    style={styles.input}
+                    value={this.state.companyName}
+                    onChangeText={this.onChangeCompanyName}
+                  />
+                </View>
 
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    width: '40%',
+                    borderColor: color.lightGrey1,
+                    borderWidth: 0.5,
+                    borderRadius: 5,
+                    paddingBottom: 2,
+                    alignSelf: 'center',
+                  }}>
+                  <TextInput
+                    style={styles.input}
+                    keyboardType="numeric"
+                    onChangeText={this.onChangeExperience}
+                    value={this.state.experience}
+                  />
+                </View>
+              </View>
               <Text style={{ margin: 12 }}>Location</Text>
               <View
                 style={{
@@ -285,6 +355,7 @@ class EditAddress extends Component {
                   onChangeText={this.onChangeLocation}
                 />
               </View>
+
               <Text style={{ margin: 12 }}>Detail Description</Text>
 
               <View
@@ -301,7 +372,7 @@ class EditAddress extends Component {
                 <TextInput
                   style={styles.input}
                   multiline={true}
-                  numberOfLines={9}
+                  numberOfLines={6}
                   onChangeText={this.onChangeDescription}
                   value={this.state.description}
                 />
@@ -352,6 +423,14 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
     marginBottom: 5,
     paddingBottom: 5,
+  },
+  pickerView: {
+    width: '95%',
+    alignSelf: 'center',
+    borderColor: color.lightGrey1,
+    borderWidth: 0.3,
+    borderRadius: 5,
+    marginTop: 10,
   },
   input: {
     backgroundColor: color.white,

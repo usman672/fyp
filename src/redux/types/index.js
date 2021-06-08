@@ -58,3 +58,6 @@ export const ADDROOMS = 'ADDROOMS';
 export const HOSTELROOMS = 'HOSTELROOMS';
 export const GETSHOPS = 'GETSHOPS';
 export const GETREVIEWS = 'GETREVIEWS';
+// JOBS
+export const ALLJOBS = 'ALLJOBS';
+

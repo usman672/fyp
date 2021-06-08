@@ -3,7 +3,8 @@ const { height, width } = Dimensions.get('screen');
 const color = {
   blue: '#6b7fea',
   primary: '#ff1616',
-  brandRed: '#ff1616',
+  brandRed: '#28df99',
+  brandRed2:'#CA00B7',
   brandRedOpacity: 'rgba(255, 22, 22, 0.6)',
   darkBlue: '#030EF7',
   darkgray: '#252333',

@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, Text,StatusBar } from 'react-native';
 import store from './src/redux/store';
 import React, { Component } from 'react';
 import SplashScreen from 'react-native-splash-screen';
@@ -61,6 +61,7 @@ import messaging from '@react-native-firebase/messaging';
 import JobPost from './src/screens/twilio/twilio';
 
 import { logoutAction } from './src/redux/actions/userActions';
+import { color } from './src/libs/styles';
 
 const Stack = createStackNavigator();
 export default class App extends React.Component {
@@ -125,7 +126,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <SafeAreaView style={{ backgroundColor: '#000', opacity: 0.7 }} />
+        <SafeAreaView style={{ backgroundColor: color.brandRed}} />
         <NavigationContainer>
           <Loader />
           <Stack.Navigator headerMode="float">
