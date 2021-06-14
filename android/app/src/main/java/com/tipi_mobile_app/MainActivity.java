@@ -2,6 +2,7 @@ package com.tipitopsinc.faroshgah;
 import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen;
 import com.facebook.react.ReactActivity;
+import com.anyline.RNImageToPDF.RNImageToPdfPackage;
 import com.devfd.RNGeocoder.RNGeocoderPackage;
 public class MainActivity extends ReactActivity {
 

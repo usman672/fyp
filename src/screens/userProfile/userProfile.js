@@ -133,6 +133,7 @@ class UserProfile extends Component {
         });
       } else this.props.navigation.navigate('Profile', { setting: false,type:'hostel' });
     } else if (type == 1) {
+      console.log(JSON.parse(user).data.shop._id,'didididididididid')
       if (this.state.isShop)
         this.props.navigation.navigate('notifications', {
           name: JSON.parse(user).data.shop.name,
@@ -148,17 +149,7 @@ class UserProfile extends Component {
           type: 'shop',
         });
     } else if (type == 2) {
-      if (this.state.isJobs)
-        this.props.navigation.navigate('notifications', {
-          name: JSON.parse(user).data.jobs.name,
-          hId: JSON.parse(user).data.jobs._id,
-          address: JSON.parse(user).data.jobs.address,
-          photo: JSON.parse(user).data.jobs.photo,
-          longitude: JSON.parse(user).data.jobs.longitude,
-          latitude: JSON.parse(user).data.jobs.latitude,
-        });
-      else
-        this.props.navigation.navigate('twillio', {
+        this.props.navigation.navigate('myJobs', {
           setting: false,
           type: 'job',
         });
@@ -290,7 +281,7 @@ class UserProfile extends Component {
                 </View>
                 <TouchableOpacity
                   style={styles.optionsName}
-                  onPress={() => this.isSeller(2)}>
+                  onPress={() => this.props.navigation.navigate()}>
                   <View>
                     <Text style={styles.optionsTextFont}>Settings</Text>
                     <HorizontalSeparator />

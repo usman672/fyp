@@ -59,6 +59,10 @@ import { markLogedin } from './src/redux/actions/userActions';
 import PushNotification from 'react-native-push-notification';
 import messaging from '@react-native-firebase/messaging';
 import JobPost from './src/screens/twilio/twilio';
+import JobDescription from './src/screens/twilio/jobDescription';
+import JobApply from './src/screens/twilio/jobApply';
+import MyJobs from './src/screens/twilio/myjobs';
+import Appliers from './src/screens/twilio/appliers';
 
 import { logoutAction } from './src/redux/actions/userActions';
 import { color } from './src/libs/styles';
@@ -565,6 +569,26 @@ export default class App extends React.Component {
                   options={{ headerShown: false }}
                   name="twillio"
                   component={JobPost}
+                />
+                 <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="JobDescription"
+                  component={JobDescription}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="jobApply"
+                  component={JobApply}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="myJobs"
+                  component={MyJobs}
+                />
+                 <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="appliers"
+                  component={Appliers}
                 />
               </>
             )}

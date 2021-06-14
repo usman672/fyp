@@ -18,41 +18,43 @@ import {
 } from '../../services/apiList';
 
 export const addRoomsAction = (data,id) => {
-  // console.log(data, 'data');
   return async (dispatch, getState) => {
-    // dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
-    const res = await addRooms(data,id);
+     const res = await addRooms(data,id);
     console.log(res,'response')
     if (res.success) {
      
     }
-    // await dispatch(
-    //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
-    // );
+    
     return res;
   };
 };
-export const addProductAction = (data,id) => {
-  // console.log(data, 'data');
+
+export const editRoomAction = (data,id) => {
   return async (dispatch, getState) => {
-    console.log(data,'response')
-    
-    // dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
-    const res = await addProduct(data,id);
+     const res = await editRoom(data,id);
     console.log(res,'response')
     if (res.success) {
      
     }
-    // await dispatch(
-    //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
-    // );
+   
+    return res;
+  };
+};
+
+export const addProductAction = (data,id) => {
+  return async (dispatch, getState) => {
+    console.log(data,'response')
+      const res = await addProduct(data,id);
+    console.log(res,'Addddddddddddddddddddddddddddddddddddddddd')
+    if (res.success) {
+     
+    }
+   
     return res;
   };
 };
 export const editProductAction = (data, product) => {
-  // console.log(data, 'data');
-  return async (dispatch, getState) => {
-    // dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+   return async (dispatch, getState) => {
     console.log(data,product)
     const res = await editProduct(data,product);
     return res;
@@ -61,7 +63,6 @@ export const editProductAction = (data, product) => {
 export const getUserRoomsAction = (data) => {
   return async (dispatch, getState) => {
     console.log('datatataa products .......:', data);
-    //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     
     const res = await getUserRooms(data);
     console.log('ew', res);
@@ -73,22 +74,21 @@ export const getUserRoomsAction = (data) => {
           },
         });
       }
-    
-    //await dispatch(
-    //await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
-    //);
+
     return res;
   };
 };
-export const getProductsAction = (data, user_id) => {
+export const getProductsAction = (user_id) => {
+  console.log(user_id,'fffinfifnifnfin')
   return async (dispatch, getState) => {
     dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
-    const res = await getProductsByUser(data, user_id);
-    if (res.code === 0) {
+    const res = await getProductsByUser(user_id);
+    if (res.success) {
+      console.log(res,'kfrekrekgprekgrekgkprekgporekpok')
       dispatch({
         type: types.USERPRODUCT,
         payload: {
-          products: res.data.products,
+          products: res.data,
         },
       });
     }
@@ -100,8 +100,7 @@ export const getProductsAction = (data, user_id) => {
 };
 export const getAllRecentProductsAction = (data) => {
   return async (dispatch, getState) => {
-    //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
-    const res = await getAllRecentProducts(data);
+     const res = await getAllRecentProducts(data);
     if (res.success) {
       dispatch({
         type: types.GETRECENTPRODUCT,
@@ -110,9 +109,6 @@ export const getAllRecentProductsAction = (data) => {
         },
       });
     }
-    // await dispatch(
-    //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
-    // );
     return res;
   };
 };
@@ -128,7 +124,6 @@ export const likeDislikeProductAction = (data) => {
 };
 export const getLikeProductAction = () => {
   return async (dispatch, getState) => {
-    //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     const res = await getLikeProduct();
     if (res.code === 0) {
       dispatch({
@@ -138,9 +133,7 @@ export const getLikeProductAction = () => {
         },
       });
     }
-    // await dispatch(
-    //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
-    // );
+
     return res;
   };
 };
@@ -184,8 +177,7 @@ export const getProductByKeywordAction = (data) => {
           },
         });
       } else {
-        // console.log(123456);
-        dispatch({
+         dispatch({
           type: types.SEARCHEDPRODUCT,
           payload: {
             searchproducts: [],
@@ -193,8 +185,7 @@ export const getProductByKeywordAction = (data) => {
         });
       }
     } else {
-      // console.log(54321);
-      dispatch({
+       dispatch({
         type: types.SEARCHEDPRODUCT,
         payload: {
           searchproducts: [],
@@ -210,10 +201,8 @@ export const getProductByKeywordAction = (data) => {
 export const deleteRoomAction = (id, index) => {
   return async (dispatch, getState) => {
     dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
-    // console.log(data, 'delete product');
     const res = await deleteRoom(id);
-    // console.log(res, 'delete product');
-
+    
     if (res.success) {
       dispatch({
         type: types.DELETEPRODUCT,

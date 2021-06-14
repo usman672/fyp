@@ -44,7 +44,7 @@ class Listing extends Component {
     this.focusListener.remove();
   }
   getListingProduct = async () => {
-    console.log('called', this.props.type,);
+    console.log('callllllllllllllllllllllled', this.props.id,);
     if (this.props.type == 'hostel') {
       console.log('jjjjjjj');
       const res = await this.props.getUserRoomsAction(this.props.id);
@@ -111,20 +111,14 @@ class Listing extends Component {
             this.props.type == 'hostel' ? this.props.rooms : this.props.products
           }
           renderItem={this.renderSellListingItem}
-          // onEndReachedThreshold={0.01}
-          // onEndReached={(distanceFromEnd) => this.LoadMoreData(distanceFromEnd)}
-          // bounces={false}
-          // ListFooterComponent={() => (
-          //   <LoadMore isLoading={this.state.isLoading} />
-          // )}
-          keyExtractor={(item, index) => index.toString()}
+         keyExtractor={(item, index) => index.toString()}
         />
       </View>
     );
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state.ProductReducer.rooms, 'ercercec');
+  console.log(state.ProductReducer.products, 'ercercec');
   return {
     rooms: state.ProductReducer.rooms,
     products: state.ProductReducer.products,

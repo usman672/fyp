@@ -52,6 +52,7 @@ export default class BuyerScreen extends Component {
   initialLayout = { width: Dimensions.get('window').width };
 
   render() {
+    console.log(this.props.route.params.hId,'ollllllllllkkkkkkkkkkkkkk')
     const { index, routes } = this.state;
     return (
       <View style={[s.scrollview]}>

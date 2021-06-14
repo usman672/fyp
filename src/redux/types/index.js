@@ -60,4 +60,5 @@ export const GETSHOPS = 'GETSHOPS';
 export const GETREVIEWS = 'GETREVIEWS';
 // JOBS
 export const ALLJOBS = 'ALLJOBS';
+export const MYJOBS = 'MYJOBS';
 

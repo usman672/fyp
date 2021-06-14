@@ -88,6 +88,10 @@ target 'tipi_mobile_app' do
 
   pod 'RNCClipboard', :path => '../node_modules/@react-native-community/clipboard'
 
+  pod 'RNImageToPdf', :path => '../node_modules/react-native-image-to-pdf'
+
+  pod 'RNBraintreeDropIn', :path => '../node_modules/react-native-braintree-dropin-ui'
+
   target 'tipi_mobile_appTests' do
     inherit! :complete
     # Pods for testing

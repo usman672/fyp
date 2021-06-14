@@ -98,7 +98,7 @@ class Profile extends Component {
       quality: 0.5,
     };
 
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.showImagePicker(options, async(response) => {
       if (response.didCancel) {
       } else if (response.error) {
       } else if (response.customButton) {
@@ -108,6 +108,44 @@ class Profile extends Component {
           image: response.uri,
           isimage: true,
         });
+        const formData = new FormData();
+  
+        formData.append('file', {
+    
+         uri :response.uri,
+    
+         type: response.type,
+    
+         name: 'flpokfoks.png'
+    
+        });
+        await fetch(`https://myhostelv1app.herokuapp.com/api/v1/jobs/${this.props.route.params.job._id}/apply`, {
+  
+          method:'POST',
+  
+          Accept: 'application/json',
+  
+          'Content-Type': 'multipart/form-data',
+  
+          body: formData
+  
+      })
+  
+      .then((response) => {
+  
+        console.log(response.status);
+        console.log(response.statusText);
+        console.log(response.type);
+        console.log(response.url);
+      }).catch((err) => {
+  
+          console.log(err)
+  
+      })
+  
+
+
+
       }
     });
   };
@@ -396,6 +434,7 @@ const styles = StyleSheet.create({
   imageRound: {
     marginTop: 30,
   },
+  
   iconOpacity: {
     height: 30,
     width: 30,

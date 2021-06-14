@@ -12,9 +12,7 @@ export default class Search extends Component {
   }
   onChange = (searchText) => {
     this.setState({ data: searchText });
-    if (this.props.type === 'category') {
-      this.props.search(searchText);
-    }
+
   };
   render() {
     return (
@@ -24,26 +22,15 @@ export default class Search extends Component {
           cardElevation={neomorph.elevation}
           cornerRadius={neomorph.cornerRadius}>
           <Icon name="search1" style={styles.searchIcon} />
-          {this.props.type !== 'category' ? (
             <TextInput
               style={s.inputField}
               ref={this.props.ref}
               autoFocus={false}
               placeholder="Looking For ..."
               placeholderTextColor={color.gray}
-              onChangeText={(searchText) => this.onChange(searchText)}
-              onBlur={() => this.props.onBlur(this.state.data)}
+              onChangeText={(searchText) => this.props.onBlur(searchText)}
             />
-          ) : (
-            <TextInput
-              style={s.inputField}
-              ref={this.props.ref}
-              autoFocus={false}
-              placeholder="Looking For ..."
-              placeholderTextColor={color.gray}
-              onChangeText={(searchText) => this.onChange(searchText)}
-            />
-          )}
+         
         </CardView>
       </View>
     );

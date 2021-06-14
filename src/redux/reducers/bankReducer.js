@@ -3,13 +3,15 @@ import * as types from '../types';
 const initialState = {
   isLogedin: false,
   allJobs: [],
+  myJobs:[],
 };
 
 function bankReducer(state = initialState, action) {
   switch (action.type) {
-    case types.BANKACCOUNT:
+    case types.MYJOBS:
       return {
         ...state,
+        myJobs: action.payload.myJobs,
       };
     case types.ALLJOBS:
       return {

@@ -11,8 +11,9 @@ import { s, color } from '../../libs/styles';
 import { Search, Header } from '../../components';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import { getCartProductsAction } from '../../redux/actions/cartAction';
-import { getJobsAction } from '../../redux/actions/bankAction';
+import { myJobsAction } from '../../redux/actions/bankAction';
 import { searchHostelsAction } from '../../redux/actions/productAction';
+import SettingHeader from '../../components/header/settingHeader';
 
 import { connect } from 'react-redux';
 import Actions from '../../redux/actions';
@@ -45,11 +46,11 @@ class Home extends Component {
     await this.setState({
       image: JSON.parse(user).data.user.photo,
     });
-    this.getAllJobs();
+    this.getMyJobs();
   };
 
-  getAllJobs = async () => {
-    await this.props.getJobsAction({search:""});
+  getMyJobs = async () => {
+    await this.props.myJobsAction();
   };
 
   componentWillMount() {
@@ -57,28 +58,23 @@ class Home extends Component {
        this.setSeller();
      });
   }
-  onBlur = async (productName) => {
-    console.log(productName,'PK12HABB0050207900414403');
-    await this.props.getJobsAction(productName);
-  };
+  
   render() {
     const { index, routes } = this.state;
     return (
       <View style={[s.scrollview]}>
-        <Header
-          badgeCount={this.state.badgeCount}
-          image={this.state.image}
-          userName={this.state.userName}
-          navigation={this.props.navigation}
+       <SettingHeader
+          title={'Jobs'}
+          color={color.lightGrey}
+
         />
-        <Search navigation={this.props.navigation} onBlur={this.onBlur} />
-        <FlatList
+         <FlatList
           style={{ width: '100%', height: '70%' }}
-          data={this.props.allJobs}
+          data={this.props.myJobs}
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
             <JobsCard
-              type="shops"
+              type="myjobs"
               navigation={this.props.navigation}
               job={item}
             />
@@ -90,13 +86,13 @@ class Home extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state.BankReducer.allJobs.length,'jefojsoefiojsioj');
+  console.log(state.BankReducer.allJobs[0],'jefojsoefiojsioj');
   return {
-    allJobs: state.BankReducer.allJobs,
+    myJobs: state.BankReducer.myJobs,
   };
 };
 const mapDispatchToProps = {
-  getJobsAction,
+  myJobsAction,
 
 };
 

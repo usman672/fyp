@@ -35,6 +35,8 @@ import { bookRoomAction } from '../../redux/actions/orderAction';
 import { similarProductAction } from '../../redux/actions/productAction';
 import moment from 'moment';
 import StarRating from 'react-native-star-rating';
+import BraintreeDropIn from 'react-native-braintree-dropin-ui';
+import {getClientToken,bookRoomPayment} from '../../services/apiList';
 
 class ItemDetail extends Component {
   static navigationOptions = {
@@ -56,7 +58,7 @@ class ItemDetail extends Component {
       isSeller: false,
       productId: [],
     };
-    // console.log(this.props.route.params.product.category.name, 12);
+     console.log(this.props.route.params.item, 12);
     // this.getLikes();
     // this.similarProduct();
     //this.checkSeller();
@@ -99,16 +101,56 @@ class ItemDetail extends Component {
     } else return false;
   };
 
+
+
+
+
   book = async () => {
-    const res = await this.props.bookRoomAction(
+
+   const res=await getClientToken();
+    BraintreeDropIn.show({
+    clientToken: res.clientToken.clientToken,
+    merchantIdentifier: 'h47c2b5ctcmmhd68',
+   //  merchantName: 'Your Merchant Name for Apple Pay',
+    orderTotal:'Total Price',
+    vaultManager: true,
+    cardDisabled: false,
+    googlePay:false,
+    darkTheme: true,
+    payPal:true
+  })
+  .then(async result => {
+    console.log(result)
+   const res = await bookRoomPayment({
+    paymentMethodNonce : result.nonce,
+    hostel: this.props.route.params.item.hostel,
+    roomNumber: this.props.route.params.item.roomNumber,
+    amount:parseInt(this.props.route.params.item.price)
+   });
+   if(res.success){
+     console.log(res,354534)
+      const res = await this.props.bookRoomAction(
       this.props.route.params.item._id,
     );
-    //let user = await storage._retrieveData('user');
-    //user = await JSON.parse(user);
     if (res.success) {
+      Alert.alert('Message', res.message)
     } else {
-      Alert.alert('Error', res);
+      Alert.alert('Error', res.message);
     }
+   }else{
+    Alert.alert('Error', res.message);
+   }
+  })
+  .catch((error) => {
+
+    if (error.code === 'USER_CANCELLATION') {
+      // update your UI to handle cancellation
+    } else {
+      // update your UI to handle other errors
+    }
+  });
+    
+    
   };
   buynow = async () => {
     Alert.alert(

@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions, View, ActivityIndicator } from 'react-native';
 import PDFView from 'react-native-view-pdf';
 import SettingHeader from '../../components/header/settingHeader';
 import { s, color } from '../../libs/styles';
-import loader from '../../components/modal/loader';
+import Loader from '../../components/loader/listingLoader';
 
 // const resources = {
 //   file:
@@ -19,6 +19,7 @@ export default class PDFExample extends React.Component {
     super(props);
     this.state = {
       otp: '',
+      isLoading:true,
       isotp: false,
       resources: {
         file:
@@ -31,23 +32,23 @@ export default class PDFExample extends React.Component {
     };
   }
   loader = () => {
-    return (
-      <View style={[styles.container, styles.horizontal]}>
-        <ActivityIndicator />
-        <ActivityIndicator size="large" color="#00ff00" />
-      </View>
-    );
+    this.setState({isLoading:false})
   };
   render() {
     const { navigate } = this.props.navigation;
     const resourceType = 'url';
     return (
+      <>
       <View style={{ flex: 1 }}>
         <SettingHeader
           title={this.props.route.params.title}
           backgroundColor={color.black}
           color={color.white}
         />
+      
+      {this.state.isLoading &&
+     <Loader/>
+}
         <PDFView
           fadeInDuration={250.0}
           style={{ flex: 1 }}
@@ -56,18 +57,17 @@ export default class PDFExample extends React.Component {
           onLoad={() => this.loader()}
           onError={(error) => console.log('Cannot render PDF', error)}
         />
+ 
       </View>
+      </>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
     justifyContent: 'center',
+   
   },
-  horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-  },
+ 
 });

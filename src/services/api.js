@@ -12,6 +12,7 @@ export const api = async (url, method, token, body, isFormData = false) => {
   // };
   let headers;
   if (isFormData) {
+    console.log('formDatatatatatat')
     headers = {
       'Content-Type': 'multipart/form-data',
     };
@@ -22,6 +23,7 @@ export const api = async (url, method, token, body, isFormData = false) => {
   }
   if (token) {
     const userToken = await AsyncStorage.getItem('token');
+    console.log(userToken)
     headers.Authorization = 'Bearer ' + userToken;
   }
 
@@ -29,6 +31,9 @@ export const api = async (url, method, token, body, isFormData = false) => {
     url: url,
     method: method,
     headers: headers,
+    validateStatus: function (status) {
+      return status < 500; // Reject only if the status code is greater than or equal to 500
+    }
   };
 
   if (method === 'GET') {
@@ -36,13 +41,16 @@ export const api = async (url, method, token, body, isFormData = false) => {
   } else {
     structure.data = body;
   }
+
+
+  console.log(body,'stststttututyuytuststststsststts');
   return axios(structure)
     .then((resp) => {
       console.log(resp)
       return resp.data;
     })
     .catch((err) => {
-      console.log(err.response.data)
+      console.log(err.request.response,'uiliolio')
       return err;
     });
 };

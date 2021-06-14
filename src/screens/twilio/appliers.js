@@ -11,15 +11,16 @@ import { s, color } from '../../libs/styles';
 import { Search, Header } from '../../components';
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
 import { getCartProductsAction } from '../../redux/actions/cartAction';
-import { getJobsAction } from '../../redux/actions/bankAction';
+import { myJobsAction } from '../../redux/actions/bankAction';
 import { searchHostelsAction } from '../../redux/actions/productAction';
+import SettingHeader from '../../components/header/settingHeader';
 
 import { connect } from 'react-redux';
 import Actions from '../../redux/actions';
 import AsyncStorage from '@react-native-community/async-storage';
 import storage from '../../libs/storage';
 import JobsCard from '../../components/buyer/jobsCard';
-class Home extends Component {
+class Appliers extends Component {
   static navigationOptions = {
     header: null,
     tabBarVisible: false,
@@ -33,52 +34,30 @@ class Home extends Component {
       badgeCount: 0,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     };
-    this.setSeller();
+    
   }
- 
-  setSeller = async () => {
-    const user = await storage._retrieveData('user');
-    console.log(user,'sjfji')
-    await this.setState({
-      userName: JSON.parse(user).data.user.name,
-    });
-    await this.setState({
-      image: JSON.parse(user).data.user.photo,
-    });
-    this.getAllJobs();
-  };
-
-  getAllJobs = async () => {
-    await this.props.getJobsAction({search:""});
-  };
 
   componentWillMount() {
-    this.props.navigation.addListener('focus', (payload) => {
-       this.setSeller();
-     });
+   
   }
-  onBlur = async (productName) => {
-    console.log(productName,'PK12HABB0050207900414403');
-    await this.props.getJobsAction(productName);
-  };
+  
   render() {
     const { index, routes } = this.state;
+    console.log(this.props.route.params.appliers,'pppppppppppgegegppppppppppppppppppppppppppppppp')
     return (
       <View style={[s.scrollview]}>
-        <Header
-          badgeCount={this.state.badgeCount}
-          image={this.state.image}
-          userName={this.state.userName}
-          navigation={this.props.navigation}
+       <SettingHeader
+          title={'Appliers'}
+          color={color.lightGrey}
+
         />
-        <Search navigation={this.props.navigation} onBlur={this.onBlur} />
-        <FlatList
+         <FlatList
           style={{ width: '100%', height: '70%' }}
-          data={this.props.allJobs}
+          data={this.props.route.params.appliers}
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
             <JobsCard
-              type="shops"
+              type="appliers"
               navigation={this.props.navigation}
               job={item}
             />
@@ -89,17 +68,8 @@ class Home extends Component {
     );
   }
 }
-const mapStateToProps = (state) => {
-  console.log(state.BankReducer.allJobs.length,'jefojsoefiojsioj');
-  return {
-    allJobs: state.BankReducer.allJobs,
-  };
-};
-const mapDispatchToProps = {
-  getJobsAction,
 
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Appliers;
 
 const styles = StyleSheet.create({});

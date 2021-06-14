@@ -19,11 +19,14 @@ const SettingHeader = (props) => {
     props.title === 'FOR SELLER TO RECEIVE EARNINGS' ? 15 : 22,
   );
   navigate = () => {
-    console.log(props.title)
+    console.log(props.title,'iolioo')
     if (props.title == 'Rooms'||props.title == 'Add Room')
       navigation.navigate('sellItem', { isEdit: false });
     else if (props.title == 'Shops'|| props.title == 'Add Product' )
       navigation.navigate('bank', { isEdit: false });
+      else if(props.title == 'Jobs'){
+        navigation.navigate('twillio');
+      }
   };
   return (
     <CardView cardElevation={neomorph.cardElevation}>

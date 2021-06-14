@@ -93,10 +93,18 @@ export const postJob = async (data) => {
 };
 
 export const getJobs = async (data) => {
-  let url = baseUrl + 'jobs';
+  let url = baseUrl + 'jobs/search?search='+data;
   let method = 'GET';
   console.log(url,data)
-  let res = await api(url, method, true, data);
+  let res = await api(url,method,true);
+  return res;
+};
+
+export const myJobs = async () => {
+  let url = baseUrl + 'jobs/my-jobs';
+  let method = 'GET';
+  console.log(url)
+  let res = await api(url, method, true);
   return res;
 };
 
@@ -349,10 +357,11 @@ export const getTwillio = async () => {
   return res;
 };
 
-export const getProductsByUser = async (data, user_id) => {
-  let url = baseUrl + 'getProductsByUserId/' + user_id;
+export const getProductsByUser = async (user_id) => {
+  let url = baseUrl + 'shops/' + user_id;
   let method = 'GET';
-  let res = await api(url, method, true, data);
+  let res = await api(url, method, true);
+  console.log('rssssssssssssssssssssssssssss',res)
   return res;
 };
 
@@ -478,6 +487,35 @@ export const userLogout = async (data) => {
   let method = 'GET';
   console.log(url, method, true, data);
   let res = await api(url, method, true, data);
+  return res;
+};
+
+export const uploadPdf = async (data,id) => {
+
+  let formData = new FormData();
+  formData.append('file',data);
+  let url = baseUrl + 'jobs/'+id+'/apply';
+   let method = 'POST';
+  let res = await api(url, method, true, formData,true);
+  console.log(res,'ress');
+  return res;
+};
+
+
+export const getClientToken = async (data,id) => {
+   let url = baseUrl + 'braintree/get-token';
+   let method = 'GET';
+  let res = await api(url, method, true);
+  console.log(res,'ress');
+  return res;
+};
+
+export const bookRoomPayment = async (data) => {
+  let url = baseUrl + 'braintree/payment';
+   let method = 'POST';
+   console.log(data,2323232)
+  let res = await api(url, method, true,data);
+  console.log(res,'ress');
   return res;
 };
 

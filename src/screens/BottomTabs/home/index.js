@@ -43,8 +43,7 @@ class Home extends Component {
   };
   setSeller = async () => {
     const user = await storage._retrieveData('user');
-    console.log(user,'ooooooooooooooooooooooooooooooooooooooooooooooommkkjnknkjnjknkjnkjnkjnoooooooooooooo')
-    await this.setState({
+     await this.setState({
       userName: JSON.parse(user).data.user.name,
     });
     await this.setState({

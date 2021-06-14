@@ -49,8 +49,7 @@ class EditAddress extends Component {
       countriesList: [],
     };
 
-    console.log(this.props.route.params.image, 'oooooo');
-  }
+   }
 
   buttonClicked = (clicked) => {
     this.setState({

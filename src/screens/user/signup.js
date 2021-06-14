@@ -75,17 +75,51 @@ class SignUp extends Component {
       } else if (response.error) {
       } else if (response.customButton) {
       } else {
-      const res_image= await  this.props.imageUploadAction({
-          image_type: 'user',
-          image: 'data:' + response.type + `;base64,${response.data}`,
-        });
-        console.log(res_image);
-        this.setState({ image_path: res_image.data.image });
 
-        this.setState({
-          image: response.uri,
-          isimage: true,
+
+        const formData = new FormData();
+  
+        formData.append('file', {
+    
+         uri :response.uri,
+    
+         type: response.type,
+    
+         name: 'flpokfoks.png'
+    
         });
+        await fetch(`https://myhostelv1app.herokuapp.com/api/v1/jobs/60437f53a7a9ff0db4767842/apply`, {
+  
+          method:'POST',
+  
+          Accept: 'application/json',
+  
+          'Content-Type': 'multipart/form-data',
+  
+          body: formData
+  
+      })
+  
+      .then((response) => {
+  
+        console.log(response.status);
+        console.log(response.statusText);
+        console.log(response.type);
+        console.log(response.url);
+      }).catch((err) => {
+  
+          console.log(err)
+  
+      })
+  
+
+
+
+
+
+
+
+     
       }
     });
   };
