@@ -6,7 +6,8 @@ import {
   updateBankAccount,
   getUser,
   getJobs,
-  myJobs
+  myJobs,
+  getHostelMembers
 } from '../../services/apiList';
 export const postJobAction = (data) => {
   return async (dispatch, getState) => {
@@ -52,6 +53,22 @@ export const myJobsAction = () => {
   };
 };
 
+export const getHostelMembersAction = () => {
+  return async (dispatch, getState) => {
+   
+    const res = await getHostelMembers();
+    console.log(res,'kkk')
+    dispatch({
+      type: types.HOSTELMEMBERS,
+      payload: {
+        hostelMembers: res.data,
+      },
+    });
+
+    return res;
+  };
+};
+
 export const updateBankInfoAction = (data) => {
   return async (dispatch, getState) => {
     //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
@@ -65,4 +82,5 @@ export const updateBankInfoAction = (data) => {
     // );
     return res;
   };
+ 
 };

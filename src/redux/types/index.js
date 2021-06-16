@@ -61,4 +61,4 @@ export const GETREVIEWS = 'GETREVIEWS';
 // JOBS
 export const ALLJOBS = 'ALLJOBS';
 export const MYJOBS = 'MYJOBS';
-
+export const HOSTELMEMBERS = 'HOSTELMEMBERS';

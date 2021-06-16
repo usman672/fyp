@@ -4,6 +4,7 @@ const initialState = {
   isLogedin: false,
   allJobs: [],
   myJobs:[],
+  hostelMember:[]
 };
 
 function bankReducer(state = initialState, action) {
@@ -17,6 +18,11 @@ function bankReducer(state = initialState, action) {
       return {
         ...state,
         allJobs: action.payload.allJobs,
+      };
+      case types.HOSTELMEMBERS:
+      return {
+        ...state,
+        hostelMembers: action.payload.hostelMembers,
       };
   }
 

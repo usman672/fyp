@@ -61,6 +61,34 @@ export default class BuyerScreen extends Component {
           color={color.lightGrey}
         />
         <View style={styles.box}>
+          {this.state.isOwner &&
+        <TouchableOpacity
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 35,
+                width: '95%',
+                borderRadius: 10,
+                backgroundColor: color.brandRed,
+                alignSelf:'center',
+                marginTop:5,
+              }}
+              onPress={() =>
+                this.props.navigation.navigate('hostelMembers', {
+                  hId: this.props.route.params.hId,
+                  photo:this.props.route.params.photo,
+                  type:'hostel',
+                })
+              }>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize:18,
+                }}>
+                Check Hostel Members
+              </Text>
+            </TouchableOpacity>
+  }
           <View style={styles.imageRow}>
             <Image
               source={
@@ -198,6 +226,7 @@ const styles = StyleSheet.create({
   },
   imageRow: {
     flexDirection: 'row',
+    marginTop:5,
   },
   icon: {
     left: 88,

@@ -519,3 +519,12 @@ export const bookRoomPayment = async (data) => {
   return res;
 };
 
+
+export const getHostelMembers = async () => {
+  let url = baseUrl + 'hostels/6002b3fda9b85e0018e6cd7b/booked-seats';
+   let method = 'GET';
+  let res = await api(url, method, true);
+  console.log(res,'ress');
+  return res;
+};
+

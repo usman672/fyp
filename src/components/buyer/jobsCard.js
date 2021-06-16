@@ -60,7 +60,41 @@ export default class JobsCard extends Component {
     </TouchableOpacity>
   </CardView>
   
+  ); 
+  else if (this.props.type === 'members' ){
+    console.log(this.props.job.roommats,'opop')
+  return (
+    this.props.job.roommats.map(roomate => {
+      return (
+        <CardView
+        style={[
+          styles.cardStyle,
+          {
+            shadowOpacity: 0.4,
+            shadowColor: color.black,
+          },
+        ]}
+        cardElevation={13}
+        cornerRadius={7}>
+      
+             <View style={s.row}>
+              <View style={[s.row]}>
+                <View onPress={this.setNavigation}>
+                  <Image
+                    source={{uri:roomate.photo}}
+                    style={[styles.headerItem, styles.headerImage]}
+                    
+                  />
+                </View>
+                <Text style={styles.title}>{roomate.name}</Text>
+              </View>
+            </View>
+      
+      </CardView>
+      );
+   })
   );
+  }
  else
     return (
       <CardView

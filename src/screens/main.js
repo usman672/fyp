@@ -17,6 +17,10 @@ export default class Main extends Component {
     tabBarVisible: false,
   };
 
+  click=()=>{
+    
+  }
+
   render() {
     return (
       <View style={styles.page}>
@@ -26,7 +30,7 @@ export default class Main extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btn}
-            onPress={() => this.props.navigation.navigate('login')}>
+            onPress={() => click()}>
             <Text style={styles.logintext}>Log in</Text>
           </TouchableOpacity>
         </View>

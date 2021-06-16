@@ -121,25 +121,21 @@ class ItemDetail extends Component {
   })
   .then(async result => {
     console.log(result)
-   const res = await bookRoomPayment({
-    paymentMethodNonce : result.nonce,
-    hostel: this.props.route.params.item.hostel,
-    roomNumber: this.props.route.params.item.roomNumber,
-    amount:parseInt(this.props.route.params.item.price)
-   });
-   if(res.success){
+   
      console.log(res,354534)
       const res = await this.props.bookRoomAction(
-      this.props.route.params.item._id,
-    );
+      this.props.route.params.item._id,{
+      paymentMethodNonce : result.nonce,
+      hostel: this.props.route.params.item.hostel,
+      roomNumber: this.props.route.params.item.roomNumber,
+      amount:parseInt(this.props.route.params.item.price)
+      });
     if (res.success) {
       Alert.alert('Message', res.message)
     } else {
       Alert.alert('Error', res.message);
     }
-   }else{
-    Alert.alert('Error', res.message);
-   }
+   
   })
   .catch((error) => {
 

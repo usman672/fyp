@@ -63,6 +63,7 @@ import JobDescription from './src/screens/twilio/jobDescription';
 import JobApply from './src/screens/twilio/jobApply';
 import MyJobs from './src/screens/twilio/myjobs';
 import Appliers from './src/screens/twilio/appliers';
+import HostelMembers from './src/screens/twilio/hostelMembers';
 
 import { logoutAction } from './src/redux/actions/userActions';
 import { color } from './src/libs/styles';
@@ -589,6 +590,11 @@ export default class App extends React.Component {
                   options={{ headerShown: false }}
                   name="appliers"
                   component={Appliers}
+                />
+                 <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="hostelMembers"
+                  component={HostelMembers}
                 />
               </>
             )}
