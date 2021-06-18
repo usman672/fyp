@@ -102,20 +102,14 @@ class Notification extends React.Component {
           iconCategory: 'heart',
         },
       ],
-      page: this.props.page + 1,
       isLoading: false,
       isEmpty: false,
     };
-    //this.getNotifications();
+    this.getNotifications();
    this.setSeller();
   }
   getNotifications = async () => {
-    console.log('page', this.props.page);
     await this.props.getNotificationsAction(
-      {
-        page: this.state.page,
-        perPage: 8,
-      },
     );
   };
   setSeller = async () => {
@@ -132,23 +126,7 @@ class Notification extends React.Component {
     });
     
   };
-  LoadMoreData = async ({ distanceFromEnd }) => {
-    var r = s.height - distanceFromEnd;
-    if (!this.state.isEmpty) {
-      await this.setState({ isLoading: true });
-      await this.setState({ page: this.state.page + 1 });
-      const res = await this.props.getNotificationsAction(
-        {
-          page: this.state.page,
-          perPage: 8,
-        },
-      );
-      if (!res.data.notifications.length > 0) {
-        this.setState({ isEmpty: true });
-        await this.setState({ isLoading: false });
-      }
-    }
-  };
+
   GetItem(item) {
     Alert.alert(item);
   }
@@ -162,8 +140,9 @@ class Notification extends React.Component {
     });
   };
   componentWillMount() {
-    this.props.navigation.addListener('focus', (payload) => {
+    this.props.navigation.addListener('focus', () => {
       this.setSeller();
+      this.getNotifications();
     });
   }
   getImage = (url) => {
@@ -203,11 +182,7 @@ class Notification extends React.Component {
                     </View>
                   </View>
                   <View style={styles.notificationTextView}>
-                    {item.title !== '' && (
-                      <Text numberOfLines={3} style={s.title_1_bold}>
-                        {item.title}
-                      </Text>
-                    )}
+                   
                     <Text numberOfLines={3} style={s.subtitle_normal}>
                       {item.notification}
                     </Text>
@@ -234,9 +209,9 @@ class Notification extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
+  console.log(state.NotificationReducer.notificationsList,'lalalal')
   return {
     notificationsList: state.NotificationReducer.notificationsList,
-    page: state.NotificationReducer.page,
   };
 };
 

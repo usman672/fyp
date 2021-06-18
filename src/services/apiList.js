@@ -450,10 +450,10 @@ export const getNotificationSettings = async (data) => {
   let res = await api(url, method, true, data);
   return res;
 };
-export const getNotifications = async (data) => {
-  let url = baseUrl + 'getNotifications';
+export const getNotifications = async () => {
+  let url = baseUrl + 'notifications';
   let method = 'GET';
-  let res = await api(url, method, true, data);
+  let res = await api(url, method, true);
   return res;
 };
 export const orderReview = async (data) => {

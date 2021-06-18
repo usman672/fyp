@@ -62,11 +62,11 @@ class Login extends Component {
     }
   };
   login = async () => {
-    // const fcm = await AsyncStorage.getItem('device_token');
+     const fcm = await AsyncStorage.getItem('device_token');
     const res = await this.props.signinAction({
       email: this.state.email,
       password: this.state.password,
-     // fireBaseToken: fcm,
+      fcmToken: fcm,
     });
     console.log('res :',res)
     if (res.success) {
