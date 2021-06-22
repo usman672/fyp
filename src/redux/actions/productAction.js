@@ -17,74 +17,71 @@ import {
   getProductsByUser,
 } from '../../services/apiList';
 
-export const addRoomsAction = (data,id) => {
+export const addRoomsAction = (data, id) => {
   return async (dispatch, getState) => {
-     const res = await addRooms(data,id);
-    console.log(res,'response')
+    const res = await addRooms(data, id);
+    console.log(res, 'response');
     if (res.success) {
-     
     }
-    
+
     return res;
   };
 };
 
-export const editRoomAction = (data,id) => {
+export const editRoomAction = (data, id) => {
   return async (dispatch, getState) => {
-     const res = await editRoom(data,id);
-    console.log(res,'response')
+    const res = await editRoom(data, id);
+    console.log(res, 'response');
     if (res.success) {
-     
     }
-   
+
     return res;
   };
 };
 
-export const addProductAction = (data,id) => {
+export const addProductAction = (data, id) => {
   return async (dispatch, getState) => {
-    console.log(data,'response')
-      const res = await addProduct(data,id);
-    console.log(res,'Addddddddddddddddddddddddddddddddddddddddd')
+    console.log(data, 'response');
+    const res = await addProduct(data, id);
+    console.log(res, 'Addddddddddddddddddddddddddddddddddddddddd');
     if (res.success) {
-     
     }
-   
+
     return res;
   };
 };
 export const editProductAction = (data, product) => {
-   return async (dispatch, getState) => {
-    console.log(data,product)
-    const res = await editProduct(data,product);
+  return async (dispatch, getState) => {
+    console.log(data, product);
+    const res = await editProduct(data, product);
     return res;
   };
 };
 export const getUserRoomsAction = (data) => {
   return async (dispatch, getState) => {
     console.log('datatataa products .......:', data);
-    
+
     const res = await getUserRooms(data);
     console.log('ew', res);
     if (res.success) {
-        dispatch({
-          type: types.HOSTELROOMS,
-          payload: {
-            rooms: res.data,
-          },
-        });
-      }
+      dispatch({
+        type: types.HOSTELROOMS,
+        payload: {
+          rooms: res.data,
+        },
+      });
+    }
 
     return res;
   };
 };
 export const getProductsAction = (user_id) => {
-  console.log(user_id,'fffinfifnifnfin')
+  console.log(user_id, 'fffinfifnifnfin');
   return async (dispatch, getState) => {
     dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     const res = await getProductsByUser(user_id);
     if (res.success) {
-      console.log(res,'kfrekrekgprekgrekgkprekgporekpok')
+      console.log(res, 'kfrekrekgprekgrekgkprekgporekpok');
       dispatch({
         type: types.USERPRODUCT,
         payload: {
@@ -100,12 +97,12 @@ export const getProductsAction = (user_id) => {
 };
 export const getAllRecentProductsAction = (data) => {
   return async (dispatch, getState) => {
-     const res = await getAllRecentProducts(data);
+    const res = await getAllRecentProducts(data);
     if (res.success) {
       dispatch({
         type: types.GETRECENTPRODUCT,
         payload: {
-          getAllRecentproducts: res.data.recentProducts,
+          getAllRecentproducts: res.data,
         },
       });
     }
@@ -177,7 +174,7 @@ export const getProductByKeywordAction = (data) => {
           },
         });
       } else {
-         dispatch({
+        dispatch({
           type: types.SEARCHEDPRODUCT,
           payload: {
             searchproducts: [],
@@ -185,7 +182,7 @@ export const getProductByKeywordAction = (data) => {
         });
       }
     } else {
-       dispatch({
+      dispatch({
         type: types.SEARCHEDPRODUCT,
         payload: {
           searchproducts: [],
@@ -202,7 +199,7 @@ export const deleteRoomAction = (id, index) => {
   return async (dispatch, getState) => {
     dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     const res = await deleteRoom(id);
-    
+
     if (res.success) {
       dispatch({
         type: types.DELETEPRODUCT,

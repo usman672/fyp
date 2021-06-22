@@ -131,9 +131,12 @@ class UserProfile extends Component {
           longitude: JSON.parse(user).data.hostel.longitude,
           latitude: JSON.parse(user).data.hostel.latitude,
         });
-      } else this.props.navigation.navigate('Profile', { setting: false,type:'hostel' });
+      } else
+        this.props.navigation.navigate('Profile', {
+          setting: false,
+          type: 'hostel',
+        });
     } else if (type == 1) {
-      console.log(JSON.parse(user).data.shop._id,'didididididididid')
       if (this.state.isShop)
         this.props.navigation.navigate('notifications', {
           name: JSON.parse(user).data.shop.name,
@@ -149,10 +152,10 @@ class UserProfile extends Component {
           type: 'shop',
         });
     } else if (type == 2) {
-        this.props.navigation.navigate('myJobs', {
-          setting: false,
-          type: 'job',
-        });
+      this.props.navigation.navigate('myJobs', {
+        setting: false,
+        type: 'job',
+      });
     }
   };
   render() {
@@ -169,7 +172,8 @@ class UserProfile extends Component {
               <ImageBackground
                 imageStyle={{ borderRadius: 50 }}
                 style={styles.image}
-                source={{ uri: this.state.image }}>
+                source={{ uri: this.state.image }}
+              >
                 <TouchableOpacity style={styles.editExternal} disabled={true} />
               </ImageBackground>
               <Text style={styles.titleSize}>{this.state.userName}</Text>
@@ -178,7 +182,8 @@ class UserProfile extends Component {
               <CardView
                 style={styles.infoCard}
                 cardElevation={neomorph.elevation}
-                cornerRadius={neomorph.cornerRadius}>
+                cornerRadius={neomorph.cornerRadius}
+              >
                 <View style={styles.profileDetails}>
                   <View style={styles.detailsView}>
                     <Text style={styles.upperDetails}>
@@ -228,7 +233,8 @@ class UserProfile extends Component {
                 </View>
                 <TouchableOpacity
                   style={styles.optionsName}
-                  onPress={() => this.isSeller(0)}>
+                  onPress={() => this.isSeller(0)}
+                >
                   <View>
                     <Text style={styles.optionsTextFont}>
                       {this.state.isHostel ? 'Your Hostel' : 'Add Hostel'}
@@ -247,7 +253,8 @@ class UserProfile extends Component {
                 </View>
                 <TouchableOpacity
                   style={styles.optionsName}
-                  onPress={() => this.isSeller(1)}>
+                  onPress={() => this.isSeller(1)}
+                >
                   <View>
                     <Text style={styles.optionsTextFont}>
                       {this.state.isShop ? 'Your Shop' : 'Add Shop'}
@@ -266,7 +273,8 @@ class UserProfile extends Component {
                 </View>
                 <TouchableOpacity
                   style={styles.optionsName}
-                  onPress={() => this.isSeller(2)}>
+                  onPress={() => this.isSeller(2)}
+                >
                   <View>
                     <Text style={styles.optionsTextFont}>
                       {this.state.isJob ? 'Your Jobs' : 'Add Job'}
@@ -281,7 +289,8 @@ class UserProfile extends Component {
                 </View>
                 <TouchableOpacity
                   style={styles.optionsName}
-                  onPress={() => this.props.navigation.navigate()}>
+                  onPress={() => this.props.navigation.navigate()}
+                >
                   <View>
                     <Text style={styles.optionsTextFont}>Settings</Text>
                     <HorizontalSeparator />
@@ -298,7 +307,8 @@ class UserProfile extends Component {
                 </View>
                 <TouchableOpacity
                   style={styles.optionsName}
-                  onPress={() => this.signout()}>
+                  onPress={() => this.signout()}
+                >
                   <View>
                     <Text style={styles.optionsTextFont}>Sign Out</Text>
                     <HorizontalSeparator />

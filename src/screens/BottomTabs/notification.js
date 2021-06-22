@@ -106,25 +106,23 @@ class Notification extends React.Component {
       isEmpty: false,
     };
     this.getNotifications();
-   this.setSeller();
+    this.setSeller();
   }
   getNotifications = async () => {
-    await this.props.getNotificationsAction(
-    );
+    await this.props.getNotificationsAction();
   };
   setSeller = async () => {
-    console.log("user",'erferjiofjeroijferjggerjggtrtrvtrgrnho')
-    
+    console.log('user', 'erferjiofjeroijferjggerjggtrtrvtrgrnho');
+
     const user = await storage._retrieveData('user');
-    console.log(user,'erferjiofjeroijferjggerjggtrtrvtrgrnho')
-    
+    console.log(user, 'erferjiofjeroijferjggerjggtrtrvtrgrnho');
+
     await this.setState({
       userName: JSON.parse(user).data.user.name,
     });
     await this.setState({
       image: JSON.parse(user).data.user.photo,
     });
-    
   };
 
   GetItem(item) {
@@ -147,7 +145,7 @@ class Notification extends React.Component {
   }
   getImage = (url) => {
     let path = require('../../assets/dummyProduct.png');
-   return path;
+    return path;
   };
   render() {
     return (
@@ -182,7 +180,6 @@ class Notification extends React.Component {
                     </View>
                   </View>
                   <View style={styles.notificationTextView}>
-                   
                     <Text numberOfLines={3} style={s.subtitle_normal}>
                       {item.notification}
                     </Text>
@@ -190,8 +187,8 @@ class Notification extends React.Component {
                   <View style={styles.daysView}>
                     <Text style={s.subtitle_general}>
                       {/* {moment(item.created_at).format('DD/MM/YY')}
-                   */}
-                   {item.days}
+                       */}
+                      {item.days}
                     </Text>
                   </View>
                 </View>
@@ -209,7 +206,6 @@ class Notification extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state.NotificationReducer.notificationsList,'lalalal')
   return {
     notificationsList: state.NotificationReducer.notificationsList,
   };

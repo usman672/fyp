@@ -67,13 +67,8 @@ export default class ReviewCard extends Component {
         latitude: review.latitude,
       });
     } else if (this.props.type == 'shops') {
-      this.props.navigation.navigate('notifications', {
-        hId: review._id,
-        name: review.name,
-        address: review.address,
-        photo: review.photo,
-        longitude: review.longitude,
-        latitude: review.latitude,
+      this.props.navigation.navigate('shopItemDetail', {
+        item: review,
       });
     }
 
@@ -151,6 +146,7 @@ export default class ReviewCard extends Component {
         </CardView>
       );
     } else if (this.props.type == 'shops') {
+      console.log(this.props.review, 'reivei');
       return (
         <CardView
           style={[
@@ -164,7 +160,7 @@ export default class ReviewCard extends Component {
           cornerRadius={22}
         >
           <View style={[s.row, { padding: 10 }]}>
-            <Text>shirt</Text>
+            <Text></Text>
             <Text
               style={[
                 { fontSize: 13, fontFamily: 'Poppins-Regular' },
@@ -182,7 +178,7 @@ export default class ReviewCard extends Component {
             }}
           >
             <Image
-              source={{ uri: review.photo }}
+              source={{ uri: review.image[0].image_url }}
               style={styles.image}
               resizeMode="cover"
             />

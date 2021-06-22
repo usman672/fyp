@@ -110,6 +110,7 @@ class BuyerRating extends Component {
     console.log(this.props.route.params.hId, 'ernhfik');
     const reviews = await this.props.getReviewsAction(
       this.props.route.params.hId,
+      this.props.route.params.type,
     );
     if (reviews.success) {
     }
@@ -136,10 +137,14 @@ class BuyerRating extends Component {
         title: this.state.title,
       },
       this.props.route.params.hId,
+      this.props.route.params.type,
     );
-    // console.log(rating);
+    console.log(rating);
     if (rating.success) {
-      this.props.navigation.navigate('tabnavigator');
+      this.getReviews();
+      Alert.alert('Message', 'Review Submitted Successfully');
+    } else {
+      Alert.alert('Message', 'You have already submit a review');
     }
   };
   onChange = (searchText) => {
@@ -248,9 +253,7 @@ class BuyerRating extends Component {
                     </Text>
                   </View>
                   <View style={styles.daysView}>
-                    <Text style={s.subtitle_general}>
-                      just now
-                    </Text>
+                    <Text style={s.subtitle_general}>just now</Text>
                   </View>
                 </View>
               </TouchableOpacity>

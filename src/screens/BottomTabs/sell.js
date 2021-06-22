@@ -9,14 +9,8 @@ import {
 } from 'react-native';
 import { s, color } from '../../libs/styles';
 import { Search, Header } from '../../components';
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
-import { getCartProductsAction } from '../../redux/actions/cartAction';
 import { getJobsAction } from '../../redux/actions/bankAction';
-import { searchHostelsAction } from '../../redux/actions/productAction';
-
 import { connect } from 'react-redux';
-import Actions from '../../redux/actions';
-import AsyncStorage from '@react-native-community/async-storage';
 import storage from '../../libs/storage';
 import JobsCard from '../../components/buyer/jobsCard';
 class Home extends Component {
@@ -35,10 +29,10 @@ class Home extends Component {
     };
     this.setSeller();
   }
- 
+
   setSeller = async () => {
     const user = await storage._retrieveData('user');
-    console.log(user,'sjfji')
+    console.log(user, 'sjfji');
     await this.setState({
       userName: JSON.parse(user).data.user.name,
     });
@@ -49,16 +43,16 @@ class Home extends Component {
   };
 
   getAllJobs = async () => {
-    await this.props.getJobsAction({search:""});
+    await this.props.getJobsAction({ search: '' });
   };
 
   componentWillMount() {
     this.props.navigation.addListener('focus', (payload) => {
-       this.setSeller();
-     });
+      this.setSeller();
+    });
   }
   onBlur = async (productName) => {
-    console.log(productName,'PK12HABB0050207900414403');
+    console.log(productName, 'PK12HABB0050207900414403');
     await this.props.getJobsAction(productName);
   };
   render() {
@@ -84,20 +78,19 @@ class Home extends Component {
             />
           )}
           keyExtractor={(item, index) => index.toString()}
-        /> 
+        />
       </View>
     );
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state.BankReducer.allJobs.length,'jefojsoefiojsioj');
+  console.log(state.BankReducer.allJobs.length, 'jefojsoefiojsioj');
   return {
     allJobs: state.BankReducer.allJobs,
   };
 };
 const mapDispatchToProps = {
   getJobsAction,
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

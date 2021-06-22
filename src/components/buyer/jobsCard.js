@@ -21,140 +21,202 @@ export default class JobsCard extends Component {
   render() {
     const { job } = this.props;
     console.log(job, 'oooooooooooooooooooooooooooooooo');
-    if (this.props.type === 'appliers' )
-  return (
-  <CardView
-    style={[
-      styles.cardStyle,
-      {
-        shadowOpacity: 0.4,
-        shadowColor: color.black,
-      },
-    ]}
-    cardElevation={13}
-    cornerRadius={7}>
-    <TouchableOpacity
- 
-      onPress={() =>
-        this.props.navigation.navigate('PDFExample', {
-          title: 'Resume',
-          source:' https://myhostelv1app.herokuapp.com/api/v1/static/'+job.cv,
-        })}>
-         <View style={s.row}>
-          <View style={[s.row]}>
-            <View onPress={this.setNavigation}>
-              <Image
-                source={{uri:job.photo}}
-                style={[styles.headerItem, styles.headerImage]}
-                
-              />
-            </View>
-            <Text style={styles.title}>{job.name}</Text>
-          </View>
-          <View style={[styles.button,{width:'35%',height:'70%',borderRadius:10}]}>
-          <Text style={[styles.applyText,{fontSize:14}]}>Open Resume </Text>
-        </View>
-        </View>
-       
-       
-    </TouchableOpacity>
-  </CardView>
-  
-  ); 
-  else if (this.props.type === 'members' ){
-    console.log(this.props.job.roommats,'opop')
-  return (
-    this.props.job.roommats.map(roomate => {
+    if (this.props.type === 'appliers')
       return (
         <CardView
-        style={[
-          styles.cardStyle,
-          {
-            shadowOpacity: 0.4,
-            shadowColor: color.black,
-          },
-        ]}
-        cardElevation={13}
-        cornerRadius={7}>
-      
-             <View style={s.row}>
+          style={[
+            styles.cardStyle,
+            {
+              shadowOpacity: 0.4,
+              shadowColor: color.black,
+            },
+          ]}
+          cardElevation={13}
+          cornerRadius={7}
+        >
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('PDFExample', {
+                title: 'Resume',
+                source:
+                  ' https://myhostelv1app.herokuapp.com/api/v1/static/' +
+                  job.cv,
+              })
+            }
+          >
+            <View style={s.row}>
               <View style={[s.row]}>
                 <View onPress={this.setNavigation}>
                   <Image
-                    source={{uri:roomate.photo}}
+                    source={{ uri: job.photo }}
                     style={[styles.headerItem, styles.headerImage]}
-                    
+                  />
+                </View>
+                <Text style={styles.title}>{job.name}</Text>
+              </View>
+              <View
+                style={[
+                  styles.button,
+                  { width: '35%', height: '70%', borderRadius: 10 },
+                ]}
+              >
+                <Text style={[styles.applyText, { fontSize: 14 }]}>
+                  Open Resume{' '}
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </CardView>
+      );
+    else if (this.props.type === 'members') {
+      console.log(this.props.job.roommats, 'opop');
+      return this.props.job.roommats.map((roomate) => {
+        return (
+          <CardView
+            style={[
+              styles.cardStyle,
+              {
+                shadowOpacity: 0.4,
+                shadowColor: color.black,
+              },
+            ]}
+            cardElevation={13}
+            cornerRadius={7}
+          >
+            <View style={s.row}>
+              <View style={[s.row]}>
+                <View onPress={this.setNavigation}>
+                  <Image
+                    source={{ uri: roomate.photo }}
+                    style={[styles.headerItem, styles.headerImage]}
                   />
                 </View>
                 <Text style={styles.title}>{roomate.name}</Text>
               </View>
             </View>
-      
-      </CardView>
-      );
-   })
-  );
-  }
- else
-    return (
-      <CardView
-        style={[
-          styles.cardStyle,
-          {
-            shadowOpacity: 0.4,
-            shadowColor: color.black,
-          },
-        ]}
-        cardElevation={13}
-        cornerRadius={7}>
-        <TouchableOpacity
-          disabled={this.props.type === 'not' ? true : false}
-          onPress={this.props.type==='myjobs' ? () =>
-          this.props.navigation.navigate('appliers', { appliers: job.appliers })
-        : () =>
-            this.props.navigation.navigate('JobDescription', { job: job })
-          }>
-            { this.props.type !== 'myjob' &&
-          <View style={styles.upperbutton}>
-            <Text style={styles.upperButtonText}>
-              Company : {job.company ? job.company : 'Tridev'}
-            </Text>
-          </View>
-  }
-          <View style={styles.upperLayer}>
-            <Text style={styles.upperLeftText}>
-              {job.title ? job.title : 'React Developer'}
-            </Text>
-            <Text style={styles.upperRightText}>
-              {moment(job.created_at).format('DD/MM/YY')}
-            </Text>
-          </View>
-          <View style={styles.lowerLayer}>
-            <View style={styles.locationView}>
-              <MaterialIcons
-                size={16}
-                color={color.brandRed}
-                name="location-on"
-              />
-              <Text style={styles.lowerLeftText}>
-             
-                {job.address ? job.address : 'Gulberg, Lahore'}
+          </CardView>
+        );
+      });
+    } else if (this.props.type === 'shops') {
+      console.log(job, 'llkmklmkl');
+      return (
+        <CardView
+          style={[
+            styles.cardStyle,
+            {
+              shadowOpacity: 0.4,
+              shadowColor: color.black,
+            },
+          ]}
+          cardElevation={13}
+          cornerRadius={7}
+        >
+          <TouchableOpacity disabled={this.props.type === 'not' ? true : false}>
+            {this.props.type !== 'myjob' && (
+              <View style={styles.upperbutton}>
+                <Text style={styles.upperButtonText}>
+                  Company : {job.company ? job.company : 'Tridev'}
+                </Text>
+              </View>
+            )}
+            <View style={styles.upperLayer}>
+              <Text style={styles.upperLeftText}>
+                {job.title ? job.title : 'React Developer'}
+              </Text>
+              <Text style={styles.upperRightText}>
+                {moment(job.created_at).format('DD/MM/YY')}
               </Text>
             </View>
+            <View style={styles.lowerLayer}>
+              <View style={styles.locationView}>
+                <MaterialIcons
+                  size={16}
+                  color={color.brandRed}
+                  name="location-on"
+                />
+                <Text style={styles.lowerLeftText}>
+                  {job.address ? job.address : 'Gulberg, Lahore'}
+                </Text>
+              </View>
 
-            <Text style={styles.lowerLeftText}>
-              {job.employmentType ? job.employmentType : 'Full Time'}
-            </Text>
-          </View>
-          {(this.props.type !== 'not' && this.props.type !== 'myjobs') && (
-            <View style={styles.button}>
-              <Text style={styles.applyText}>Apply </Text>
+              <Text style={styles.lowerLeftText}>
+                {job.employmentType ? job.employmentType : 'Full Time'}
+              </Text>
             </View>
-          )}
-        </TouchableOpacity>
-      </CardView>
-    );
-          
+            {this.props.type !== 'not' && this.props.type !== 'myjobs' && (
+              <View style={styles.button}>
+                <Text style={styles.applyText}>Apply </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </CardView>
+      );
+    } else
+      return (
+        <CardView
+          style={[
+            styles.cardStyle,
+            {
+              shadowOpacity: 0.4,
+              shadowColor: color.black,
+            },
+          ]}
+          cardElevation={13}
+          cornerRadius={7}
+        >
+          <TouchableOpacity
+            disabled={this.props.type === 'not' ? true : false}
+            onPress={
+              this.props.type === 'myjobs'
+                ? () =>
+                    this.props.navigation.navigate('appliers', {
+                      appliers: job.appliers,
+                    })
+                : () =>
+                    this.props.navigation.navigate('JobDescription', {
+                      job: job,
+                    })
+            }
+          >
+            {this.props.type !== 'myjob' && (
+              <View style={styles.upperbutton}>
+                <Text style={styles.upperButtonText}>
+                  Company : {job.company ? job.company : 'Tridev'}
+                </Text>
+              </View>
+            )}
+            <View style={styles.upperLayer}>
+              <Text style={styles.upperLeftText}>
+                {job.title ? job.title : 'React Developer'}
+              </Text>
+              <Text style={styles.upperRightText}>
+                {moment(job.created_at).format('DD/MM/YY')}
+              </Text>
+            </View>
+            <View style={styles.lowerLayer}>
+              <View style={styles.locationView}>
+                <MaterialIcons
+                  size={16}
+                  color={color.brandRed}
+                  name="location-on"
+                />
+                <Text style={styles.lowerLeftText}>
+                  {job.address ? job.address : 'Gulberg, Lahore'}
+                </Text>
+              </View>
+
+              <Text style={styles.lowerLeftText}>
+                {job.employmentType ? job.employmentType : 'Full Time'}
+              </Text>
+            </View>
+            {this.props.type !== 'not' && this.props.type !== 'myjobs' && (
+              <View style={styles.button}>
+                <Text style={styles.applyText}>Apply </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </CardView>
+      );
   }
 }
 const styles = StyleSheet.create({
@@ -176,7 +238,7 @@ const styles = StyleSheet.create({
   },
   upperLeftText: {
     fontSize: 17,
-    color:color.lightGrey
+    color: color.lightGrey,
   },
   upperRightText: {
     color: color.brandRed,
@@ -187,7 +249,7 @@ const styles = StyleSheet.create({
   },
   lowerLeftText: {
     fontSize: 14,
-    color:color.lightGrey
+    color: color.lightGrey,
   },
   upperbutton: {
     width: '100%',

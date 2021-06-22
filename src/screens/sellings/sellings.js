@@ -54,15 +54,15 @@ export default class BuyerScreen extends Component {
   render() {
     const { index, routes } = this.state;
     return (
-      <View style={[s.scrollview]}>
+      <View style={[s.scrollview, styles.container]}>
         <SettingHeader
           title={this.state.isOwner ? 'Rooms' : 'Room'}
           backgroundColor={this.state.isOwner}
           color={color.lightGrey}
         />
         <View style={styles.box}>
-          {this.state.isOwner &&
-        <TouchableOpacity
+          {this.state.isOwner && (
+            <TouchableOpacity
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -70,25 +70,27 @@ export default class BuyerScreen extends Component {
                 width: '95%',
                 borderRadius: 10,
                 backgroundColor: color.brandRed,
-                alignSelf:'center',
-                marginTop:5,
+                alignSelf: 'center',
+                marginTop: 5,
               }}
               onPress={() =>
                 this.props.navigation.navigate('hostelMembers', {
                   hId: this.props.route.params.hId,
-                  photo:this.props.route.params.photo,
-                  type:'hostel',
+                  photo: this.props.route.params.photo,
+                  type: 'hostel',
                 })
-              }>
+              }
+            >
               <Text
                 style={{
                   color: 'white',
-                  fontSize:18,
-                }}>
+                  fontSize: 18,
+                }}
+              >
                 Check Hostel Members
               </Text>
             </TouchableOpacity>
-  }
+          )}
           <View style={styles.imageRow}>
             <Image
               source={
@@ -117,7 +119,8 @@ export default class BuyerScreen extends Component {
               margin: 10,
               width: '96%',
               justifyContent: 'space-between',
-            }}>
+            }}
+          >
             <TouchableOpacity
               style={{
                 justifyContent: 'center',
@@ -130,14 +133,16 @@ export default class BuyerScreen extends Component {
               onPress={() =>
                 this.props.navigation.navigate('BuyerRating', {
                   hId: this.props.route.params.hId,
-                  photo:this.props.route.params.photo,
-                  type:'hostel',
+                  photo: this.props.route.params.photo,
+                  type: 'hostel',
                 })
-              }>
+              }
+            >
               <Text
                 style={{
                   color: 'white',
-                }}>
+                }}
+              >
                 Rate Hostel
               </Text>
             </TouchableOpacity>
@@ -155,11 +160,13 @@ export default class BuyerScreen extends Component {
                   longitude: this.props.route.params.longitude,
                   latitude: this.props.route.params.latitude,
                 })
-              }>
+              }
+            >
               <Text
                 style={{
                   color: 'white',
-                }}>
+                }}
+              >
                 Locate Hostel
               </Text>
             </TouchableOpacity>
@@ -226,7 +233,7 @@ const styles = StyleSheet.create({
   },
   imageRow: {
     flexDirection: 'row',
-    marginTop:5,
+    marginTop: 5,
   },
   icon: {
     left: 88,

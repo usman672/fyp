@@ -43,5 +43,5 @@ export {
   Dropdown,
   CardConfirmation,
   ListingLoader,
-  LoadMore
+  LoadMore,
 };

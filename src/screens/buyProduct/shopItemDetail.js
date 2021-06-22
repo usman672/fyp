@@ -31,7 +31,7 @@ import { likeDislikeProductAction } from '../../redux/actions/productAction';
 import Actions from '../../redux/actions';
 import { SliderBox } from 'react-native-image-slider-box';
 import AsyncStorage from '@react-native-community/async-storage';
-import { bookRoomAction } from '../../redux/actions/orderAction';
+import { buyProductAction } from '../../redux/actions/orderAction';
 import { similarProductAction } from '../../redux/actions/productAction';
 import moment from 'moment';
 import StarRating from 'react-native-star-rating';
@@ -118,12 +118,10 @@ class ItemDetail extends Component {
         console.log(result);
 
         console.log(res, 354534);
-        const res = await this.props.bookRoomAction(
+        const res = await this.props.buyProductAction(
           this.props.route.params.item._id,
           {
             paymentMethodNonce: result.nonce,
-            hostel: this.props.route.params.item.hostel,
-            roomNumber: this.props.route.params.item.roomNumber,
             amount: parseInt(this.props.route.params.item.price),
           },
         );
@@ -151,6 +149,7 @@ class ItemDetail extends Component {
   };
 
   render() {
+    const { item } = this.props.route.params;
     const { navigate } = this.props.navigation;
     console.log(this.props.route.params.item);
     return (
@@ -182,18 +181,54 @@ class ItemDetail extends Component {
                       'DD MMM YYYY',
                     )}
                 </Text>
-                <Text style={styles.priceBoldText}>
-                  {this.props.route.params.item.price}
-                </Text>
               </View>
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '90%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                alignSelf: 'center',
+              }}
+            >
+              <Text style={styles.priceBoldText}>
+                {this.props.route.params.item.price}
+              </Text>
+              <TouchableOpacity
+                style={{
+                  height: 40,
+                  marginTop: '10%',
+                  backgroundColor: color.brandRed,
+                  borderRadius: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '40%',
+                }}
+                onPress={() =>
+                  this.props.navigation.navigate('notifications', {
+                    hId: item.shop._id,
+                    name: item.shop.name,
+                    address: item.shop.address,
+                    photo: item.shop.photo,
+                    longitude: item.shop.longitude,
+                    latitude: item.shop.latitude,
+                  })
+                }
+              >
+                <Text style={{ color: color.white }}>Go To Shop</Text>
+              </TouchableOpacity>
             </View>
             {/* <SendMessage />
              */}
             <Description
-              descriptionOne="{this.props.route.params.product.descriptionOne}"
-              descriptionTwo="{this.props.route.params.product.descriptionTwo}"
+              descriptionOne={this.props.route.params.item.description}
             />
-            <BuyNow navigation={this.props.navigation} buy={this.buynow} />
+            <BuyNow
+              navigation={this.props.navigation}
+              buy={this.buynow}
+              type={'shops'}
+            />
 
             <CustomSeparator
               heightt={1}
@@ -217,7 +252,7 @@ const mapDispatchToProps = {
   similarProductAction,
   likeDislikeProductAction,
   addToCartAction,
-  bookRoomAction,
+  buyProductAction,
   getLikeProductAction: Actions.getLikeProductAction,
   getAllRecentProductsAction: Actions.getAllRecentProductsAction,
 };

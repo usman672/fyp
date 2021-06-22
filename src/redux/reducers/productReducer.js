@@ -37,6 +37,7 @@ function addressReducer(state = initialState, action) {
         loadingUsersLikedProducts: false,
       };
     case types.GETRECENTPRODUCT:
+    console.log(action.payload.getAllRecentproducts,'reducer')
       return {
         ...state,
         getAllRecentProducts: action.payload.getAllRecentproducts,

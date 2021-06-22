@@ -26,18 +26,22 @@ class ListingProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userHostelId: '',
+      userHostelId: null,
+      shopIdL: null,
     };
     this.setSeller();
   }
 
   setSeller = async () => {
-    
     const user = await storage._retrieveData('user');
-    console.log(JSON.parse(user).data.hostel._id, '    ', this.props.id);
-    await this.setState({
-      userHostelId: JSON.parse(user).data.hostel._id,
-    });
+    if (JSON.parse(user).data.hostel)
+      await this.setState({
+        userHostelId: JSON.parse(user).data.hostel._id,
+      });
+    if (JSON.parse(user).data.shop)
+      await this.setState({
+        shopId: JSON.parse(user).data.shop._id,
+      });
   };
   checkimage = (address) => {
     if (address.length > 0) {
@@ -48,12 +52,19 @@ class ListingProduct extends Component {
   };
   getImage = () => {
     let path = require('../../assets/room.jpg');
-    if (this.props.product.img.length > 0)
+    console.log(this.props.type, 'ttyptptpyp');
+    if (this.props.type === 'shops') {
+      if (this.props.product.image.length > 0)
+        return { uri: this.props.product.image[0].image_url };
+    } else if (this.props.product.img.length > 0)
       return { uri: this.props.product.img[0].image_url };
+
+    console.log(this.props.product.image);
     return path;
   };
   render() {
-    if (this.props.nav == 'hostel') {
+    if (this.props.type == 'hostel') {
+      console.log(this.props.product, '3333');
       return (
         <View style={styles.box}>
           <TouchableOpacity
@@ -61,7 +72,8 @@ class ListingProduct extends Component {
               this.props.navigation.navigate('itemDetail', {
                 item: this.props.product,
               })
-            }>
+            }
+          >
             <Image
               style={styles.image}
               source={this.getImage()}
@@ -86,7 +98,7 @@ class ListingProduct extends Component {
                 color={color.white}
                 productChange={this.props.productChange}
                 product={this.props.product._id}
-                nav={this.props.nav}
+                nav={this.props.type}
                 type="delete"
                 index={this.props.index}
               />
@@ -98,22 +110,24 @@ class ListingProduct extends Component {
                 productChange={this.props.productChange}
                 product={this.props.product}
                 type="edit"
-                nav={this.props.nav}
+                nav={this.props.type}
                 index={this.props.index}
               />
             </View>
           )}
         </View>
       );
-    }else if (this.props.nav == 'shops') {
+    } else if (this.props.type == 'shops') {
+      console.log(this.props.product, '2222');
       return (
         <View style={styles.box}>
           <TouchableOpacity
             onPress={() =>
-              this.props.navigation.navigate('itemDetail', {
+              this.props.navigation.navigate('shopItemDetail', {
                 item: this.props.product,
               })
-            }>
+            }
+          >
             <Image
               style={styles.image}
               source={this.getImage()}
@@ -130,7 +144,7 @@ class ListingProduct extends Component {
               Price per seat : {this.props.product.price}
             </Text>
           </View>
-          {this.state.userHostelId == this.props.id && (
+          {this.state.shopId == this.props.id && (
             <View style={styles.cupertinoButtonPurpleRow}>
               <Button
                 style={styles.cupertinoButtonPurple}
@@ -138,7 +152,7 @@ class ListingProduct extends Component {
                 color={color.white}
                 productChange={this.props.productChange}
                 product={this.props.product._id}
-                nav={this.props.nav}
+                nav={this.props.type}
                 type="delete"
                 index={this.props.index}
               />
@@ -150,7 +164,7 @@ class ListingProduct extends Component {
                 productChange={this.props.productChange}
                 product={this.props.product}
                 type="edit"
-                nav={this.props.nav}
+                nav={this.props.type}
                 index={this.props.index}
               />
             </View>

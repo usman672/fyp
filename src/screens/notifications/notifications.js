@@ -41,23 +41,35 @@ export default class BuyerScreen extends Component {
   }
   setSeller = async () => {
     const user = await storage._retrieveData('user');
-
-    if (JSON.parse(user).data.shops._id == this.props.route.params.hId) {
-      this.setState({ isOwner: true });
-    }
+    console.log(
+      JSON.parse(user).data.shop._id,
+      this.props.route.params.hId,
+      'llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll',
+    );
+    if (JSON.parse(user).data.shop._id)
+      if (JSON.parse(user).data.shop._id == this.props.route.params.hId) {
+        await this.setState({ isOwner: true });
+        console.log('owneksd;lmskldfmlsdmkflmsdlfmksdlkmflsdmkflsmkflmr');
+      }
   };
   toggleMap = () => {
     this.setState({ isMap: !this.state.isMap });
   };
+
+  componentWillMount() {
+    this.props.navigation.addListener('focus', (payload) => {
+      this.setSeller();
+    });
+  }
   initialLayout = { width: Dimensions.get('window').width };
 
   render() {
-    console.log(this.props.route.params.hId,'ollllllllllkkkkkkkkkkkkkk')
+    console.log(this.state.isOwner, 'ollllllllllkkkkkkkkkkkkkk');
     const { index, routes } = this.state;
     return (
-      <View style={[s.scrollview]}>
+      <View style={[s.scrollview, styles.container]}>
         <SettingHeader
-          title={this.state.isOwner ? 'Shops' : 'Shops'}
+          title={this.state.isOwner ? 'Shops' : 'Shop'}
           backgroundColor={this.state.isOwner}
           color={color.lightGrey}
         />
@@ -74,7 +86,6 @@ export default class BuyerScreen extends Component {
               <Text numberOfLines={2} style={styles.delivery}>
                 {this.props.route.params.address}
               </Text>
-
             </View>
           </View>
           <View
@@ -85,8 +96,9 @@ export default class BuyerScreen extends Component {
               margin: 10,
               width: '96%',
               justifyContent: 'space-between',
-            }}>
-            {this.state.isOwner && (
+            }}
+          >
+            {!this.state.isOwner && (
               <TouchableOpacity
                 style={{
                   justifyContent: 'center',
@@ -97,13 +109,19 @@ export default class BuyerScreen extends Component {
                   backgroundColor: 'black',
                 }}
                 onPress={() =>
-                  this.props.navigation.navigate('BuyerRating')
-                }>
+                  this.props.navigation.navigate('BuyerRating', {
+                    hId: this.props.route.params.hId,
+                    photo: this.props.route.params.photo,
+                    type: 'shops',
+                  })
+                }
+              >
                 <Text
                   style={{
                     color: 'white',
-                  }}>
-                  Rate Hostel
+                  }}
+                >
+                  Rate Shop
                 </Text>
               </TouchableOpacity>
             )}
@@ -121,21 +139,24 @@ export default class BuyerScreen extends Component {
                   longitude: this.props.route.params.longitude,
                   latitude: this.props.route.params.latitude,
                 })
-              }>
+              }
+            >
               <Text
                 style={{
                   color: 'white',
-                }}>
-                Locate Hostel
+                }}
+              >
+                Locate Shop
               </Text>
             </TouchableOpacity>
           </View>
+          <Listing
+            navigation={this.props.navigation}
+            id={this.props.route.params.hId}
+            type="shops"
+          />
         </View>
-        <Listing
-          navigation={this.props.navigation}
-          id={this.props.route.params.hId}
-          type={'shops'}
-        />
+
         {this.state.isMap && <MapView />}
       </View>
     );
@@ -144,10 +165,11 @@ export default class BuyerScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: color.white,
+    flex: 1,
+    backgroundColor: color.brandRed,
   },
   box: {
-    backgroundColor: color.white,
+    backgroundColor: color.brandRed,
     borderWidth: 0,
     borderColor: color.gray,
     borderRadius: 4,

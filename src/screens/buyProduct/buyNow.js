@@ -37,7 +37,7 @@ export default class BuyNow extends Component {
     token: null,
     success: null,
   };
-  
+
   handleCardPayPress = async () => {
     try {
       this.setState({ loading: true, token: null });
@@ -65,24 +65,24 @@ export default class BuyNow extends Component {
     }
   };
 
-
   render() {
     return (
       <View>
         <View style={styles.main}>
-          
-        <View style={styles.main}>
-          <TouchableOpacity style={styles.logo}>
-            <Text style={styles.logoText}>B</Text>
-          </TouchableOpacity>
-          <Text style={styles.middleColor}>Book You'r Room </Text>
-          <Text style={styles.lowerColor}>
-             You'r Booking Notification Send To Owner 
-          </Text>
-          <Text style={styles.lowerColor}>
-         Plz Wait For Approve Booked Request </Text>
-          
-        </View>
+          <View style={styles.main}>
+            <TouchableOpacity style={styles.logo}>
+              <Text style={styles.logoText}>B</Text>
+            </TouchableOpacity>
+            <Text style={styles.middleColor}>
+              {this.props.type === 'shops' ? 'Buy Product' : `Book You'r Room`}{' '}
+            </Text>
+            <Text style={styles.lowerColor}>
+              You'r Booking Notification Send To Owner
+            </Text>
+            <Text style={styles.lowerColor}>
+              Plz Contact on his contact number for delivery updates
+            </Text>
+          </View>
 
           <CustomSeparator
             heightt={1}
@@ -93,8 +93,11 @@ export default class BuyNow extends Component {
           <View style={styles.cartButtonView}>
             <TouchableOpacity
               style={styles.cartButton}
-              onPress={() => this.props.buy()}>
-              <Text style={styles.cartButtonText}>Book Now</Text>
+              onPress={() => this.props.buy()}
+            >
+              <Text style={styles.cartButtonText}>
+                {this.props.type === 'shops' ? 'Buy Now' : 'Book Now'}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -134,8 +137,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '15%',
-    width:'95%',
-    alignSelf:'center'
+    width: '95%',
+    alignSelf: 'center',
   },
   logo: {
     backgroundColor: color.black,
@@ -161,6 +164,7 @@ const styles = StyleSheet.create({
     color: color.lightGrey2,
     alignSelf: 'center',
     marginTop: '1%',
+    textAlign: 'center',
   },
   image: {
     height: 80,

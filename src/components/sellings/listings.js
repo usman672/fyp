@@ -44,7 +44,7 @@ class Listing extends Component {
     this.focusListener.remove();
   }
   getListingProduct = async () => {
-    console.log('callllllllllllllllllllllled', this.props.id,);
+    console.log('callllllllllllllllllllllled', this.props.id);
     if (this.props.type == 'hostel') {
       console.log('jjjjjjj');
       const res = await this.props.getUserRoomsAction(this.props.id);
@@ -83,6 +83,7 @@ class Listing extends Component {
     }
   };
   renderSellListingItem = ({ item, index }) => {
+    console.log(item, 'cccvvcv');
     return (
       <View
         style={{
@@ -94,7 +95,7 @@ class Listing extends Component {
         <ListingProduct
           product={item}
           index={index}
-          nav={this.props.type}
+          type="shops"
           id={this.props.id}
           navigation={this.props.navigation}
           productChange={this.productChange}
@@ -108,10 +109,12 @@ class Listing extends Component {
         <FlatList
           numColumns={2}
           data={
-            this.props.type == 'hostel' ? this.props.rooms : this.props.products
+            this.props.type == 'hostel'
+              ? this.props.rooms
+              : this.props.usersProducts
           }
           renderItem={this.renderSellListingItem}
-         keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     );
@@ -121,7 +124,7 @@ const mapStateToProps = (state) => {
   console.log(state.ProductReducer.products, 'ercercec');
   return {
     rooms: state.ProductReducer.rooms,
-    products: state.ProductReducer.products,
+    usersProducts: state.ProductReducer.usersProducts,
   };
 };
 
@@ -137,6 +140,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Listing);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'red',
   },
   box: {
     // height: height,

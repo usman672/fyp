@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import {
-  View,
-  StyleSheet,
-  FlatList,
-} from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import { s } from '../../libs/styles';
 import { Search, Header } from '../../components';
-import {
-  getAllRecentProductsAction,
-} from '../../redux/actions/productAction';
-
+import { getAllRecentProductsAction } from '../../redux/actions/productAction';
 import { connect } from 'react-redux';
 import storage from '../../libs/storage';
-import JobCard from '../../components/buyer/jobsCard';
+import ReviewCard from '../../components/buyer/reviewCard';
 class Home extends Component {
   static navigationOptions = {
     header: null,
@@ -30,7 +23,7 @@ class Home extends Component {
     this.setSeller();
   }
   getShops = async () => {
-    //await this.props.getShopsAction({search:""});
+    await this.props.getAllRecentProductsAction({ search: '' });
   };
   setSeller = async () => {
     const user = await storage._retrieveData('user');
@@ -40,14 +33,14 @@ class Home extends Component {
     await this.setState({
       image: JSON.parse(user).data.user.photo,
     });
-    console.log('jkljsdnsdjuinfksduijkisdnkhsidhkisdkih')
-   // this.getShops();
+    console.log('jkljsdnsdjuinfksduijkisdnkhsidhkisdkih');
+    this.getShops();
   };
 
   componentWillMount() {
     this.props.navigation.addListener('focus', (payload) => {
       //   this.getCartProducts();
-     // this.setSeller();
+      this.setSeller();
       //   this.setState({ badgeCount: this.props.cartProducts.length });
     });
   }
@@ -71,7 +64,8 @@ class Home extends Component {
           data={this.props.getAllRecentProducts}
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
-            <JobCard
+            // eslint-disable-next-line prettier/prettier
+            <ReviewCard
               type="shops"
               navigation={this.props.navigation}
               review={item}
@@ -84,14 +78,12 @@ class Home extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  console.log(state.UserReducer.hostels[0]);
   return {
     getAllRecentProducts: state.ProductReducer.getAllRecentProducts,
   };
 };
 const mapDispatchToProps = {
-  getAllRecentProductsAction
-
+  getAllRecentProductsAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

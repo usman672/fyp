@@ -87,27 +87,26 @@ export const updateDeviceToken = async (token) => {
 export const postJob = async (data) => {
   let url = baseUrl + 'jobs';
   let method = 'POST';
-  console.log(url,data)
+  console.log(url, data);
   let res = await api(url, method, true, data);
   return res;
 };
 
 export const getJobs = async (data) => {
-  let url = baseUrl + 'jobs/search?search='+data;
+  let url = baseUrl + 'jobs/search?search=' + data;
   let method = 'GET';
-  console.log(url,data)
-  let res = await api(url,method,true);
+  console.log(url, data);
+  let res = await api(url, method, true);
   return res;
 };
 
 export const myJobs = async () => {
   let url = baseUrl + 'jobs/my-jobs';
   let method = 'GET';
-  console.log(url)
+  console.log(url);
   let res = await api(url, method, true);
   return res;
 };
-
 
 export const updateBankAccount = async (data) => {
   let url = baseUrl + 'bankAccount';
@@ -137,8 +136,11 @@ export const forgotPassword = async (data) => {
   let res = await api(url, method, false, formData);
   return res;
 };
-export const getReviews = async (id) => {
-  let url = baseUrl + 'hostels/' + id + '/reviews';
+export const getReviews = async (id, type) => {
+  let url = '';
+  if (type === 'hostels') url = baseUrl + 'hostels/' + id + '/reviews';
+  else url = baseUrl + 'shops/' + id + '/reviews';
+  console.log(url, 'url');
   let method = 'GET';
   let res = await api(url, method, true);
   return res;
@@ -265,8 +267,8 @@ export const getUserRooms = async (data) => {
 };
 export const getAllRecentProducts = async (data) => {
   let url = baseUrl + 'products/search';
-  let method = 'GET';
-  let res = await api(url, method, false, data);
+  let method = 'POST';
+  let res = await api(url, method, true, data);
   console.log(res);
   return res;
 };
@@ -358,10 +360,11 @@ export const getTwillio = async () => {
 };
 
 export const getProductsByUser = async (user_id) => {
-  let url = baseUrl + 'shops/' + user_id;
-  let method = 'GET';
+  let url = baseUrl + 'shops/' + user_id + '/products/search';
+  let method = 'POST';
   let res = await api(url, method, true);
-  console.log('rssssssssssssssssssssssssssss',res)
+
+  console.log('rssssssssssssssssssssssssssss', url);
   return res;
 };
 
@@ -462,8 +465,10 @@ export const orderReview = async (data) => {
   let res = await api(url, method, true, data);
   return res;
 };
-export const orderRating = async (data, id) => {
-  let url = baseUrl + 'hostels/' + id + '/reviews';
+export const orderRating = async (data, id, type) => {
+  let url = '';
+  if (type === 'hostels') url = baseUrl + 'hostels/' + id + '/reviews';
+  else url = baseUrl + 'shops/' + id + '/reviews';
   let method = 'POST';
   let res = await api(url, method, true, data);
   console.log(res);
@@ -490,41 +495,45 @@ export const userLogout = async (data) => {
   return res;
 };
 
-export const uploadPdf = async (data,id) => {
-
+export const uploadPdf = async (data, id) => {
   let formData = new FormData();
-  formData.append('file',data);
-  let url = baseUrl + 'jobs/'+id+'/apply';
-   let method = 'POST';
-  let res = await api(url, method, true, formData,true);
-  console.log(res,'ress');
+  formData.append('file', data);
+  let url = baseUrl + 'jobs/' + id + '/apply';
+  let method = 'POST';
+  let res = await api(url, method, true, formData, true);
+  console.log(res, 'ress');
   return res;
 };
 
-
-export const getClientToken = async (data,id) => {
-   let url = baseUrl + 'braintree/get-token';
-   let method = 'GET';
+export const getClientToken = async (data, id) => {
+  let url = baseUrl + 'braintree/get-token';
+  let method = 'GET';
   let res = await api(url, method, true);
-  console.log(res,'ress');
+  console.log(res, 'ress');
   return res;
 };
 
 export const bookRoomPayment = async (data) => {
   let url = baseUrl + 'braintree/payment';
-   let method = 'POST';
-   console.log(data,2323232)
-  let res = await api(url, method, true,data);
-  console.log(res,'ress');
+  let method = 'POST';
+  console.log(data, 2323232);
+  let res = await api(url, method, true, data);
+  console.log(res, 'ress');
   return res;
 };
-
 
 export const getHostelMembers = async () => {
   let url = baseUrl + 'hostels/6002b3fda9b85e0018e6cd7b/booked-seats';
-   let method = 'GET';
+  let method = 'GET';
   let res = await api(url, method, true);
-  console.log(res,'ress');
+  console.log(res, 'ress');
   return res;
 };
-
+// buy product
+export const buyProduct = async (data, id) => {
+  let url = baseUrl + 'products/' + id + '/purchase';
+  let method = 'POST';
+  console.log(url, '');
+  let res = await api(url, method, true, data);
+  return res;
+};

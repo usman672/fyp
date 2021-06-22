@@ -1,6 +1,5 @@
 import * as types from '../types/index';
 import Actions from '../actions';
-import AsyncStorage from '@react-native-community/async-storage';
 import {
   bookRoom,
   inProgrssOrder,
@@ -12,6 +11,7 @@ import {
   orderReview,
   orderRating,
   getReviews,
+  buyProduct,
 } from '../../services/apiList';
 import storage from '../../libs/storage';
 
@@ -19,6 +19,18 @@ export const bookRoomAction = (data) => {
   return async (dispatch, getState) => {
     dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     const res = await bookRoom(data);
+    console.log(res, 'oopo');
+    await dispatch(
+      await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
+    );
+    return res;
+  };
+};
+
+export const buyProductAction = (id, data) => {
+  return async (dispatch, getState) => {
+    dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
+    const res = await buyProduct(data, id);
     console.log(res, 'oopo');
     await dispatch(
       await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
@@ -184,10 +196,10 @@ export const reviewOrder = (data) => {
   };
 };
 
-export const ratingOrder = (data, id) => {
+export const ratingOrder = (data, id, type) => {
   return async (dispatch, getState) => {
     dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
-    const res = await orderRating(data, id);
+    const res = await orderRating(data, id, type);
     await dispatch(
       await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
     );
@@ -195,10 +207,10 @@ export const ratingOrder = (data, id) => {
   };
 };
 
-export const getReviewsAction = (id) => {
+export const getReviewsAction = (id, type) => {
   return async (dispatch, getState) => {
     dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
-    const res = await getReviews(id);
+    const res = await getReviews(id, type);
     console.log(res, 'ssksksksk');
     if (res.success) {
       dispatch({

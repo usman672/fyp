@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import { SafeAreaView, Text,StatusBar } from 'react-native';
+import { SafeAreaView, Text, StatusBar } from 'react-native';
 import store from './src/redux/store';
 import React, { Component } from 'react';
 import SplashScreen from 'react-native-splash-screen';
@@ -32,6 +32,7 @@ import balance from './src/screens/balance/balance';
 import payout from './src/screens/payout/payout';
 import UserProfile from './src/screens/userProfile/userProfile';
 import bank from './src/screens/payout/bank';
+import ShopItemDetail from './src/screens/buyProduct/shopItemDetail';
 import confirmPayout from './src/screens/payout/confirmPayout';
 import successPayout from './src/screens/payout/successPayout';
 import sellItem from './src/screens/item/sellItem';
@@ -131,7 +132,13 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <SafeAreaView style={{ backgroundColor: color.brandRed}} />
+        <StatusBar
+          // translucent
+          barStyle="light-content"
+          //  backgroundColor="rgba(0, 0, 0, 0.251)"
+          backgroundColor="black"
+        />
+        <SafeAreaView style={{ backgroundColor: '#000' }} />
         <NavigationContainer>
           <Loader />
           <Stack.Navigator headerMode="float">
@@ -347,7 +354,7 @@ export default class App extends React.Component {
                   name="cart"
                   component={cart}
                 />
-                 <Stack.Screen
+                <Stack.Screen
                   options={{ headerShown: false }}
                   name="signup"
                   component={signup}
@@ -452,7 +459,7 @@ export default class App extends React.Component {
                   name="MyPayments"
                   component={MyPayments}
                 />
-                
+
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="BankInfo"
@@ -566,12 +573,12 @@ export default class App extends React.Component {
                   name="PDFExample"
                   component={PDFExample}
                 />
-               <Stack.Screen
+                <Stack.Screen
                   options={{ headerShown: false }}
                   name="twillio"
                   component={JobPost}
                 />
-                 <Stack.Screen
+                <Stack.Screen
                   options={{ headerShown: false }}
                   name="JobDescription"
                   component={JobDescription}
@@ -586,15 +593,20 @@ export default class App extends React.Component {
                   name="myJobs"
                   component={MyJobs}
                 />
-                 <Stack.Screen
+                <Stack.Screen
                   options={{ headerShown: false }}
                   name="appliers"
                   component={Appliers}
                 />
-                 <Stack.Screen
+                <Stack.Screen
                   options={{ headerShown: false }}
                   name="hostelMembers"
                   component={HostelMembers}
+                />
+                <Stack.Screen
+                  options={{ headerShown: false }}
+                  name="shopItemDetail"
+                  component={ShopItemDetail}
                 />
               </>
             )}
