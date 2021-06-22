@@ -95,7 +95,7 @@ class Listing extends Component {
         <ListingProduct
           product={item}
           index={index}
-          type="shops"
+          type={this.props.type}
           id={this.props.id}
           navigation={this.props.navigation}
           productChange={this.productChange}
@@ -139,8 +139,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Listing);
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: 'red',
   },
   box: {
     // height: height,

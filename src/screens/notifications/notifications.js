@@ -67,7 +67,7 @@ export default class BuyerScreen extends Component {
     console.log(this.state.isOwner, 'ollllllllllkkkkkkkkkkkkkk');
     const { index, routes } = this.state;
     return (
-      <View style={[s.scrollview, styles.container]}>
+      <ScrollView style={[s.scrollview,styles.container]}>
         <SettingHeader
           title={this.state.isOwner ? 'Shops' : 'Shop'}
           backgroundColor={this.state.isOwner}
@@ -150,26 +150,26 @@ export default class BuyerScreen extends Component {
               </Text>
             </TouchableOpacity>
           </View>
+          </View>
           <Listing
             navigation={this.props.navigation}
             id={this.props.route.params.hId}
             type="shops"
           />
-        </View>
+      
 
         {this.state.isMap && <MapView />}
-      </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: color.brandRed,
+    backgroundColor: color.white,
   },
   box: {
-    backgroundColor: color.brandRed,
+    backgroundColor: color.white,
     borderWidth: 0,
     borderColor: color.gray,
     borderRadius: 4,

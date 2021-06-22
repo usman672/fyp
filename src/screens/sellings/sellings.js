@@ -54,7 +54,7 @@ export default class BuyerScreen extends Component {
   render() {
     const { index, routes } = this.state;
     return (
-      <View style={[s.scrollview, styles.container]}>
+      <ScrollView style={[s.scrollview, styles.container]}>
         <SettingHeader
           title={this.state.isOwner ? 'Rooms' : 'Room'}
           backgroundColor={this.state.isOwner}
@@ -178,7 +178,7 @@ export default class BuyerScreen extends Component {
           type={'hostel'}
         />
         {this.state.isMap && <MapView />}
-      </View>
+      </ScrollView >
     );
   }
 }
