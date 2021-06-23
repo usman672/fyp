@@ -192,7 +192,7 @@ export default class ReviewCard extends Component {
                 { color: '#ADB6D4' },
               ]}
             >
-              {/* {moment(review.created_at).format('DD MMM YYYY . hh:mm A')} */}
+             
               Since {moment(review.created_at).format('DD/MM/YY')}
             </Text>
           </View>

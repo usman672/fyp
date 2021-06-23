@@ -58,7 +58,7 @@ class ItemDetail extends Component {
       isSeller: false,
       productId: [],
     };
-    console.log(this.props.route.params.item, 12);
+    console.log(this.props.route.params.item, 12232323232323232);
     // this.getLikes();
     // this.similarProduct();
     //this.checkSeller();

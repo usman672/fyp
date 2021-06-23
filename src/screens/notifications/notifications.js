@@ -41,15 +41,11 @@ export default class BuyerScreen extends Component {
   }
   setSeller = async () => {
     const user = await storage._retrieveData('user');
-    console.log(
-      JSON.parse(user).data.shop._id,
-      this.props.route.params.hId,
-      'llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll',
-    );
+  console.log(JSON.parse(user).data,this.props.route.params.hId)
     if (JSON.parse(user).data.shop._id)
       if (JSON.parse(user).data.shop._id == this.props.route.params.hId) {
         await this.setState({ isOwner: true });
-        console.log('owneksd;lmskldfmlsdmkflmsdlfmksdlkmflsdmkflsmkflmr');
+    
       }
   };
   toggleMap = () => {
@@ -64,7 +60,6 @@ export default class BuyerScreen extends Component {
   initialLayout = { width: Dimensions.get('window').width };
 
   render() {
-    console.log(this.state.isOwner, 'ollllllllllkkkkkkkkkkkkkk');
     const { index, routes } = this.state;
     return (
       <ScrollView style={[s.scrollview,styles.container]}>

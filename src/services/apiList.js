@@ -363,8 +363,6 @@ export const getProductsByUser = async (user_id) => {
   let url = baseUrl + 'shops/' + user_id + '/products/search';
   let method = 'POST';
   let res = await api(url, method, true);
-
-  console.log('rssssssssssssssssssssssssssss', url);
   return res;
 };
 
