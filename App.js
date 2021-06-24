@@ -139,6 +139,7 @@ export default class App extends React.Component {
           backgroundColor="black"
         />
         <SafeAreaView style={{ backgroundColor: '#000' }} />
+     
         <NavigationContainer>
           <Loader />
           <Stack.Navigator headerMode="float">

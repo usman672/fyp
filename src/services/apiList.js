@@ -360,8 +360,9 @@ export const getTwillio = async () => {
 };
 
 export const getProductsByUser = async (user_id) => {
-  let url = baseUrl + 'shops/' + user_id + '/products/search';
-  let method = 'POST';
+  let url = baseUrl + 'shops/' + user_id + '/products';
+  let method = 'GET';
+  console.log(url,'final')
   let res = await api(url, method, true);
   return res;
 };

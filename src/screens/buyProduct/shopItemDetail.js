@@ -155,7 +155,7 @@ class ItemDetail extends Component {
     return (
       <View style={[s.scrollview]}>
         <ItemDetailHeader
-          price={'Room # ' + this.props.route.params.item.roomNumber}
+          price={this.props.route.params.item.name}
           badgeCount={this.state.badgeCount}
           navigation={this.props.navigation}
         />

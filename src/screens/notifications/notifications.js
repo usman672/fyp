@@ -41,7 +41,7 @@ export default class BuyerScreen extends Component {
   }
   setSeller = async () => {
     const user = await storage._retrieveData('user');
-  console.log(JSON.parse(user).data,this.props.route.params.hId)
+  console.log(JSON.parse(user).data.shop._id,this.props.route.params.hId)
     if (JSON.parse(user).data.shop._id)
       if (JSON.parse(user).data.shop._id == this.props.route.params.hId) {
         await this.setState({ isOwner: true });

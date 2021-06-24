@@ -52,7 +52,6 @@ class ListingProduct extends Component {
   };
   getImage = () => {
     let path = require('../../assets/room.jpg');
-    console.log(this.props.type, 'ttyptptpyp');
     if (this.props.type === 'shops') {
       if (this.props.product.image.length > 0)
         return { uri: this.props.product.image[0].image_url };
@@ -118,7 +117,7 @@ class ListingProduct extends Component {
         </View>
       );
     } else if (this.props.type == 'shops') {
-      console.log(this.props.product, '2222');
+
       return (
         <View style={styles.box}>
           <TouchableOpacity
