@@ -122,7 +122,7 @@ class UserProfile extends Component {
 
     if (type == 0) {
       if (this.state.isHostel) {
-        console.log('click');
+        console.log('click',JSON.parse(user).data.hostel.photo,JSON.parse(user).data.hostel);
         this.props.navigation.navigate('sellings', {
           name: JSON.parse(user).data.hostel.name,
           hId: JSON.parse(user).data.hostel._id,

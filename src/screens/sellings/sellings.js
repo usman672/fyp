@@ -40,6 +40,7 @@ export default class BuyerScreen extends Component {
     this.setSeller();
   }
   setSeller = async () => {
+    console.log( this.props.route.params.photo,'wrertretretretretretretre')
     const user = await storage._retrieveData('user');
 
     if (JSON.parse(user).data.hostel._id == this.props.route.params.hId) {

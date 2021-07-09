@@ -1,11 +1,11 @@
 import { api } from './api';
 import storage from '../libs/storage';
 //export const baseUrl = 'http://13.58.108.68/api/';
-export const baseUrl = 'https://myhostelv1app.herokuapp.com/api/v1/auth/register';
+export const baseUrl = 'https://myhostelv1app.herokuapp.com/api/v1/';
 //export const baseUrl = 'http://localhost:5000/';
 
 export const signin = async (data) => {
-  let url = baseUrl + 'https://myhostelv1app.herokuapp.com/api/v1/auth/login';
+  let url = baseUrl + 'auth/login';
   let method = 'POST';
   let res = await api(url, method, false, data);
   console.log(res, 'res');

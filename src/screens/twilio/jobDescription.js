@@ -98,7 +98,7 @@ class AddCard extends Component {
           </View>
         </ScrollView>
   
-       <TouchableOpacity style={styles.button} onPress={()=>this.pay()}> 
+       <TouchableOpacity style={styles.button} onPress={()=>this.props.navigation.navigate('jobApply',{job:job})}> 
             <Text style={styles.applyText}>Apply </Text>
           </TouchableOpacity>
       </View>

@@ -79,11 +79,12 @@ class ItemDetail extends Component {
   }
 
   getImagesArray = () => {
+    console.log(this.props.route.params.item, 1253453);
     var imagesArray = [];
-    for (var i = 0; i < this.props.route.params.item.image.length; i++) {
-      imagesArray.push(this.props.route.params.item.image[i].image_url);
+    for (var i = 0; i < this.props.route.params.item.img.length; i++) {
+      imagesArray.push(this.props.route.params.item.img[i].image_url);
     }
-    if (this.props.route.params.item.image.length < 1) {
+    if (this.props.route.params.item.img.length < 1) {
       imagesArray.push(require('../../assets/dummyProduct.png'));
     }
     return imagesArray;
