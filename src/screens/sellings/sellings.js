@@ -134,6 +134,7 @@ export default class BuyerScreen extends Component {
                 this.props.navigation.navigate('BuyerRating', {
                   hId: this.props.route.params.hId,
                   photo: this.props.route.params.photo,
+                  isOwner:this.state.isOwner,
                   type: 'hostel',
                 })
               }
@@ -143,7 +144,7 @@ export default class BuyerScreen extends Component {
                   color: 'white',
                 }}
               >
-                Rate Hostel
+                  { this.state.isOwner ? 'Reviews' : 'Rate Hostel'}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity

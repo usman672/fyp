@@ -68,17 +68,7 @@ class Login extends Component {
       password: this.state.password,
       fcmToken: fcm,
     });
-    console.log('res :',res)
-    if (res.success) {
-
-      console.log(res)
-      this.props.navigation.dispatch(StackActions.replace('tabnavigator'));
-    } else {
-      setTimeout(() => {
-        Alert.alert('Error', res.error);
-      }, 500);
-    }
-       this.props.navigation.dispatch(StackActions.replace('tabnavigator'));
+   
    
   };
   render() {

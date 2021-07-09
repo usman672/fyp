@@ -90,9 +90,10 @@ export default class App extends React.Component {
     console.log(fcmToken);
     AsyncStorage.setItem('device_token', fcmToken);
   };
-  componentWillMount = async () => {
-    await store.subscribe(() => this.stateChange());
-    await this.checkUserLogedin();
+  componentDidMount = async () => {
+    this.checkUserLogedin();
+    store.subscribe(() => this.stateChange());
+     
     this.getDeviceToken();
     // PushNotification.configure({
     //   onRegister: function (token) {
@@ -103,7 +104,7 @@ export default class App extends React.Component {
     //   },
     //   onAction: function (notification) {
     //     console.log('ACTION:', notification.action);
-    //   },
+    //   }, 
     //   onRegistrationError: function (err) {
     //     console.error(err.message, err);
     //   },
@@ -119,13 +120,14 @@ export default class App extends React.Component {
   checkUserLogedin = async () => {
     const isLogedin = await AsyncStorage.getItem('isLogedin');
     if (isLogedin === 'true') {
-      await store.dispatch(markLogedin);
+       store.dispatch(markLogedin);
     }
     SplashScreen.hide();
   };
   stateChange = async () => {
+
     const currentState = store.getState();
-    await this.setState({
+     this.setState({
       isLogedin: currentState.UserReducer.isLogedin,
     });
   };
@@ -143,13 +145,10 @@ export default class App extends React.Component {
         <NavigationContainer>
           <Loader />
           <Stack.Navigator headerMode="float">
+           
             {!this.state.isLogedin ? (
               <>
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="swiper"
-                  component={swiper}
-                />
+             {console.log('r;g;l,r;gl,er;lg,e;rl,g;rel,g')}
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Main"
@@ -250,11 +249,7 @@ export default class App extends React.Component {
                   name="balance"
                   component={balance}
                 />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="tabnavigator"
-                  component={BottomTabNavigator}
-                />
+               
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="MyPayments"
@@ -341,7 +336,7 @@ export default class App extends React.Component {
                   options={{ headerShown: false }}
                   name="category"
                   component={category}
-                />
+                /> 
               </>
             ) : (
               <>
@@ -424,17 +419,7 @@ export default class App extends React.Component {
                   options={{ headerShown: false }}
                   name="userProfile"
                   component={UserProfile}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="Main"
-                  component={Main}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="login"
-                  component={login}
-                />
+                />             
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Otp"

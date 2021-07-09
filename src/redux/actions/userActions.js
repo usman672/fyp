@@ -30,12 +30,11 @@ export const signinAction = (data) => {
   return async (dispatch, getState) => {
     dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     const res = await signin(data);
-    if (res.success) {
-      console.log(res, 'token');
+     if (res.success) {
+  
       await AsyncStorage.setItem('token', res.token);
-      const user = await getUser();
-     
-      console.log(res);
+
+  
       await AsyncStorage.setItem('isLogedin', 'true');
      
       dispatch({
@@ -44,11 +43,13 @@ export const signinAction = (data) => {
           isLogedin: true,
         },
       });
+      const user = await getUser();
+
     }
     dispatch(
       await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
     );
-    return res;
+   // return res;
   };
 };
 export const verifyEmailAndUsernameAction = (data) => {
@@ -164,7 +165,7 @@ export const forgetPasswordAction = (data) => {
   };
 };
 export const markLogedin = async(dispatch) => {
-  await getUser();
+  console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
   dispatch({
     type: types.SIGNIN,
     payload: {
@@ -247,12 +248,10 @@ export const updateBankInfoAction = (data) => {
 };
 export const logoutAction = () => {
   return async (dispatch, getState) => {
-    const res = await userLogout();
-    console.log(res);
+  //  const res = await userLogout();
+ 
 
-    if (res.code == 0) {
-      console.log(res);
-      await AsyncStorage.setItem('isLogedin', 'false');
+     await AsyncStorage.setItem('isLogedin', 'false');
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('user');
       await AsyncStorage.removeItem('isSeller');
@@ -264,7 +263,7 @@ export const logoutAction = () => {
         },
       });
     }
-  };
+  
 };
 export const getUserAction = () => {
   return async (dispatch, getState) => {

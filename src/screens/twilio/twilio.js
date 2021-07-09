@@ -71,14 +71,7 @@ class EditAddress extends Component {
   editAddress = async () => {};
   saveJob = async () => {
     this.buttonClicked();
-    console.log({
-      title: this.state.position,
-      description: this.state.description,
-      salary: parseInt(this.state.salary),
-      jobType: this.state.jobCat,
-      experience: this.state.experience,
-      address: this.state.location,
-    });
+ 
     const res = await this.props.postJobAction({
       title: this.state.position,
       description: this.state.description,
@@ -89,7 +82,8 @@ class EditAddress extends Component {
       company: this.state.companyName,
       employmentType:this.state.selectedEmpType
     });
-    if (res) {
+    if (res.success) {
+      this.props.navigation.navigate('myJobs')
       console.log(res);
     }
   };

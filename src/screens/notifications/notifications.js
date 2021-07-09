@@ -71,12 +71,12 @@ export default class BuyerScreen extends Component {
         <View style={styles.box}>
           <View style={styles.imageRow}>
             <Image
-              source={require('../../assets/shop.jpg')}
+              source={this.props.route.params.photo ? {uri:this.props.route.params.photo} : require('../../assets/shop.jpg')}
               resizeMode="cover"
               style={styles.image}
             />
             <View style={styles.nameColumn}>
-              <Text style={styles.name}>Usman Shop</Text>
+              <Text style={styles.name}>{this.props.route.params.name}</Text>
               <Text style={styles.price}>03041566666</Text>
               <Text numberOfLines={2} style={styles.delivery}>
                 {this.props.route.params.address}
@@ -93,13 +93,13 @@ export default class BuyerScreen extends Component {
               justifyContent: 'space-between',
             }}
           >
-            {!this.state.isOwner && (
+            
               <TouchableOpacity
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                   height: 35,
-                  width: '47%',
+                  width: '47%',  
                   borderRadius: 10,
                   backgroundColor: 'black',
                 }}
@@ -107,6 +107,7 @@ export default class BuyerScreen extends Component {
                   this.props.navigation.navigate('BuyerRating', {
                     hId: this.props.route.params.hId,
                     photo: this.props.route.params.photo,
+                    isOwner:this.state.isOwner,
                     type: 'shops',
                   })
                 }
@@ -116,10 +117,10 @@ export default class BuyerScreen extends Component {
                     color: 'white',
                   }}
                 >
-                  Rate Shop
+                  {this.state.isOwner ? 'Reviews' : 'Rate Shop'}
                 </Text>
               </TouchableOpacity>
-            )}
+            
             <TouchableOpacity
               style={{
                 justifyContent: 'center',

@@ -174,7 +174,7 @@ class ItemDetail extends Component {
             </View>
             <View style={styles.itemDetailView}>
               <View>
-                <Text style={styles.boldText}>2 Seats Available</Text>
+                <Text style={styles.boldText}>{this.props.route.params.item.name}</Text>
                 <Text style={styles.likes}>
                   {'Added ' +
                     moment(this.props.route.params.item.createdAt).format(
@@ -193,7 +193,7 @@ class ItemDetail extends Component {
               }}
             >
               <Text style={styles.priceBoldText}>
-                {this.props.route.params.item.price}
+                Rs : {this.props.route.params.item.price}/-
               </Text>
               <TouchableOpacity
                 style={{

@@ -72,7 +72,7 @@ class Home extends Component {
           showsVerticalScrollIndicator={false}
           renderItem={({ item, index }) => (
             <JobsCard
-              type="shops"
+              type="sholps"
               navigation={this.props.navigation}
               job={item}
             />

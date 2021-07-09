@@ -161,16 +161,17 @@ class sellItem extends Component {
     });
   }
   setEditableData = async () => {
+    console.log(this.props.route.params.product,'adasdadasda')
     const copied_Images_path = [...this.state.images];
     const copied_Images_uris = [...this.state.image_uris];
     const copied_Images_urls = [...this.state.image_urls];
 
-    for (let i = 0; i < this.props.route.params.product.img.length; i++) {
-      copied_Images_uris[i] = this.props.route.params.product.img[i].image_url;
+    for (let i = 0; i < this.props.route.params.product.image.length; i++) {
+      copied_Images_uris[i] = this.props.route.params.product.image[i].image_url;
       copied_Images_urls[i] = {
-        image_url: this.props.route.params.product.img[i].image_url,
+        image_url: this.props.route.params.product.image[i].image_url,
       };
-      copied_Images_path[i].imageUri = this.props.route.params.product.img[
+      copied_Images_path[i].imageUri = this.props.route.params.product.image[
         i
       ].image_url;
     }
@@ -178,37 +179,48 @@ class sellItem extends Component {
     await this.setState({ image_urls: copied_Images_urls });
     await this.setState({ image_uris: copied_Images_uris });
     await this.setState({
-      length: this.props.route.params.product.img.length,
+      length: this.props.route.params.product.image.length,
     });
     await this.setState({
       description2: this.props.route.params.product.description,
     });
-    var index = this.state.rooms.findIndex(
-      (x) => x.value == this.props.route.params.product.roomNumber,
+    await this.setState({
+      description1: this.props.route.params.product.name,
+    });
+    await this.setState({
+      selectCategory: this.props.route.params.product.category,
+
+    });
+ 
+      var index = this.state.pickerColors.findIndex(
+      (x) => x.name === this.props.route.params.product.color,
     );
-    var index2 = this.state.cat.findIndex(
-      (x) => x.value == this.props.route.params.product.seater,
+
+    var index2 = this.state.quantity.findIndex(
+      (x) => x.value == this.props.route.params.product.stock,
     );
 
     console.log(
       index,
       index2,
-      this.props.route.params.product.roomNumber,
-      this.props.route.params.product.seater,
+      this.props.route.params.product.color,
+      this.props.route.params.product.stock,
     );
     await this.setState({
       selectedColorIndex: index - 1,
-      room: this.props.route.params.product.roomNumber,
+      color: this.props.route.params.product.color,
     });
     await this.setState({
-      selectedIndex: index2 - 1,
-      seater: this.props.route.params.product.seater,
+      selectedQuantityIndex: index2 - 1,
+      stock: this.props.route.params.product.stock,
     });
 
     await this.setState({
       price: this.props.route.params.product.price,
     });
+    
   };
+ 
   toggleSwitch1 = (value) => {
     this.setState({ switchValue: value });
   };
@@ -321,17 +333,19 @@ class sellItem extends Component {
   };
 
   addProduct = async () => {
+    console.log(this.state.description1,this.state.quantity,'nameeeewtyytyjytjytytjt')
+   
     // console.log(this.state.image_urls);
     this.buttonClicked(true);
     const res = await this.props.addProductAction(
       {
         image: this.state.image_urls,
         description: this.state.description2,
-        seater: this.state.seater,
         price: this.state.price,
         category: this.state.selectCategory,
-        name: this.state.name,
+        name: this.state.description1,
         color: this.state.color,
+        quantity:parseInt(this.state.stock)
       },
       this.state.hId,
     );
@@ -347,22 +361,23 @@ class sellItem extends Component {
     }
   };
   editProduct = async () => {
+    console.log(this.state.description1,'nameeeewtyytyjytjytytjt')
     this.buttonClicked(true);
     const res = await this.props.editProductAction(
       {
         image: this.state.image_urls,
         description: this.state.description2,
-        quantity: this.state.stock,
         price: this.state.price,
-        name: this.state.name,
+        category: this.state.selectCategory,
+        name: this.state.description1,
         color: this.state.color,
-        category: this.state.category,
+        quantity:parseInt(this.state.stock)
       },
       this.props.route.params.product._id,
     );
     this.buttonClicked(false);
     if (res.success) {
-      this.props.navigation.navigate('sellings');
+      this.props.navigation.navigate('notifications');
     } else {
       setTimeout(() => {
         Alert.alert('Error', res.error);
@@ -380,11 +395,7 @@ class sellItem extends Component {
   };
   onChangeUnitPrice = (price) => {
     // console.log('rojorj');
-    price = parseFloat(price);
-    let sellingFee = (price / 100) * 15;
-    sellingFee = sellingFee.toFixed(2);
-    const youEarn = price - sellingFee;
-    this.setState({ price: price, youEarn: youEarn, sellingFee: sellingFee });
+    this.setState({ price: price.toString()});
   };
 
   placeImages = () => {
@@ -567,7 +578,7 @@ class sellItem extends Component {
                       }}
                       placeholder="0.0"
                       maxLength={10}
-                      value={this.state.price}
+                      value={this.state.price.toString()}
                       keyboardType="numeric"
                       onChangeText={(price) => this.onChangeUnitPrice(price)}
                     />

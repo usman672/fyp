@@ -83,7 +83,7 @@ class Listing extends Component {
     }
   };
   renderSellListingItem = ({ item, index }) => {
-    console.log(item, 'cccvvcv');
+
     return (
       <View
         style={{

@@ -134,13 +134,13 @@ class ListingProduct extends Component {
             />
           </TouchableOpacity>
           <Text style={styles.name}>
-            Room # {this.props.product.roomNumber}
+            {this.props.product.name ? this.props.product.name : 'No Name'}
           </Text>
           <View style={{ flexDirection: 'column' }}>
-            <Text style={styles.date}>2 Seats Available</Text>
+            <Text style={styles.date}>Available Stock : {this.props.product.quantity ? this.props.product.quantity : 'No Stock'}</Text>
 
             <Text style={styles.date}>
-              Price per seat : {this.props.product.price}
+              Price per Item : {this.props.product.price}
             </Text>
           </View>
           {this.state.shopId == this.props.id && (

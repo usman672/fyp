@@ -175,6 +175,7 @@ class BuyerRating extends Component {
               </TouchableOpacity>
               <Text style={styles.heading}>Buyer Rating</Text>
             </View>
+
             <View style={styles.content}>
               <Image
                 style={styles.profileImage}
@@ -184,6 +185,7 @@ class BuyerRating extends Component {
                     : require('../../assets/hostel.jpg')
                 }
               />
+               {!this.props.route.params.isOwner &&
               <StarRating
                 disabled={false}
                 maxStars={5}
@@ -191,7 +193,10 @@ class BuyerRating extends Component {
                 selectedStar={(rating) => this.onStarRatingPress(rating)}
                 fullStarColor={'red'}
               />
+               }
             </View>
+            {!this.props.route.params.isOwner &&
+            <>
             <Text style={styles.secondHeading}>
               How Would you rate the buyer?
             </Text>
@@ -220,6 +225,8 @@ class BuyerRating extends Component {
                 onChangeText={(searchText) => this.onChange(searchText)}
               />
             </View>
+            </>
+  }
           </View>
           <Text
             style={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center' }}
@@ -261,8 +268,9 @@ class BuyerRating extends Component {
             keyExtractor={(item, index) => index.toString()}
           />
         </ScrollView>
-
+        {!this.props.route.params.isOwner &&
         <Button text="Submit Rating" rating={() => this.review()} />
+  }
       </View>
     );
   }

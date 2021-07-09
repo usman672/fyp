@@ -42,6 +42,7 @@
     "react-native-image-slider-box": "^1.0.12",
     "react-native-image-to-pdf": "^1.2.0",
     "react-native-maps": "0.27.1",
+    "react-native-opencv3": "^1.0.8",
     "react-native-otp-inputs": "^5.0.1",
     "react-native-otp-textinput": "0.0.7",
     "react-native-pdf-to-image": "^3.0.2",
