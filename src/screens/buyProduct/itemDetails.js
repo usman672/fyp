@@ -104,6 +104,7 @@ class ItemDetail extends Component {
 
   book = async () => {
     const res = await getClientToken();
+    console.log(res,'5y56y65y')
     BraintreeDropIn.show({
       clientToken: res.clientToken.clientToken,
       merchantIdentifier: 'h47c2b5ctcmmhd68',
@@ -116,7 +117,7 @@ class ItemDetail extends Component {
       payPal: true,
     })
       .then(async (result) => {
-        console.log(result);
+       // console.log(result);
 
         console.log(res, 354534);
         const res = await this.props.bookRoomAction(
@@ -144,7 +145,7 @@ class ItemDetail extends Component {
   };
   buynow = async () => {
     Alert.alert(
-      'Sign Out',
+      'Booking',
       'Are you sure you want to send request for Booking this Room?',
       [{ text: 'No' }, { text: 'Yes', onPress: () => this.book() }],
       { cancelable: false },
@@ -191,8 +192,8 @@ class ItemDetail extends Component {
             {/* <SendMessage />
              */}
             <Description
-              descriptionOne="{this.props.route.params.product.descriptionOne}"
-              descriptionTwo="{this.props.route.params.product.descriptionTwo}"
+              descriptionOne={this.props.route.params.item.description}
+             
             />
             <BuyNow navigation={this.props.navigation} buy={this.buynow} />
 

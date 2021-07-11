@@ -28,7 +28,7 @@ export const signup = async (data) => {
 export const sendOtp = async (data) => {
   console.log(data);
 
-  let url = 'http://13.58.108.68/api/sendOTP';
+  let url = 'http://13.58.108.68/tipitops-QA/api/sendOTP';
   let method = 'POST';
   let res = await api(url, method, false, data);
   console.log(res);
@@ -36,7 +36,7 @@ export const sendOtp = async (data) => {
   return res;
 };
 export const verifyOtp = async (data) => {
-  let url = 'http://13.58.108.68/api/verifyOTP';
+  let url = 'http://13.58.108.68/tipitops-QA/api/verifyOTP';
   let method = 'POST';
   let res = await api(url, method, false, data);
   console.log(res, 'jroijfroifjroi');
@@ -62,7 +62,7 @@ export const changePassword = async (data) => {
 };
 
 export const imageUpload = async (data) => {
-  let url = 'http://13.58.108.68/api/uploadImage';
+  let url = 'http://13.58.108.68/tipitops-QA/api/uploadImage';
   let method = 'POST';
   let res = await api(url, method, false, data);
   return res;
@@ -388,10 +388,11 @@ export const getUserInfo = async (data) => {
   return res;
 };
 // order
-export const bookRoom = async (data) => {
-  let url = baseUrl + 'rooms/' + data + '/book';
+export const bookRoom = async (id,data) => {
+  console.log(data)
+  let url = baseUrl + 'rooms/' + id + '/book';
   let method = 'POST';
-  let res = await api(url, method, true);
+  let res = await api(url, method, true,data);
   return res;
 };
 export const inProgrssOrder = async (data, user_id) => {
@@ -530,6 +531,7 @@ export const getHostelMembers = async () => {
 };
 // buy product
 export const buyProduct = async (data, id) => {
+  console.log(data,id)
   let url = baseUrl + 'products/' + id + '/purchase';
   let method = 'POST';
   console.log(url, '');

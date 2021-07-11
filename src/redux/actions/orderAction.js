@@ -15,10 +15,10 @@ import {
 } from '../../services/apiList';
 import storage from '../../libs/storage';
 
-export const bookRoomAction = (data) => {
+export const bookRoomAction = (id,data) => {
   return async (dispatch, getState) => {
     dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
-    const res = await bookRoom(data);
+    const res = await bookRoom(id,data);
     console.log(res, 'oopo');
     await dispatch(
       await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),

@@ -134,13 +134,8 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <StatusBar
-          // translucent
-          barStyle="light-content"
-          //  backgroundColor="rgba(0, 0, 0, 0.251)"
-          backgroundColor="black"
-        />
-        <SafeAreaView style={{ backgroundColor: '#000' }} />
+       
+        <SafeAreaView style={{ backgroundColor: 'red' }} />
      
         <NavigationContainer>
           <Loader />

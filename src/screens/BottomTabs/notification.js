@@ -131,11 +131,11 @@ class Notification extends React.Component {
   setSeller = async () => {
     const user = await storage._retrieveData('user');
     await this.setState({
-      userName: JSON.parse(user).username,
-    });
-    await this.setState({
-      image: JSON.parse(user).image_url,
-    });
+     userName: JSON.parse(user).data.user.name,
+   });
+   await this.setState({
+     image: JSON.parse(user).data.user.photo,
+   });
   };
   componentWillMount() {
     this.props.navigation.addListener('focus', () => {
@@ -143,9 +143,10 @@ class Notification extends React.Component {
       this.getNotifications();
     });
   }
-  getImage = (url) => {
-    let path = require('../../assets/dummyProduct.png');
-    return path;
+  getImage = (user) => {
+    console.log(user)
+    return {uri:user.photo}
+   
   };
   render() {
     return (
@@ -155,9 +156,9 @@ class Notification extends React.Component {
           image={this.state.image}
           userName={this.state.userName}
         />
-        {this.state.FlatListItems.length > 0 ? (
+        {this.props.notificationsList.length > 0 ? (
           <FlatList
-            data={this.state.FlatListItems}
+            data={this.props.notificationsList}
             ItemSeparatorComponent={FlatListItemSeparator}
             renderItem={({ item }) => (
               <TouchableOpacity
@@ -168,7 +169,7 @@ class Notification extends React.Component {
                   <View style={styles.photoView}>
                     <Image
                       style={s.photo_100}
-                      source={this.getImage(0)}
+                      source={this.getImage(item.user)}
                       resizeMode="stretch"
                     />
                     <View style={styles.bottomBadgeIcon}>
@@ -180,14 +181,17 @@ class Notification extends React.Component {
                     </View>
                   </View>
                   <View style={styles.notificationTextView}>
+                  <Text numberOfLines={3} style={s.title_1_bold}>
+                  {item.user.comtact_number}
+                    </Text>
                     <Text numberOfLines={3} style={s.subtitle_normal}>
-                      {item.notification}
+                      {item.message}
                     </Text>
                   </View>
                   <View style={styles.daysView}>
                     <Text style={s.subtitle_general}>
-                      {/* {moment(item.created_at).format('DD/MM/YY')}
-                       */}
+                      {moment(item.created_at).format('DD/MM/YY')}
+                       
                       {item.days}
                     </Text>
                   </View>
@@ -233,7 +237,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 15,
     marginLeft: 10,
-  },
+      },
   photoView: {
     width: (18 * s.width) / 100,
     height: (18 * s.width) / 100,

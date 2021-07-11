@@ -200,7 +200,7 @@ class Profile extends Component {
     return (
       <View style={styles.view}>
         <SettingHeader
-          title="Profile"
+          title={this.props.route.params.type == 'shop' ? "Create Shop" : "Create Hostel"}
           backgroundColor={color.black}
           color={color.white}
         />

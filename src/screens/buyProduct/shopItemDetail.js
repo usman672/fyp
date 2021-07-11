@@ -141,8 +141,8 @@ class ItemDetail extends Component {
   };
   buynow = async () => {
     Alert.alert(
-      'Sign Out',
-      'Are you sure you want to send request for Booking this Room?',
+      'Booking',
+      'Are you sure you want to send request for Buy this Product?',
       [{ text: 'No' }, { text: 'Yes', onPress: () => this.book() }],
       { cancelable: false },
     );

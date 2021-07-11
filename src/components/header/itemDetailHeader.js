@@ -44,23 +44,11 @@ class ItemDetailHeader extends Component {
           <View style={styles.center}>
             <Text style={styles.centerText}>{this.props.price}</Text>
           </View>
-          {this.state.userToken !== null ? (
-            <View style={[s.row]}>
-              <TouchableOpacity
-                style={styles.cart}
-                onPress={() => this.props.navigation.navigate('cart')}>
-                <IconWithBadge
-                  name="cart-plus"
-                  color={color.white}
-                  badgeCount={this.props.badgeCount}
-                />
-              </TouchableOpacity>
-            </View>
-          ) : (
+        
             <Text>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </Text>
-          )}
+          
         </View>
       </CardView>
     );
