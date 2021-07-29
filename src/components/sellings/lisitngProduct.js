@@ -83,7 +83,9 @@ class ListingProduct extends Component {
             Room # {this.props.product.roomNumber}
           </Text>
           <View style={{ flexDirection: 'column' }}>
-            <Text style={styles.date}>2 Seats Available</Text>
+            <Text style={styles.date}>
+              {this.props.product.remaining_seats} Seats Available
+            </Text>
 
             <Text style={styles.date}>
               Price per seat : {this.props.product.price}
@@ -117,7 +119,6 @@ class ListingProduct extends Component {
         </View>
       );
     } else if (this.props.type == 'shops') {
-
       return (
         <View style={styles.box}>
           <TouchableOpacity
@@ -137,7 +138,12 @@ class ListingProduct extends Component {
             {this.props.product.name ? this.props.product.name : 'No Name'}
           </Text>
           <View style={{ flexDirection: 'column' }}>
-            <Text style={styles.date}>Available Stock : {this.props.product.quantity ? this.props.product.quantity : 'No Stock'}</Text>
+            <Text style={styles.date}>
+              Available Stock :{' '}
+              {this.props.product.quantity
+                ? this.props.product.quantity
+                : 'No Stock'}
+            </Text>
 
             <Text style={styles.date}>
               Price per Item : {this.props.product.price}

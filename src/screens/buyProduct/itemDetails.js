@@ -14,16 +14,13 @@ import { StackActions } from '@react-navigation/native';
 
 import { s, color, neomorph } from '../../libs/styles';
 import ItemDetailHeader from '../../components/header/itemDetailHeader';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import CardView from 'react-native-cardview';
 import CustomSeparator from '../../components/separators/customSeparator';
-import ShippingDetail from '../../screens/buyProduct/shippingDetail';
+
 import Description from '../../screens/buyProduct/description';
 import MoneyBack from '../../screens/buyProduct/moneyBack';
-import Seller from '../../screens/buyProduct/seller';
+
 import BuyNow from '../../screens/buyProduct/buyNow';
-import SimilarItems from '../../screens/buyProduct/similarItems';
-import SendMessage from '../../screens/buyProduct/sendMessage';
+
 import storage from '../../libs/storage';
 import { connect } from 'react-redux';
 import { addToCartAction } from '../../redux/actions/cartAction';
@@ -59,11 +56,18 @@ class ItemDetail extends Component {
       productId: [],
     };
     console.log(this.props.route.params.item, 12);
-    // this.getLikes();
-    // this.similarProduct();
-    //this.checkSeller();
-    //this.checkAlreadyInCart();
+    this.checkSeller();
   }
+
+  checkSeller = async () => {
+    const user = await storage._retrieveData('user');
+
+    if (JSON.parse(user).data.user._id == this.props.route.params.item.user) {
+      this.setState({
+        isSeller: true,
+      });
+    }
+  };
 
   navigationPage = (element) => {
     this.props.navigation.dispatch(
@@ -90,21 +94,9 @@ class ItemDetail extends Component {
     return imagesArray;
   };
 
-  isShowBuyNow = () => {
-    console.log(
-      'se',
-      this.state.isSeller,
-      'sold',
-      this.props.route.params.product.sold,
-    );
-    if (!this.state.isSeller && !this.props.route.params.product.sold) {
-      return true;
-    } else return false;
-  };
-
   book = async () => {
     const res = await getClientToken();
-    console.log(res,'5y56y65y')
+    console.log(res, '5y56y65y');
     BraintreeDropIn.show({
       clientToken: res.clientToken.clientToken,
       merchantIdentifier: 'h47c2b5ctcmmhd68',
@@ -117,7 +109,7 @@ class ItemDetail extends Component {
       payPal: true,
     })
       .then(async (result) => {
-       // console.log(result);
+        // console.log(result);
 
         console.log(res, 354534);
         const res = await this.props.bookRoomAction(
@@ -154,7 +146,7 @@ class ItemDetail extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    console.log(this.props.route.params.item);
+    console.log(this.props.route.params.item, 'iowejiofjwejjweo,eF,.');
     return (
       <View style={[s.scrollview]}>
         <ItemDetailHeader
@@ -177,7 +169,9 @@ class ItemDetail extends Component {
             </View>
             <View style={styles.itemDetailView}>
               <View>
-                <Text style={styles.boldText}>2 Seats Available</Text>
+                <Text style={styles.boldText}>
+                  {this.props.route.params.item.availableSeats} Seats Available
+                </Text>
                 <Text style={styles.likes}>
                   {'Added ' +
                     moment(this.props.route.params.item.createdAt).format(
@@ -189,14 +183,13 @@ class ItemDetail extends Component {
                 </Text>
               </View>
             </View>
-            {/* <SendMessage />
-             */}
+
             <Description
               descriptionOne={this.props.route.params.item.description}
-             
             />
-            <BuyNow navigation={this.props.navigation} buy={this.buynow} />
-
+            {this.state.isSeller === false && (
+              <BuyNow navigation={this.props.navigation} buy={this.buynow} />
+            )}
             <CustomSeparator
               heightt={1}
               colorr={color.lightGrey2}

@@ -8,6 +8,7 @@ import {
   Platform,
   TextInput,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 var Spinner = require('react-native-spinkit');
@@ -41,15 +42,15 @@ class EditAddress extends Component {
         { name: 'Full Time', value: 0 },
         { name: 'Part Time', value: 1 },
         { name: 'Remoter', value: 2 },
-      ], jobType: [
+      ],
+      jobType: [
         { name: 'Senior', value: 0 },
         { name: 'junior', value: 1 },
         { name: 'intern', value: 2 },
       ],
       countriesList: [],
     };
-
-   }
+  }
 
   buttonClicked = (clicked) => {
     this.setState({
@@ -71,7 +72,7 @@ class EditAddress extends Component {
   editAddress = async () => {};
   saveJob = async () => {
     this.buttonClicked();
- 
+
     const res = await this.props.postJobAction({
       title: this.state.position,
       description: this.state.description,
@@ -80,11 +81,13 @@ class EditAddress extends Component {
       experience: this.state.experience,
       address: this.state.location,
       company: this.state.companyName,
-      employmentType:this.state.selectedEmpType
+      employmentType: this.state.selectedEmpType,
     });
     if (res.success) {
-      this.props.navigation.navigate('myJobs')
+      this.props.navigation.navigate('myJobs');
       console.log(res);
+    } else {
+      Alert.alert('Message', 'Some thing wrong with data');
     }
   };
 
@@ -166,7 +169,8 @@ class EditAddress extends Component {
           justifyContent: 'center',
         }}
         enabled
-        behavior="padding">
+        behavior="padding"
+      >
         <ScrollView style={s.scrollview} keyboardShouldPersistTaps="always">
           <View style={[styles.view]}>
             <View style={styles.header}>
@@ -189,7 +193,8 @@ class EditAddress extends Component {
               style={[
                 styles.fieldsview,
                 Platform.OS === 'ios' ? { zIndex: 1 } : {},
-              ]}>
+              ]}
+            >
               <View style={{ flexDirection: 'row', width: '100%' }}>
                 <Text style={{ margin: 12, width: '50%' }}>Job Title</Text>
                 <Text style={{ margin: 12, width: '30%' }}> Job type</Text>
@@ -200,7 +205,8 @@ class EditAddress extends Component {
                   flexDirection: 'row',
                   width: '95%',
                   justifyContent: 'space-between',
-                }}>
+                }}
+              >
                 <View
                   style={{
                     backgroundColor: 'white',
@@ -210,7 +216,8 @@ class EditAddress extends Component {
                     borderRadius: 5,
                     paddingBottom: 2,
                     alignSelf: 'center',
-                  }}>
+                  }}
+                >
                   <TextInput
                     style={styles.input}
                     onChangeText={this.onChangeposition}
@@ -227,7 +234,8 @@ class EditAddress extends Component {
                     borderRadius: 5,
                     paddingBottom: 2,
                     alignSelf: 'center',
-                  }}>
+                  }}
+                >
                   <Picker
                     heading=""
                     list={this.state.jobType}
@@ -248,7 +256,8 @@ class EditAddress extends Component {
                   flexDirection: 'row',
                   width: '95%',
                   justifyContent: 'space-between',
-                }}>
+                }}
+              >
                 <View
                   style={{
                     backgroundColor: 'white',
@@ -258,7 +267,8 @@ class EditAddress extends Component {
                     borderRadius: 5,
                     paddingBottom: 2,
                     alignSelf: 'center',
-                  }}>
+                  }}
+                >
                   <Picker
                     heading=""
                     list={this.state.empType}
@@ -276,7 +286,8 @@ class EditAddress extends Component {
                     borderRadius: 5,
                     paddingBottom: 2,
                     alignSelf: 'center',
-                  }}>
+                  }}
+                >
                   <TextInput
                     style={styles.input}
                     keyboardType="numeric"
@@ -295,7 +306,8 @@ class EditAddress extends Component {
                   flexDirection: 'row',
                   width: '95%',
                   justifyContent: 'space-between',
-                }}>
+                }}
+              >
                 <View
                   style={{
                     backgroundColor: 'white',
@@ -305,7 +317,8 @@ class EditAddress extends Component {
                     borderRadius: 5,
                     paddingBottom: 2,
                     alignSelf: 'center',
-                  }}>
+                  }}
+                >
                   <TextInput
                     style={styles.input}
                     value={this.state.companyName}
@@ -322,7 +335,8 @@ class EditAddress extends Component {
                     borderRadius: 5,
                     paddingBottom: 2,
                     alignSelf: 'center',
-                  }}>
+                  }}
+                >
                   <TextInput
                     style={styles.input}
                     keyboardType="numeric"
@@ -341,7 +355,8 @@ class EditAddress extends Component {
                   borderRadius: 5,
                   paddingBottom: 2,
                   alignSelf: 'center',
-                }}>
+                }}
+              >
                 <TextInput
                   style={styles.input}
                   value={this.state.location}
@@ -361,7 +376,8 @@ class EditAddress extends Component {
                   borderRadius: 5,
                   paddingBottom: 2,
                   alignSelf: 'center',
-                }}>
+                }}
+              >
                 <TextInput
                   style={styles.input}
                   multiline={true}
@@ -382,7 +398,8 @@ class EditAddress extends Component {
               { flexDirection: 'row' },
             ]}
             disabled={!this.checkField()}
-            onPress={this.saveJob}>
+            onPress={this.saveJob}
+          >
             {this.state.isCliked && (
               <Spinner
                 style={s.buttonLoader}

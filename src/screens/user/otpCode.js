@@ -9,6 +9,8 @@ import {
   Switch,
   Alert,
 } from 'react-native';
+import { CommonActions } from '@react-navigation/native';
+
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { s, color } from '../../libs/styles';
 import SettingHeader from '../../components/header/settingHeader';
@@ -78,19 +80,28 @@ class OtpCode extends Component {
     });
     this.buttonClicked(false);
     if (res.code === 0) {
-      const res = await this.props.signupAction({
+      const res = await this.props.signupAction('signup', {
         email: this.props.route.params.email,
         name: this.props.route.params.username,
         password: this.props.route.params.password,
         photo: this.props.route.params.photo,
-        number: this.props.route.params.number,
+        contactNumber: this.props.route.params.number.toString(),
         role: 'publisher',
       });
       this.buttonClicked(false);
       if (res.success) {
         console.log(res);
         Alert.alert('Success', 'SignUp Successfully');
-        this.props.navigation.navigate('login');
+        this.props.navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [
+              {
+                name: 'login',
+              },
+            ],
+          }),
+        );
       } else {
         setTimeout(() => {
           Alert.alert('Error', res);

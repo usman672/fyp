@@ -32,21 +32,22 @@ class Home extends Component {
       index: 0,
       image: '',
       userName: '',
-      isLoading:false,
+      isLoading: false,
       badgeCount: 0,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     };
     this.setSeller();
   }
   getHostels = async () => {
-    await this.props.getHostelsAction({search:""});
+    await this.props.getHostelsAction({ search: '' });
   };
   setSeller = async () => {
     const user = await storage._retrieveData('user');
-     await this.setState({
+    console.log(user, 'kpokpokpokpok');
+    this.setState({
       userName: JSON.parse(user).data.user.name,
     });
-    await this.setState({
+    this.setState({
       image: JSON.parse(user).data.user.photo,
     });
     this.getHostels();
@@ -62,8 +63,7 @@ class Home extends Component {
 
   onBlur = async (productName) => {
     console.log(productName);
-     await this.props.getHostelsAction({search:productName});
-  
+    await this.props.getHostelsAction({ search: productName });
   };
   render() {
     const { index, routes } = this.state;
@@ -85,7 +85,6 @@ class Home extends Component {
               type="hostels"
               navigation={this.props.navigation}
               review={item}
-              
             />
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -102,7 +101,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   getHostelsAction,
   searchHostelsAction,
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

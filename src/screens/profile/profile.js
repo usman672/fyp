@@ -140,49 +140,18 @@ class Profile extends Component {
         image: this.state.image_code,
       });
       console.log(res_image, 'popopopop');
-
       if (res_image.code === 0) {
         this.setState({ image_path: res_image.data.image });
       }
     }
-    console.log(this.state.image_path, 'imageeee');
     this.props.navigation.navigate('EditAddress', {
       name: this.state.username,
       description: this.state.description,
       category: this.state.category,
-      image: this.state.image_path,
+      photo: this.state.image_path,
       type: this.props.route.params.type,
       setting: true,
     });
-    // const res = await this.props.signupAction({
-    //   email: this.props.route.params.email,
-    //   username: this.props.route.params.username,
-    //   password: this.props.route.params.password,
-    //   phone: this.props.route.params.number,
-    //   countryCode: '1',
-    //   description: this.state.description,
-    //   image_url: this.state.image_path,
-    //   fireBaseToken: fcm,
-    //   is_Seller: true,
-    //   is_Buyer: false,
-    // });
-    // this.buttonClicked(false);
-    // if (res.code === 0) {
-    //   Alert.alert('Success', res.message);
-    //   storage._storeData('token', res.data.token.toString());
-    //   this.props.navigation.navigate('r', {
-    //     setting: false,
-    //     number: this.props.route.params.number,
-    //     email: this.props.route.params.email,
-    //     password: this.props.route.params.password,
-    //     username: this.props.route.params.username,
-    //     country: '1',
-    //   });
-    // } else {
-    //   setTimeout(() => {
-    //     Alert.alert('Error', res.message);
-    //   }, 500);
-    // }
   };
   removeImage = () => {
     this.setState({
@@ -200,7 +169,11 @@ class Profile extends Component {
     return (
       <View style={styles.view}>
         <SettingHeader
-          title={this.props.route.params.type == 'shop' ? "Create Shop" : "Create Hostel"}
+          title={
+            this.props.route.params.type == 'shop'
+              ? 'Create Shop'
+              : 'Create Hostel'
+          }
           backgroundColor={color.black}
           color={color.white}
         />
@@ -212,15 +185,18 @@ class Profile extends Component {
                 style={styles.plusIcon}
                 onPress={() => {
                   this.pickImage();
-                }}>
+                }}
+              >
                 {this.state.image === '' ? (
                   <ImageBackground
                     imageStyle={{ borderRadius: 62.5 }}
                     style={[styles.image]}
-                    source={this.state.imageDummy}>
+                    source={this.state.imageDummy}
+                  >
                     <TouchableOpacity
                       style={styles.iconOpacity}
-                      onPress={() => this.pickImage()}>
+                      onPress={() => this.pickImage()}
+                    >
                       <Icon name="camera" size={20} color={color.brandRed} />
                     </TouchableOpacity>
                   </ImageBackground>
@@ -228,10 +204,12 @@ class Profile extends Component {
                   <ImageBackground
                     imageStyle={{ borderRadius: 62.5 }}
                     style={[styles.image]}
-                    source={{ uri: this.state.image }}>
+                    source={{ uri: this.state.image }}
+                  >
                     <TouchableOpacity
                       style={styles.iconOpacity}
-                      onPress={() => this.pickImage()}>
+                      onPress={() => this.pickImage()}
+                    >
                       <Icon name="camera" size={20} color={color.brandRed} />
                     </TouchableOpacity>
                   </ImageBackground>
@@ -261,7 +239,8 @@ class Profile extends Component {
                 style={[
                   Platform.OS === 'ios' ? { zIndex: 1111 } : {},
                   { marginTop: 10, width: '98%', alignSelf: 'center' },
-                ]}>
+                ]}
+              >
                 <Dropdown
                   zndex={1111}
                   options={this.state.hostelCategory}
@@ -281,7 +260,8 @@ class Profile extends Component {
                     { flexDirection: 'row' },
                   ]}
                   disabled={!this.checkField()}
-                  onPress={() => this.goToAddress()}>
+                  onPress={() => this.goToAddress()}
+                >
                   <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
                     {this.state.isCliked && (
                       <Spinner
@@ -306,7 +286,8 @@ class Profile extends Component {
                     { flexDirection: 'row' },
                   ]}
                   disabled={!this.checkField()}
-                  onPress={this.editProfile}>
+                  onPress={this.editProfile}
+                >
                   <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
                     {this.state.isCliked && (
                       <Spinner
@@ -396,7 +377,7 @@ const styles = StyleSheet.create({
   imageRound: {
     marginTop: 30,
   },
-  
+
   iconOpacity: {
     height: 30,
     width: 30,

@@ -20,21 +20,14 @@ import EditAddress from './src/screens/profile/editaddress';
 import MyPayments from './src/screens/profile/mypayments';
 import BankInfo from './src/screens/profile/bankinfo';
 import EditProfile from './src/screens/profile/editprofile';
-import ProductDetail from './src/screens/Product/productDetail';
-import singleMessage from './src/screens/conversation/singleMessage';
+
 import BottomTabNavigator from './src/components/Navigators/BottomTabNavigator';
-import notifications from './src/screens/notifications/notifications';
 import buyer from './src/screens/buyer/buyer';
 import BuyerRating from './src/screens/buyer/buyerRating';
-import cart from './src/screens/cart/cart';
-import checkout from './src/screens/checkout/checkout';
-import balance from './src/screens/balance/balance';
-import payout from './src/screens/payout/payout';
 import UserProfile from './src/screens/userProfile/userProfile';
-import bank from './src/screens/payout/bank';
+
 import ShopItemDetail from './src/screens/buyProduct/shopItemDetail';
-import confirmPayout from './src/screens/payout/confirmPayout';
-import successPayout from './src/screens/payout/successPayout';
+
 import sellItem from './src/screens/item/sellItem';
 import category from './src/screens/category/category.js';
 import sellings from './src/screens/sellings/sellings.js';
@@ -42,19 +35,11 @@ import item from './src/screens/sellings/item';
 import ItemDetail from './src/screens/buyProduct/itemDetails';
 import type from './src/screens/category/type.js';
 import sellType from './src/screens/category/sellType';
-import ShippingInfo from './src/screens/shipping/shippingInfo';
-import SearchProduct from './src/screens/Product/searchProduct';
-import HelpCenter from './src/screens/helpCenter/index';
-import ContactUs from './src/screens/helpCenter/contactus';
 import PDFExample from './src/screens/Pdf/pdf';
 // redux
 import { Provider, connect } from 'react-redux';
 import Setting from './src/screens/settings/settings';
-import Store from './src/screens/store/store';
-import OrderStatus from './src/screens/shippingTimeline/orderStatus';
-import FollowSeller from './src/screens/follow/followSeller';
 import PickImageModal from './src/components/modal/pickImage';
-import payment from './src/screens/stripe/CardFormScreen';
 import AsyncStorage from '@react-native-community/async-storage';
 import { markLogedin } from './src/redux/actions/userActions';
 import PushNotification from 'react-native-push-notification';
@@ -93,7 +78,7 @@ export default class App extends React.Component {
   componentDidMount = async () => {
     this.checkUserLogedin();
     store.subscribe(() => this.stateChange());
-     
+
     this.getDeviceToken();
     // PushNotification.configure({
     //   onRegister: function (token) {
@@ -104,7 +89,7 @@ export default class App extends React.Component {
     //   },
     //   onAction: function (notification) {
     //     console.log('ACTION:', notification.action);
-    //   }, 
+    //   },
     //   onRegistrationError: function (err) {
     //     console.error(err.message, err);
     //   },
@@ -120,30 +105,26 @@ export default class App extends React.Component {
   checkUserLogedin = async () => {
     const isLogedin = await AsyncStorage.getItem('isLogedin');
     if (isLogedin === 'true') {
-       store.dispatch(markLogedin);
+      store.dispatch(markLogedin);
     }
     SplashScreen.hide();
   };
   stateChange = async () => {
-
     const currentState = store.getState();
-     this.setState({
+    this.setState({
       isLogedin: currentState.UserReducer.isLogedin,
     });
   };
   render() {
     return (
       <Provider store={store}>
-       
         <SafeAreaView style={{ backgroundColor: 'red' }} />
-     
+
         <NavigationContainer>
           <Loader />
           <Stack.Navigator headerMode="float">
-           
             {!this.state.isLogedin ? (
               <>
-             {console.log('r;g;l,r;gl,er;lg,e;rl,g;rel,g')}
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Main"
@@ -186,11 +167,6 @@ export default class App extends React.Component {
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="HelpCenter"
-                  component={HelpCenter}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
                   name="EditAddress"
                   component={EditAddress}
                 />
@@ -216,39 +192,8 @@ export default class App extends React.Component {
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="ShippingInfo"
-                  component={ShippingInfo}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="confirmPayout"
-                  component={confirmPayout}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="payout"
-                  component={payout}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="SearchProduct"
-                  component={SearchProduct}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
                   name="itemDetail"
                   component={ItemDetail}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="balance"
-                  component={balance}
-                />
-               
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="MyPayments"
-                  component={MyPayments}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
@@ -262,41 +207,15 @@ export default class App extends React.Component {
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="ContactUs"
-                  component={ContactUs}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
                   name="EditProfile"
                   component={EditProfile}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="store"
-                  component={Store}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="notifications"
-                  component={notifications}
-                />
-                <Stack.Screen
-                  options={{
-                    headerShown: false,
-                  }}
-                  name="successPayout"
-                  component={successPayout}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="settings"
                   component={Setting}
                 />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="bank"
-                  component={bank}
-                />
+
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="sellItem"
@@ -304,34 +223,9 @@ export default class App extends React.Component {
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="cart"
-                  component={cart}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="followSeller"
-                  component={FollowSeller}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="singleMessage"
-                  component={singleMessage}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="orderStatus"
-                  component={OrderStatus}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="checkout"
-                  component={checkout}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
                   name="category"
                   component={category}
-                /> 
+                />
               </>
             ) : (
               <>
@@ -342,18 +236,8 @@ export default class App extends React.Component {
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="cart"
-                  component={cart}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
                   name="signup"
                   component={signup}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="checkout"
-                  component={checkout}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
@@ -372,11 +256,6 @@ export default class App extends React.Component {
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="balance"
-                  component={balance}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
                   name="sellItem"
                   component={sellItem}
                 />
@@ -392,21 +271,6 @@ export default class App extends React.Component {
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="sellType"
-                  component={sellType}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="confirmPayout"
-                  component={confirmPayout}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="payout"
-                  component={payout}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
                   name="OtpCode"
                   component={OtpCode}
                 />
@@ -414,7 +278,7 @@ export default class App extends React.Component {
                   options={{ headerShown: false }}
                   name="userProfile"
                   component={UserProfile}
-                />             
+                />
                 <Stack.Screen
                   options={{ headerShown: false }}
                   name="Otp"
@@ -456,33 +320,6 @@ export default class App extends React.Component {
                   name="EditProfile"
                   component={EditProfile}
                 />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="ProductDetail"
-                  component={ProductDetail}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="bank"
-                  component={bank}
-                />
-                <Stack.Screen
-                  options={{
-                    headerShown: false,
-                  }}
-                  name="successPayout"
-                  component={successPayout}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="singleMessage"
-                  component={singleMessage}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="notifications"
-                  component={notifications}
-                />
 
                 <Stack.Screen
                   options={{ headerShown: false }}
@@ -496,18 +333,8 @@ export default class App extends React.Component {
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="store"
-                  component={Store}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
                   name="itemDetail"
                   component={ItemDetail}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="orderStatus"
-                  component={OrderStatus}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
@@ -516,38 +343,8 @@ export default class App extends React.Component {
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}
-                  name="ShippingInfo"
-                  component={ShippingInfo}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
                   name="pickImage"
                   component={PickImageModal}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="followSeller"
-                  component={FollowSeller}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="SearchProduct"
-                  component={SearchProduct}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="HelpCenter"
-                  component={HelpCenter}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="ContactUs"
-                  component={ContactUs}
-                />
-                <Stack.Screen
-                  options={{ headerShown: false }}
-                  name="paymentstripe"
-                  component={payment}
                 />
                 <Stack.Screen
                   options={{ headerShown: false }}

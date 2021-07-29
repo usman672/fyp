@@ -4,7 +4,7 @@ const color = {
   blue: '#6b7fea',
   primary: '#ff1616',
   brandRed: '#BF5414',
-  brandRed2:'#CA00B7',
+  brandRed2: '#CA00B7',
   brandRedOpacity: 'rgba(255, 22, 22, 0.6)',
   darkBlue: '#030EF7',
   darkgray: '#252333',
@@ -242,7 +242,7 @@ module.exports.s = StyleSheet.create({
     color: color.black,
   },
   buttonLoader: {
-    marginRight: 10
+    marginRight: 10,
   },
 
   //Tabs
@@ -303,7 +303,7 @@ module.exports.s = StyleSheet.create({
     marginLeft: '7%',
     marginTop: '7%',
   },
-   save_search: {
+  save_search: {
     fontSize: 14,
     fontWeight: 'bold',
   },

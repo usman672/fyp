@@ -19,8 +19,8 @@ export default class JobsCard extends Component {
   }
 
   render() {
-    const { job } = this.props;
-    console.log(job, 'oooooooooooooooooooooooooooooooo');
+    const { job, id } = this.props;
+
     if (this.props.type === 'appliers')
       return (
         <CardView
@@ -165,7 +165,13 @@ export default class JobsCard extends Component {
           cornerRadius={7}
         >
           <TouchableOpacity
-            disabled={this.props.type === 'not' ? true : false}
+            disabled={
+              this.props.type === 'not' ||
+              job.postedBy === this.props.id ||
+              job.appliers.findIndex((x) => x.user == this.props.id) !== -1
+                ? true
+                : false
+            }
             onPress={
               this.props.type === 'myjobs'
                 ? () =>
@@ -209,11 +215,19 @@ export default class JobsCard extends Component {
                 {job.employmentType ? job.employmentType : 'Full Time'}
               </Text>
             </View>
-            {this.props.type !== 'not' && this.props.type !== 'myjobs' && (
-              <View style={styles.button}>
-                <Text style={styles.applyText}>Apply </Text>
-              </View>
-            )}
+            {this.props.type !== 'not' &&
+              this.props.type !== 'myjobs' &&
+              this.props.id !== job.postedBy && (
+                <View style={styles.button}>
+                  <Text style={styles.applyText}>
+                    {job.appliers &&
+                    job.appliers.findIndex((x) => x.user == this.props.id) !==
+                      -1
+                      ? 'Applied'
+                      : 'Apply'}
+                  </Text>
+                </View>
+              )}
           </TouchableOpacity>
         </CardView>
       );

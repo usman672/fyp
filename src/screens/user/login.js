@@ -62,14 +62,13 @@ class Login extends Component {
     }
   };
   login = async () => {
-     const fcm = await AsyncStorage.getItem('device_token');
+    const fcm = await AsyncStorage.getItem('device_token');
+
     const res = await this.props.signinAction({
       email: this.state.email,
       password: this.state.password,
       fcmToken: fcm,
     });
-   
-   
   };
   render() {
     const { goBack } = this.props.navigation;
@@ -87,7 +86,8 @@ class Login extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.forgetbtn}
-              onPress={() => this.props.navigation.navigate('ForgetPassword')}>
+              onPress={() => this.props.navigation.navigate('ForgetPassword')}
+            >
               <Text style={styles.forgetbtnText}>Forgot password?</Text>
             </TouchableOpacity>
           </View>
@@ -115,7 +115,8 @@ class Login extends Component {
                 : s.buttonbox(color.gray, color.gray, 'center', '90%')
             }
             disabled={!this.checkField()}
-            onPress={() => this.login()}>
+            onPress={() => this.login()}
+          >
             <Text style={s.buttonText}>Log in</Text>
           </TouchableOpacity>
         </View>

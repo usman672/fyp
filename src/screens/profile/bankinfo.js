@@ -13,7 +13,7 @@ import {
 import SettingHeader from '../../components/header/settingHeader';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { s, color } from '../../libs/styles';
-import { Input, InputWithoutHeading } from '../../components';
+import { Input } from '../../components';
 import { connect } from 'react-redux';
 import Actions from '../../redux/actions';
 import CustomSeparator from '../../components/separators/customSeparator';
@@ -156,7 +156,8 @@ class BankInfo extends Component {
               fontSize: 16,
               marginTop: 10,
               textDecorationLine: 'underline',
-            }}>
+            }}
+          >
             What is a bank rounting number?
           </Text>
           {!this.state.setting ? (
@@ -166,14 +167,16 @@ class BankInfo extends Component {
                   alignSelf: 'center',
                   fontSize: 16,
                   marginTop: '8%',
-                }}>
+                }}
+              >
                 IF NOT A SELLER ?
               </Text>
               <TouchableOpacity
                 style={s.buttonbox(color.black, color.black, 'center', '90%')}
                 onPress={() =>
                   this.props.navigation.navigate(this.state.navigate)
-                }>
+                }
+              >
                 <Text style={s.buttonText}>Skip</Text>
               </TouchableOpacity>
               <View style={styles.orView}>
@@ -200,7 +203,8 @@ class BankInfo extends Component {
                     : s.buttonbox(color.black, color.black, 'center', '90%'),
                   { flexDirection: 'row' },
                 ]}
-                disabled={this.state.isCliked}>
+                disabled={this.state.isCliked}
+              >
                 {this.state.isCliked && (
                   <Spinner
                     style={s.buttonLoader}
@@ -220,13 +224,15 @@ class BankInfo extends Component {
                   alignSelf: 'center',
                   fontSize: 16,
                   marginTop: '10%',
-                }}>
+                }}
+              >
                 IF NOT A SELLER ?
               </Text>
 
               <TouchableOpacity
                 style={s.buttonbox(color.black, color.black, 'center', '90%')}
-                onPress={() => this.props.navigation.navigate('settings')}>
+                onPress={() => this.props.navigation.navigate('settings')}
+              >
                 <Text style={s.buttonText}>Skip</Text>
               </TouchableOpacity>
 
@@ -253,7 +259,8 @@ class BankInfo extends Component {
                   { flexDirection: 'row' },
                 ]}
                 onPress={this.editBank}
-                disabled={this.state.isCliked}>
+                disabled={this.state.isCliked}
+              >
                 {/* <View style={{ alignSelf: 'center', flexDirection: 'row' }}> */}
                 {this.state.isCliked && (
                   <Spinner

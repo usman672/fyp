@@ -7,11 +7,11 @@ import {
   getUser,
   getJobs,
   myJobs,
-  getHostelMembers
+  getHostelMembers,
 } from '../../services/apiList';
 export const postJobAction = (data) => {
   return async (dispatch, getState) => {
-    console.log(data)
+    console.log(data);
     //dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     const res = await postJob(data);
     // await dispatch(
@@ -22,9 +22,9 @@ export const postJobAction = (data) => {
 };
 export const getJobsAction = (data) => {
   return async (dispatch, getState) => {
-    console.log(data)
-     const res = await getJobs(data);
-    console.log(res.data,'kkk')
+    console.log(data);
+    const res = await getJobs(data);
+    console.log(res.data, 'kkk');
     dispatch({
       type: types.ALLJOBS,
       payload: {
@@ -32,16 +32,13 @@ export const getJobsAction = (data) => {
       },
     });
 
-
-    
     return res;
   };
 };
 export const myJobsAction = () => {
   return async (dispatch, getState) => {
-   
     const res = await myJobs();
-    console.log(res,'kkk')
+    console.log(res, 'kkk');
     dispatch({
       type: types.MYJOBS,
       payload: {
@@ -53,11 +50,10 @@ export const myJobsAction = () => {
   };
 };
 
-export const getHostelMembersAction = () => {
+export const getHostelMembersAction = (id) => {
   return async (dispatch, getState) => {
-   
-    const res = await getHostelMembers();
-    console.log(res,'kkk')
+    const res = await getHostelMembers(id);
+    console.log(res, 'kkk');
     dispatch({
       type: types.HOSTELMEMBERS,
       payload: {
@@ -82,5 +78,4 @@ export const updateBankInfoAction = (data) => {
     // );
     return res;
   };
- 
 };

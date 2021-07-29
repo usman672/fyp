@@ -34,24 +34,16 @@ class Appliers extends Component {
       badgeCount: 0,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     };
-    
   }
 
-  componentWillMount() {
-   
-  }
-  
+  componentWillMount() {}
+
   render() {
     const { index, routes } = this.state;
-    console.log(this.props.route.params.appliers,'pppppppppppgegegppppppppppppppppppppppppppppppp')
     return (
       <View style={[s.scrollview]}>
-       <SettingHeader
-          title={'Appliers'}
-          color={color.lightGrey}
-
-        />
-         <FlatList
+        <SettingHeader title={'Appliers'} color={color.lightGrey} />
+        <FlatList
           style={{ width: '100%', height: '70%' }}
           data={this.props.route.params.appliers}
           showsVerticalScrollIndicator={false}
@@ -63,12 +55,11 @@ class Appliers extends Component {
             />
           )}
           keyExtractor={(item, index) => index.toString()}
-        /> 
+        />
       </View>
     );
   }
 }
-
 
 export default Appliers;
 

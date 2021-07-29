@@ -29,23 +29,18 @@ class HostelMembers extends Component {
       badgeCount: 0,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     };
-    
   }
 
-  async componentWillMount () {
-   await this.props.getHostelMembersAction();
+  async componentWillMount() {
+    await this.props.getHostelMembersAction(this.props.route.params.hId);
   }
-  
+
   render() {
     const { index, routes } = this.state;
-     return (
+    return (
       <View style={[s.scrollview]}>
-       <SettingHeader
-          title={'Appliers'}
-          color={color.lightGrey}
-
-        />
-         <FlatList
+        <SettingHeader title={'Appliers'} color={color.lightGrey} />
+        <FlatList
           style={{ width: '100%', height: '70%' }}
           data={this.props.hostelMembers}
           showsVerticalScrollIndicator={false}
@@ -57,22 +52,20 @@ class HostelMembers extends Component {
             />
           )}
           keyExtractor={(item, index) => index.toString()}
-        /> 
+        />
       </View>
     );
   }
 }
 
-
-
 const mapStateToProps = (state) => {
-    return {hostelMembers: state.BankReducer.hostelMembers,};
-  };
-  
-  const mapDispatchToProps = {
-    getHostelMembersAction: Actions.getHostelMembersAction,
-  };
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(HostelMembers);
+  return { hostelMembers: state.BankReducer.hostelMembers };
+};
+
+const mapDispatchToProps = {
+  getHostelMembersAction: Actions.getHostelMembersAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HostelMembers);
 
 const styles = StyleSheet.create({});

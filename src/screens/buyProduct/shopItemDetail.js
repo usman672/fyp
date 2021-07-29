@@ -14,17 +14,15 @@ import { StackActions } from '@react-navigation/native';
 
 import { s, color, neomorph } from '../../libs/styles';
 import ItemDetailHeader from '../../components/header/itemDetailHeader';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import CardView from 'react-native-cardview';
+
 import CustomSeparator from '../../components/separators/customSeparator';
-import ShippingDetail from '../../screens/buyProduct/shippingDetail';
+
 import Description from '../../screens/buyProduct/description';
 import MoneyBack from '../../screens/buyProduct/moneyBack';
-import Seller from '../../screens/buyProduct/seller';
+
 import BuyNow from '../../screens/buyProduct/buyNow';
-import SimilarItems from '../../screens/buyProduct/similarItems';
-import SendMessage from '../../screens/buyProduct/sendMessage';
 import storage from '../../libs/storage';
+
 import { connect } from 'react-redux';
 import { addToCartAction } from '../../redux/actions/cartAction';
 import { likeDislikeProductAction } from '../../redux/actions/productAction';
@@ -34,7 +32,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { buyProductAction } from '../../redux/actions/orderAction';
 import { similarProductAction } from '../../redux/actions/productAction';
 import moment from 'moment';
-import StarRating from 'react-native-star-rating';
+
 import BraintreeDropIn from 'react-native-braintree-dropin-ui';
 import { getClientToken, bookRoomPayment } from '../../services/apiList';
 
@@ -59,11 +57,20 @@ class ItemDetail extends Component {
       productId: [],
     };
     console.log(this.props.route.params.item, 12232323232323232);
-    // this.getLikes();
-    // this.similarProduct();
-    //this.checkSeller();
-    //this.checkAlreadyInCart();
+    this.checkSeller();
   }
+
+  checkSeller = async () => {
+    const user = await storage._retrieveData('user');
+
+    if (
+      JSON.parse(user).data.user._id == this.props.route.params.item.user._id
+    ) {
+      this.setState({
+        isSeller: true,
+      });
+    }
+  };
 
   navigationPage = (element) => {
     this.props.navigation.dispatch(
@@ -174,7 +181,9 @@ class ItemDetail extends Component {
             </View>
             <View style={styles.itemDetailView}>
               <View>
-                <Text style={styles.boldText}>{this.props.route.params.item.name}</Text>
+                <Text style={styles.boldText}>
+                  {this.props.route.params.item.name}
+                </Text>
                 <Text style={styles.likes}>
                   {'Added ' +
                     moment(this.props.route.params.item.createdAt).format(
@@ -224,11 +233,13 @@ class ItemDetail extends Component {
             <Description
               descriptionOne={this.props.route.params.item.description}
             />
-            <BuyNow
-              navigation={this.props.navigation}
-              buy={this.buynow}
-              type={'shops'}
-            />
+            {this.state.isSeller === false && (
+              <BuyNow
+                navigation={this.props.navigation}
+                buy={this.buynow}
+                type={'shops'}
+              />
+            )}
 
             <CustomSeparator
               heightt={1}

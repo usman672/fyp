@@ -13,13 +13,11 @@ import {
 import Textarea from 'react-native-textarea';
 import Picker from '../../components/input/withoutDesignPicker';
 import Payout from '../../components/payout/Payout';
-import Amount from '../../components/payout/Amount';
 import SellItem from '../../components/item/SellItem';
 import { Dropdown } from '../../components';
 import IconArrow from 'react-native-vector-icons/AntDesign';
 import CustomSeparator from '../../components/separators/customSeparator';
 import { s, color } from '../../libs/styles.js';
-import ToggleButton from '../../components/payout/radioButton';
 import SettingHeader from '../../components/header/settingHeader';
 import { connect } from 'react-redux';
 import Actions from '../../redux/actions';
@@ -54,7 +52,7 @@ class sellItem extends Component {
       multiple: true,
       editIndex: -1,
       selectedIndex: 0,
-      hId:'',
+      hId: '',
       selectedColorIndex: 0,
       selectCategory: '',
       shipsFrom: '',
@@ -218,7 +216,7 @@ class sellItem extends Component {
     const res = await this.props.getAllCategoriesAction();
     const user = await storage._retrieveData('user');
     await this.setState({
-      hId: JSON.parse(user).data.hostel._id
+      hId: JSON.parse(user).data.hostel._id,
     });
   };
   toggle = (value, index) => {
@@ -304,15 +302,17 @@ class sellItem extends Component {
   addProduct = async () => {
     // console.log(this.state.image_urls);
     this.buttonClicked(true);
-    const res = await this.props.addRoomsAction({
-      img: this.state.image_urls,
-      description: this.state.description2,
-      seater: this.state.seater,
-      price: this.state.price,
-      roomNumber: this.state.room,
-      floor: '2',
-    },
-    this.state.hId
+    const res = await this.props.addRoomsAction(
+      {
+        img: this.state.image_urls,
+        description: this.state.description2,
+        seater: this.state.seater,
+        remaining_seats: parseInt(this.state.seater),
+        price: this.state.price,
+        roomNumber: this.state.room,
+        floor: '2',
+      },
+      this.state.hId,
     );
     this.buttonClicked(false);
     // console.log(res,"item page");
@@ -340,9 +340,7 @@ class sellItem extends Component {
     );
     this.buttonClicked(false);
     if (res.success) {
-     
-        this.props.navigation.navigate('sellings');
-      
+      this.props.navigation.navigate('sellings');
     } else {
       setTimeout(() => {
         Alert.alert('Error', res.error);
@@ -415,7 +413,8 @@ class sellItem extends Component {
         style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
         enabled
         keyboardVerticalOffset={55}
-        behavior="padding">
+        behavior="padding"
+      >
         <View style={s.scrollview}>
           <SettingHeader
             title="Add Room"
@@ -459,12 +458,14 @@ class sellItem extends Component {
               style={[
                 styles.categoryMainExternal,
                 Platform.OS === 'ios' ? { zIndex: 1 } : {},
-              ]}>
+              ]}
+            >
               <View
                 style={[
                   styles.categoryMainInternal,
                   Platform.OS === 'ios' ? { zIndex: 11 } : {},
-                ]}>
+                ]}
+              >
                 {/* <TouchableOpacity
                   onPress={() => this.props.navigation.navigate('category')}>
                   <Amount
@@ -527,14 +528,16 @@ class sellItem extends Component {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     width: '95%',
-                  }}>
+                  }}
+                >
                   <Text
                     style={{
                       fontSize: 17,
                       color: color.black,
                       alignSelf: 'center',
                       width: '50%',
-                    }}>
+                    }}
+                  >
                     Set Price
                   </Text>
                   <View
@@ -542,7 +545,8 @@ class sellItem extends Component {
                       width: '30%',
                       flexDirection: 'row',
                       // backgroundColor: 'red',
-                    }}>
+                    }}
+                  >
                     <TextInput
                       style={{
                         width: '100%',
@@ -566,7 +570,8 @@ class sellItem extends Component {
               {this.props.route.params.isEdit ? (
                 <TouchableOpacity
                   style={s.buttonbox(color.black, color.black, 'center', '90%')}
-                  onPress={() => this.editProduct()}>
+                  onPress={() => this.editProduct()}
+                >
                   <Text style={s.buttonText}>
                     {this.state.isCliked && (
                       <Spinner
@@ -583,7 +588,8 @@ class sellItem extends Component {
               ) : (
                 <TouchableOpacity
                   style={s.buttonbox(color.black, color.black, 'center', '90%')}
-                  onPress={() => this.addProduct()}>
+                  onPress={() => this.addProduct()}
+                >
                   <Text style={s.buttonText}>
                     {this.state.isCliked && (
                       <Spinner

@@ -71,24 +71,11 @@ export default class ReviewCard extends Component {
         item: review,
       });
     }
-
-    // const review = this.props.review;
-    // if (this.props.type === 'draft') {
-    //   this.props.navigation.navigate('saveReview', {
-    //     editReview: true,
-    //     review: review,
-    //     type: review.review_type,
-    //     uri: review.file_url,
-    //   });
-    // } else {
-    //   this.props.navigation.navigate('reviewDetail', { review: review });
-    // }
   };
 
   render() {
     const review = this.props.review;
     if (this.props.type == 'hostels') {
-      console.log('oooooooooooooooooooooooooooooooo');
       return (
         <CardView
           style={[
@@ -160,15 +147,15 @@ export default class ReviewCard extends Component {
           cornerRadius={22}
         >
           <View style={[s.row, { padding: 10 }]}>
-            <Text></Text>
+            <Text>{review.name}</Text>
             <Text
               style={[
                 { fontSize: 13, fontFamily: 'Poppins-Regular' },
                 { color: '#ADB6D4' },
               ]}
             >
+              {review.shop.town}
               {/* {moment(review.created_at).format('DD MMM YYYY . hh:mm A')} */}
-              johar town
             </Text>
           </View>
           <TouchableOpacity
@@ -192,7 +179,6 @@ export default class ReviewCard extends Component {
                 { color: '#ADB6D4' },
               ]}
             >
-             
               Since {moment(review.created_at).format('DD/MM/YY')}
             </Text>
           </View>

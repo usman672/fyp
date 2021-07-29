@@ -24,32 +24,29 @@ import {
   checkfollow,
   followUnfollow,
   userLogout,
+  updateUserProfile,
 } from '../../services/apiList';
 import storage from '../../libs/storage';
 export const signinAction = (data) => {
   return async (dispatch, getState) => {
     dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     const res = await signin(data);
-     if (res.success) {
-  
+    if (res.success) {
       await AsyncStorage.setItem('token', res.token);
-
-  
+      const user = await getUser();
       await AsyncStorage.setItem('isLogedin', 'true');
-     
+
       dispatch({
         type: types.SIGNIN,
         payload: {
           isLogedin: true,
         },
       });
-      const user = await getUser();
-
     }
     dispatch(
       await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
     );
-   // return res;
+    // return res;
   };
 };
 export const verifyEmailAndUsernameAction = (data) => {
@@ -68,14 +65,14 @@ export const verifyEmailAndUsernameAction = (data) => {
   };
 };
 
-export const signupAction = (data) => {
+export const signupAction = (type, data) => {
   return async (dispatch, getState) => {
     // dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
-    console.log(data,'gguygggggggggggggggggg')
-    const res = await signup(data);
-    if (res.success) {
-      AsyncStorage.setItem('isLogedin', 'false');
-    }
+    console.log(data, 'gguygggggggggggggggggg');
+    let res = '';
+    if (type === 'signup') res = await signup(data);
+    else res = await updateUserProfile(data);
+
     // await dispatch(
     //   await Actions.loaderAction({ isLoading: false, message: 'Please Wait' }),
     // );
@@ -164,8 +161,10 @@ export const forgetPasswordAction = (data) => {
     return res;
   };
 };
-export const markLogedin = async(dispatch) => {
-  console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm')
+export const markLogedin = async (dispatch) => {
+  console.log(
+    'mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm',
+  );
   dispatch({
     type: types.SIGNIN,
     payload: {
@@ -248,22 +247,20 @@ export const updateBankInfoAction = (data) => {
 };
 export const logoutAction = () => {
   return async (dispatch, getState) => {
-  //  const res = await userLogout();
- 
+    //  const res = await userLogout();
 
-     await AsyncStorage.setItem('isLogedin', 'false');
-      await AsyncStorage.removeItem('token');
-      await AsyncStorage.removeItem('user');
-      await AsyncStorage.removeItem('isSeller');
+    await AsyncStorage.setItem('isLogedin', 'false');
+    await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('user');
+    await AsyncStorage.removeItem('isSeller');
 
-      dispatch({
-        type: types.SIGNIN,
-        payload: {
-          isLogedin: false,
-        },
-      });
-    }
-  
+    dispatch({
+      type: types.SIGNIN,
+      payload: {
+        isLogedin: false,
+      },
+    });
+  };
 };
 export const getUserAction = () => {
   return async (dispatch, getState) => {
@@ -280,12 +277,12 @@ export const getHostelsAction = (data) => {
   return async (dispatch, getState) => {
     //  dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     const res = await getHostels(data);
-    console.log('res',res)
+    console.log('res', res);
     if (res.success) {
       dispatch({
         type: types.GETHOSTELS,
         payload: {
-          hostels:res.data
+          hostels: res.data,
         },
       });
     }
@@ -298,12 +295,12 @@ export const getShopsAction = (data) => {
   return async (dispatch, getState) => {
     //  dispatch(Actions.loaderAction({ isLoading: true, message: 'Please Wait' }));
     const res = await getShops(data);
-    console.log('res',res)
+    console.log('res', res);
     if (res.success) {
       dispatch({
         type: types.GETSHOPS,
         payload: {
-          shops:res.data
+          shops: res.data,
         },
       });
     }

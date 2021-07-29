@@ -171,7 +171,8 @@ class BottomTabNavigator extends Component {
             fontSize: 12,
           },
           showLabel: false,
-        }}>
+        }}
+      >
         <Tab.Screen name="Home" options={{ headerShown: false }}>
           {(props) => <Home {...props} />}
         </Tab.Screen>

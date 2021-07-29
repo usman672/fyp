@@ -1,171 +1,306 @@
-import React from 'react';
+import React, { Component } from 'react';
+
 import {
-  StyleSheet,
-  FlatList,
-  Text,
   View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
   Alert,
   Image,
-  TouchableOpacity,
-  Dimensions,
-  ScrollView,
+  ImageBackground,
 } from 'react-native';
+import Icon2 from 'react-native-vector-icons/Feather';
+import ImagePicker from 'react-native-image-picker';
 import { s, color } from '../../libs/styles';
-import FlatListItemSeparator from '../../components/separators/horizontalSeparator';
-import TabsHeader from '../../components/header/tabsHeader';
+import { Input, PasswordInput } from '../../components';
+import Icon from 'react-native-vector-icons/AntDesign';
 import storage from '../../libs/storage';
 
-export default class Messages extends React.Component {
+import SettingHeader from '../../components/header/settingHeader';
+import { connect } from 'react-redux';
+import {
+  verifyEmailAndUsernameAction,
+  imageUploadAction,
+  signupAction,
+} from '../../redux/actions/userActions';
+
+var Spinner = require('react-native-spinkit');
+
+class SignUp extends Component {
+  static navigationOptions = {
+    header: null,
+    tabBarVisible: false,
+  };
   constructor(props) {
     super(props);
-    this.setSeller();
-    this.state = {
-      image: '',
-      userName: '',
-      FlatListItems: [
-        {
-          days: '1d',
-          url: require('../../assets/product.jpg'),
-          title: 'Can you do $100 with ship',
-          notification: 'Gift',
-        },
-        {
-          days: '2d',
-          url: require('../../assets/mobile.jpg'),
-          title: 'Sorry again',
-          notification: 'Jasminewalys',
-        },
-        {
-          days: '3d',
-          url: require('../../assets/message.png'),
-          title: 'Okey let me check then',
-          notification: 'okay',
-        },
-        {
-          days: '4d',
-          url: require('../../assets/sale.jpg'),
-          title: 'Can you do $100 with ship',
-          notification: 'Gift',
-        },
-        {
-          days: '4d',
-          url: require('../../assets/logo.png'),
-          title: 'Can you do $100 with ship',
-          notification: 'Gift',
-        },
-        {
-          days: '4d',
-          url: require('../../assets/logo.png'),
-          title: 'Can you do $100 with ship',
-          notification: 'Gift',
-        },
-        {
-          days: '4d',
-          url: require('../../assets/logo.png'),
-          title: 'Can you do $100 with ship',
-          notification: 'Gift',
-        },
-        {
-          days: '4d',
-          url: require('../../assets/logo.png'),
-          title: 'Can you do $100 with ship',
-          notification: 'Gift',
-        },
-        {
-          days: '11/11/20',
-          url: require('../../assets/logo.png'),
-          title: 'Can you do $100 with ship',
-          notification: 'Gift',
-        },
-      ],
-    };
-  }
+    this.togglePassword = this.togglePassword.bind(this);
 
-  GetItem(item) {
-    Alert.alert(item);
+    this.state = {
+      isCliked: false,
+      username: '',
+      email: '',
+      password: '',
+      imageDummy: require('../../assets/dummy.png'),
+      ispassword: false,
+      image_code: '',
+      isimage: false,
+      image_path: '',
+      image: '',
+
+      isusername: false,
+      isemail: false,
+      showPassword: true,
+    };
+    this.setSeller();
   }
-  setSeller = async () => {
-    const user = await storage._retrieveData('user');
-    await this.setState({
-      userName: JSON.parse(user).username,
-    });
-    await this.setState({
-      image: JSON.parse(user).image_url,
+  togglePassword() {
+    this.setState({ showPassword: !this.state.showPassword });
+  }
+  buttonClicked = (clicked) => {
+    this.setState({
+      isCliked: clicked,
     });
   };
-  componentWillMount() {
-    this.props.navigation.addListener('focus', (payload) => {
-      this.setSeller();
+  setSeller = async () => {
+    console.log('user', 'erferjiofjeroijferjggerjggtrtrvtrgrnho');
+
+    const user = await storage._retrieveData('user');
+    console.log(user, 'erferjiofjeroijferjggerjggtrtrvtrgrnho');
+
+    await this.setState({
+      username: JSON.parse(user).data.user.name,
     });
-  }
+    await this.setState({
+      image: JSON.parse(user).data.user.photo,
+      image_path: JSON.parse(user).data.user.photo,
+
+      email: JSON.parse(user).data.user.email,
+    });
+  };
+  pickImage = async () => {
+    const options = {
+      title: 'Image Picker',
+      mediaType: 'photo',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+      quality: 0.5,
+    };
+
+    ImagePicker.showImagePicker(options, async (response) => {
+      if (response.didCancel) {
+      } else if (response.error) {
+      } else if (response.customButton) {
+      } else {
+        const res_image = await this.props.imageUploadAction({
+          image_type: 'user',
+          image: 'data:' + response.type + `;base64,${response.data}`,
+        });
+        console.log(res_image);
+        this.setState({ image_path: res_image.data.image });
+
+        this.setState({
+          image: response.uri,
+          isimage: true,
+        });
+      }
+    });
+  };
+  onChangeusername = (newText) => {
+    if (newText.length > 3) {
+      this.setState({ username: newText, isusername: true });
+    } else {
+      this.setState({ isusername: false });
+    }
+  };
+  onChangeEmail = (email) => {
+    if (email) {
+      let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if (reg.test(email) === false) {
+        this.setState({ isemail: false });
+      } else {
+        this.setState({ email: email, isemail: true });
+      }
+    } else {
+      this.setState({ isemail: false });
+    }
+  };
+  signup = async () => {
+    this.buttonClicked(true);
+
+    const res = await this.props.signupAction('update', {
+      name: this.state.username,
+      photo: this.state.image_path,
+    });
+    this.buttonClicked(false);
+    if (res.success) {
+      Alert.alert('Success', 'Updated Successfully');
+    } else {
+      setTimeout(() => {
+        Alert.alert('Error', 'Something went wrong with data');
+      }, 500);
+    }
+  };
+
+  onChangePassword = (password) => {
+    if (password.length > 6) {
+      this.setState({ password: password, ispassword: true });
+    } else {
+      this.setState({ ispassword: false });
+    }
+  };
+  checkField = () => {
+    if (
+      this.state.ispassword &&
+      this.state.isusername &&
+      this.state.isemail &&
+      !this.state.isCliked
+    ) {
+      return true;
+    }
+  };
+
+  checkuser = async () => {
+    console.log(this.state.image_path);
+    this.props.navigation.navigate('Otp', {
+      email: this.state.email,
+      username: this.state.username,
+      password: this.state.password,
+      photo: this.state.image_path,
+    });
+    // this.buttonClicked(true);
+    // const res = await this.props.verifyEmailAndUsernameAction({
+    //   email: this.state.email,
+    //   username: this.state.username,
+    // });
+    // this.buttonClicked(false);
+    // if (res.code == 0) {
+    //   this.props.navigation.navigate('Otp', {
+    //     email: this.state.email,
+    //     username: this.state.username,
+    //     password: this.state.password,
+    //   });
+    // } else {
+    //   Alert.alert('Error', res.message);
+    // }
+  };
+
   render() {
     return (
-      <View style={[s.scrollview]}>
-        <TabsHeader
-          guest={this.props.guest}
-          image={this.state.image}
-          userName={this.state.userName}
-          navigation={this.props.notification}
+      <ScrollView style={[s.scrollview]} keyboardShouldPersistTaps="always">
+        <SettingHeader
+          title="SignUp"
+          backgroundColor={color.black}
+          color={color.white}
         />
-
-        <ScrollView style={[s.scrollview]}>
-          <FlatList
-            data={this.state.FlatListItems}
-            ItemSeparatorComponent={FlatListItemSeparator}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('singleMessage')}
-                style={styles.container}>
-                <View style={s.row}>
-                  <View style={styles.photoView}>
-                    <Image
-                      style={[s.photo_100]}
-                      source={item.url}
-                      resizeMode="stretch"
-                    />
-                  </View>
-                  <View style={styles.notificationTextView}>
-                    {item.title !== '' && (
-                      <Text numberOfLines={2} style={s.title_1_normal}>
-                        {item.title}
-                      </Text>
-                    )}
-                    <Text numberOfLines={2} style={s.subtitle_normal}>
-                      {item.notification}
-                    </Text>
-                  </View>
-                  <View style={styles.daysView}>
-                    <Text style={s.subtitle_general}>{item.days}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
+        <View style={styles.imageRound}>
+          <TouchableOpacity
+            style={styles.plusIcon}
+            onPress={() => {
+              this.pickImage();
+            }}
+          >
+            {this.state.image === '' ? (
+              <ImageBackground
+                imageStyle={{ borderRadius: 62.5 }}
+                style={[styles.image]}
+                source={this.state.imageDummy}
+              >
+                <TouchableOpacity
+                  style={styles.iconOpacity}
+                  onPress={() => this.pickImage()}
+                >
+                  <Icon2 name="camera" size={20} color={color.brandRed} />
+                </TouchableOpacity>
+              </ImageBackground>
+            ) : (
+              <ImageBackground
+                imageStyle={{ borderRadius: 62.5 }}
+                style={[styles.image]}
+                source={{ uri: this.state.image }}
+              >
+                <TouchableOpacity
+                  style={styles.iconOpacity}
+                  onPress={() => this.pickImage()}
+                >
+                  <Icon2 name="camera" size={20} color={color.brandRed} />
+                </TouchableOpacity>
+              </ImageBackground>
             )}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </ScrollView>
-      </View>
+          </TouchableOpacity>
+        </View>
+        <Input
+          heading="."
+          placeholder="name@example.com"
+          ref="email"
+          value={this.state.email}
+          isValid={this.state.isemail}
+          onChange={this.onChangeEmail}
+        />
+        <Input
+          heading="User Name"
+          placeholder="4-20 character username"
+          ref="username"
+          value={this.state.username}
+          isValid={this.state.isusername}
+          onChange={this.onChangeusername}
+        />
+        <TouchableOpacity
+          style={[
+            s.buttonbox(color.black, color.black, 'flex-end', '30%'),
+            { flexDirection: 'row' },
+          ]}
+          onPress={() => this.signup()}
+        >
+          <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+            {this.state.isCliked && (
+              <Spinner
+                style={s.buttonLoader}
+                isVisible={true}
+                size={20}
+                type="FadingCircleAlt"
+                color={color.brandRed}
+              />
+            )}
+            <Text style={s.buttonText}>Update</Text>
+          </View>
+        </TouchableOpacity>
+      </ScrollView>
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = {
+  verifyEmailAndUsernameAction,
+  imageUploadAction,
+  signupAction,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 15,
-    marginLeft: 10,
+  image: {
+    height: 125,
+    width: 125,
+    justifyContent: 'flex-end',
+    alignSelf: 'center',
   },
-  photoView: {
-    width: (15 * s.width) / 100,
-    height: (15 * s.width) / 100,
-    justifyContent: 'center',
+  imageRound: {
+    marginTop: 30,
   },
-  notificationTextView: {
-    width: (60 * s.width) / 100,
-    paddingBottom: 15,
-    justifyContent: 'center',
-  },
-  daysView: {
-    width: (19 * s.width) / 100,
+  iconOpacity: {
+    height: 30,
+    width: 30,
+    left: 90,
+    bottom: 10,
+    backgroundColor: color.black,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 5,
   },
 });

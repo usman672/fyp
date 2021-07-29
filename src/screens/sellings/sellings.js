@@ -40,7 +40,7 @@ export default class BuyerScreen extends Component {
     this.setSeller();
   }
   setSeller = async () => {
-    console.log( this.props.route.params.photo,'wrertretretretretretretre')
+    console.log(this.props.route.params.photo, 'wrertretretretretretretre');
     const user = await storage._retrieveData('user');
 
     if (JSON.parse(user).data.hostel._id == this.props.route.params.hId) {
@@ -104,7 +104,9 @@ export default class BuyerScreen extends Component {
             />
             <View style={styles.nameColumn}>
               <Text style={styles.name}>{this.props.route.params.name}</Text>
-              <Text style={styles.price}>03041566666</Text>
+              <Text style={styles.price}>
+                {this.props.route.params.contactNumber}
+              </Text>
               <Text numberOfLines={2} style={styles.delivery}>
                 {this.props.route.params.address}
               </Text>
@@ -135,7 +137,7 @@ export default class BuyerScreen extends Component {
                 this.props.navigation.navigate('BuyerRating', {
                   hId: this.props.route.params.hId,
                   photo: this.props.route.params.photo,
-                  isOwner:this.state.isOwner,
+                  isOwner: this.state.isOwner,
                   type: 'hostel',
                 })
               }
@@ -145,7 +147,7 @@ export default class BuyerScreen extends Component {
                   color: 'white',
                 }}
               >
-                  { this.state.isOwner ? 'Reviews' : 'Rate Hostel'}
+                {this.state.isOwner ? 'Reviews' : 'Rate Hostel'}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -180,7 +182,7 @@ export default class BuyerScreen extends Component {
           type={'hostel'}
         />
         {this.state.isMap && <MapView />}
-      </ScrollView >
+      </ScrollView>
     );
   }
 }

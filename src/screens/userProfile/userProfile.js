@@ -122,7 +122,6 @@ class UserProfile extends Component {
 
     if (type == 0) {
       if (this.state.isHostel) {
-        console.log('click',JSON.parse(user).data.hostel.photo,JSON.parse(user).data.hostel);
         this.props.navigation.navigate('sellings', {
           name: JSON.parse(user).data.hostel.name,
           hId: JSON.parse(user).data.hostel._id,
@@ -130,6 +129,7 @@ class UserProfile extends Component {
           photo: JSON.parse(user).data.hostel.photo,
           longitude: JSON.parse(user).data.hostel.longitude,
           latitude: JSON.parse(user).data.hostel.latitude,
+          contactNumber: JSON.parse(user).data.user.contactNumber,
         });
       } else
         this.props.navigation.navigate('Profile', {
@@ -137,6 +137,7 @@ class UserProfile extends Component {
           type: 'hostel',
         });
     } else if (type == 1) {
+      console.log('cliojhiojiojiojjick', JSON.parse(user).data);
       if (this.state.isShop)
         this.props.navigation.navigate('notifications', {
           name: JSON.parse(user).data.shop.name,
@@ -145,6 +146,7 @@ class UserProfile extends Component {
           photo: JSON.parse(user).data.shop.photo,
           longitude: JSON.parse(user).data.shop.longitude,
           latitude: JSON.parse(user).data.shop.latitude,
+          contactNumber: JSON.parse(user).data.user.contactNumber,
         });
       else
         this.props.navigation.navigate('Profile', {

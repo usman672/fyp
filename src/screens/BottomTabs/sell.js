@@ -23,6 +23,7 @@ class Home extends Component {
     this.state = {
       index: 0,
       image: '',
+      id: 0,
       userName: '',
       badgeCount: 0,
       data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -38,6 +39,7 @@ class Home extends Component {
     });
     await this.setState({
       image: JSON.parse(user).data.user.photo,
+      id: JSON.parse(user).data.user._id,
     });
     this.getAllJobs();
   };
@@ -75,6 +77,7 @@ class Home extends Component {
               type="sholps"
               navigation={this.props.navigation}
               job={item}
+              id={this.state.id}
             />
           )}
           keyExtractor={(item, index) => index.toString()}

@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import Actions from '../../redux/actions/index';
 import { getReviewsAction, ratingOrder } from '../../redux/actions/orderAction';
 import FlatListItemSeparator from '../../components/separators/horizontalSeparator';
+import moment from 'moment';
 
 class BuyerRating extends Component {
   constructor(props) {
@@ -128,18 +129,21 @@ class BuyerRating extends Component {
     });
   }
   review = async () => {
+    const tags = this.tag.itemsSelected.map((tag) => {
+      return tag.label;
+    });
     // console.log(21312312312);
     // console.log(res);
     const rating = await this.props.ratingOrder(
       {
         rating: this.state.starCount,
         text: this.state.review,
-        title: this.state.title,
+        title: tags,
       },
       this.props.route.params.hId,
       this.props.route.params.type,
     );
-    console.log(rating);
+    console.log(rating, this.props.route.params.title);
     if (rating.success) {
       this.getReviews();
       Alert.alert('Message', 'Review Submitted Successfully');
@@ -185,48 +189,49 @@ class BuyerRating extends Component {
                     : require('../../assets/hostel.jpg')
                 }
               />
-               {!this.props.route.params.isOwner &&
-              <StarRating
-                disabled={false}
-                maxStars={5}
-                rating={this.state.starCount}
-                selectedStar={(rating) => this.onStarRatingPress(rating)}
-                fullStarColor={'red'}
-              />
-               }
+              {!this.props.route.params.isOwner && (
+                <StarRating
+                  disabled={false}
+                  maxStars={5}
+                  rating={this.state.starCount}
+                  selectedStar={(rating) => this.onStarRatingPress(rating)}
+                  fullStarColor={'red'}
+                />
+              )}
             </View>
-            {!this.props.route.params.isOwner &&
-            <>
-            <Text style={styles.secondHeading}>
-              How Would you rate the buyer?
-            </Text>
-            <View style={styles.tags}>
-              <TagSelect
-                data={data}
-                max={1}
-                ref={(tag) => {
-                  this.tag = tag;
-                }}
-                onMaxError={() => {
-                  Alert.alert('Ops', 'Max reached');
-                }}
-                itemStyle={styles.item}
-              />
-            </View>
+            {!this.props.route.params.isOwner && (
+              <>
+                <Text style={styles.secondHeading}>
+                  How Would you rate the buyer?
+                </Text>
+                <View style={styles.tags}>
+                  <TagSelect
+                    data={data}
+                    max={1}
+                    ref={(tag) => {
+                      this.tag = tag;
+                      console.log(this.tag);
+                    }}
+                    onMaxError={() => {
+                      Alert.alert('Ops', 'Max reached');
+                    }}
+                    itemStyle={styles.item}
+                  />
+                </View>
 
-            <View style={styles.textAreaContainer}>
-              <TextInput
-                style={styles.textArea}
-                underlineColorAndroid="transparent"
-                placeholder="Type something"
-                placeholderTextColor="grey"
-                numberOfLines={10}
-                multiline={true}
-                onChangeText={(searchText) => this.onChange(searchText)}
-              />
-            </View>
-            </>
-  }
+                <View style={styles.textAreaContainer}>
+                  <TextInput
+                    style={styles.textArea}
+                    underlineColorAndroid="transparent"
+                    placeholder="Type something"
+                    placeholderTextColor="grey"
+                    numberOfLines={10}
+                    multiline={true}
+                    onChangeText={(searchText) => this.onChange(searchText)}
+                  />
+                </View>
+              </>
+            )}
           </View>
           <Text
             style={{ fontSize: 25, fontWeight: 'bold', textAlign: 'center' }}
@@ -245,7 +250,7 @@ class BuyerRating extends Component {
                   <View style={styles.photoView}>
                     <Image
                       style={s.photo_100}
-                      source={require('../../assets/logo.png')}
+                      source={{ uri: item.user.photo }}
                       resizeMode="stretch"
                     />
                   </View>
@@ -260,7 +265,9 @@ class BuyerRating extends Component {
                     </Text>
                   </View>
                   <View style={styles.daysView}>
-                    <Text style={s.subtitle_general}>just now</Text>
+                    <Text style={s.subtitle_general}>
+                      {moment(item.created_at).format('DD/MM/YY')}
+                    </Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -268,15 +275,16 @@ class BuyerRating extends Component {
             keyExtractor={(item, index) => index.toString()}
           />
         </ScrollView>
-        {!this.props.route.params.isOwner &&
-        <Button text="Submit Rating" rating={() => this.review()} />
-  }
+        {!this.props.route.params.isOwner && (
+          <Button text="Submit Rating" rating={() => this.review()} />
+        )}
       </View>
     );
   }
 }
 
 const mapStateToProps = (state) => {
+  console.log(state.OrderReducer.allReviews, 'llllllllllll');
   return {
     allReviews: state.OrderReducer.allReviews,
   };
@@ -308,6 +316,7 @@ const styles = StyleSheet.create({
     width: (18 * s.width) / 100,
     height: (18 * s.width) / 100,
     justifyContent: 'center',
+    borderRadius: 100,
   },
   notificationTextView: {
     width: (60 * s.width) / 100,

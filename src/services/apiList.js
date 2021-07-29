@@ -25,10 +25,20 @@ export const signup = async (data) => {
   console.log(res, 'ressssss');
   return res;
 };
+
+export const updateUserProfile = async (data) => {
+  let url = baseUrl + 'auth/updatedetails';
+  let method = 'PUT';
+  let res = await api(url, method, true, data);
+  console.log(res, 'ressssss');
+  await getUser();
+  return res;
+};
+
 export const sendOtp = async (data) => {
   console.log(data);
 
-  let url = 'http://13.58.108.68/tipitops-QA/api/sendOTP';
+  let url = 'http://13.58.108.68/api/sendOTP';
   let method = 'POST';
   let res = await api(url, method, false, data);
   console.log(res);
@@ -36,7 +46,7 @@ export const sendOtp = async (data) => {
   return res;
 };
 export const verifyOtp = async (data) => {
-  let url = 'http://13.58.108.68/tipitops-QA/api/verifyOTP';
+  let url = 'http://13.58.108.68/api/verifyOTP';
   let method = 'POST';
   let res = await api(url, method, false, data);
   console.log(res, 'jroijfroifjroi');
@@ -62,7 +72,7 @@ export const changePassword = async (data) => {
 };
 
 export const imageUpload = async (data) => {
-  let url = 'http://13.58.108.68/tipitops-QA/api/uploadImage';
+  let url = 'http://13.58.108.68/api/uploadImage';
   let method = 'POST';
   let res = await api(url, method, false, data);
   return res;
@@ -138,7 +148,7 @@ export const forgotPassword = async (data) => {
 };
 export const getReviews = async (id, type) => {
   let url = '';
-  if (type === 'hostels') url = baseUrl + 'hostels/' + id + '/reviews';
+  if (type === 'hostel') url = baseUrl + 'hostels/' + id + '/reviews';
   else url = baseUrl + 'shops/' + id + '/reviews';
   console.log(url, 'url');
   let method = 'GET';
@@ -287,8 +297,7 @@ export const editProduct = async (data, id) => {
 };
 
 export const getCategories = async () => {
-  let url =
-    'http://13.58.108.68/tipitops-QA/api/getAllCategories?page=1&perPage=27';
+  let url = 'http://13.58.108.68/api/getAllCategories?page=1&perPage=27';
   let method = 'GET';
   let res = await api(url, method, true);
   return res;
@@ -362,7 +371,7 @@ export const getTwillio = async () => {
 export const getProductsByUser = async (user_id) => {
   let url = baseUrl + 'shops/' + user_id + '/products';
   let method = 'GET';
-  console.log(url,'final')
+  console.log(url, 'final');
   let res = await api(url, method, true);
   return res;
 };
@@ -388,11 +397,11 @@ export const getUserInfo = async (data) => {
   return res;
 };
 // order
-export const bookRoom = async (id,data) => {
-  console.log(data)
+export const bookRoom = async (id, data) => {
+  console.log(data);
   let url = baseUrl + 'rooms/' + id + '/book';
   let method = 'POST';
-  let res = await api(url, method, true,data);
+  let res = await api(url, method, true, data);
   return res;
 };
 export const inProgrssOrder = async (data, user_id) => {
@@ -467,7 +476,7 @@ export const orderReview = async (data) => {
 };
 export const orderRating = async (data, id, type) => {
   let url = '';
-  if (type === 'hostels') url = baseUrl + 'hostels/' + id + '/reviews';
+  if (type === 'hostel') url = baseUrl + 'hostels/' + id + '/reviews';
   else url = baseUrl + 'shops/' + id + '/reviews';
   let method = 'POST';
   let res = await api(url, method, true, data);
@@ -522,8 +531,8 @@ export const bookRoomPayment = async (data) => {
   return res;
 };
 
-export const getHostelMembers = async () => {
-  let url = baseUrl + 'hostels/6002b3fda9b85e0018e6cd7b/booked-seats';
+export const getHostelMembers = async (id) => {
+  let url = baseUrl + 'hostels/' + id + '/booked-seats';
   let method = 'GET';
   let res = await api(url, method, true);
   console.log(res, 'ress');
@@ -531,7 +540,7 @@ export const getHostelMembers = async () => {
 };
 // buy product
 export const buyProduct = async (data, id) => {
-  console.log(data,id)
+  console.log(data, id);
   let url = baseUrl + 'products/' + id + '/purchase';
   let method = 'POST';
   console.log(url, '');

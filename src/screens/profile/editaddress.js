@@ -148,13 +148,13 @@ class EditAddress extends Component {
   };
   saveAddress = async () => {
     this.buttonClicked(true);
-    
+
     if (this.props.route.params.type == 'hostel') {
       const res = await this.props.saveAddressAction({
         address: this.state.address1,
         hostelType: this.props.route.params.category,
         type: this.props.route.params.type,
-        photo: this.props.route.params.image,
+        photo: this.props.route.params.photo,
         description: this.props.route.params.description,
         name: this.props.route.params.name,
         longitude: this.state.lng,
@@ -162,22 +162,31 @@ class EditAddress extends Component {
         city: this.state.city,
         town: this.state.street,
       });
-      console.log(res)
-       this.buttonClicked(false);
-    if (res.success) {
-      setTimeout(() => {
-        Alert.alert('Error', 'Hostel Added Successfully');
-      }, 500);
-    } else {
-      setTimeout(() => {
-        Alert.alert('Error', 'Something went wrong');
-      }, 500);
-    }
+      console.log(res);
+      this.buttonClicked(false);
+      if (res.success) {
+        Alert.alert(
+          'Message',
+          'Shop Added SuccessFully',
+          [
+            {
+              text: 'OK',
+              onPress: () => this.props.navigation.navigate('userProfile'),
+            },
+          ],
+          { cancelable: false },
+        );
+      } else {
+        setTimeout(() => {
+          Alert.alert('Error', 'Something went wrong');
+        }, 500);
+      }
     } else if (this.props.route.params.type == 'shop') {
+      console.log(this.props.route.params.photo, 'image');
       const res = await this.props.saveAddressAction({
         address: this.state.address1,
         type: this.props.route.params.type,
-        photo: this.props.route.params.image,
+        photo: this.props.route.params.photo,
         description: this.props.route.params.description,
         name: this.props.route.params.name,
         longitude: this.state.lng,
@@ -185,38 +194,37 @@ class EditAddress extends Component {
         city: this.state.city,
         town: this.state.street,
       });
-       console.log(res)
-     
-       this.buttonClicked(false);
-    if (res.success) {
-      setTimeout(() => {
-         Alert.alert(
+      console.log(res);
+
+      this.buttonClicked(false);
+      if (res.success) {
+        setTimeout(() => {
+          Alert.alert(
+            'Message',
+            'Shop Added SuccessFully',
+            [
+              {
+                text: 'OK',
+                onPress: () => this.props.navigation.navigate('userProfile'),
+              },
+            ],
+            { cancelable: false },
+          );
+        }, 500);
+      } else {
+        Alert.alert(
           'Message',
-          'Shop Added SuccessFully',
+          'Something went wrong',
           [
             {
               text: 'OK',
-              onPress: () => this.props.navigation.navigate('userProfile'),
             },
           ],
-          {cancelable: false},
+          { cancelable: false },
         );
-      }, 500);
-    } else {
-     Alert.alert(
-          'Message',
-          'Shop Added SuccessFully',
-          [
-            {
-              text: 'OK',
-              onPress: () => this.props.navigation.navigate('userProfile'),
-            },
-          ],
-          {cancelable: false},
-        );}
+      }
     }
     console.log(res);
-   
   };
 
   onChangeStreet = (newText) => {
@@ -308,7 +316,8 @@ class EditAddress extends Component {
       <KeyboardAvoidingView
         style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
         enabled
-        behavior="padding">
+        behavior="padding"
+      >
         <ScrollView style={s.scrollview} keyboardShouldPersistTaps="always">
           <View style={[styles.view]}>
             <View style={styles.header}>
@@ -337,7 +346,8 @@ class EditAddress extends Component {
               style={[
                 styles.fieldsview,
                 Platform.OS === 'ios' ? { zIndex: 1 } : {},
-              ]}>
+              ]}
+            >
               <Text style={{ margin: 12 }}>City</Text>
 
               <View
@@ -348,7 +358,8 @@ class EditAddress extends Component {
                   borderWidth: 0.3,
                   borderRadius: 10,
                   alignSelf: 'center',
-                }}>
+                }}
+              >
                 <TextInput
                   style={styles.input}
                   editable={false}
@@ -365,7 +376,8 @@ class EditAddress extends Component {
                   borderWidth: 0.3,
                   borderRadius: 10,
                   alignSelf: 'center',
-                }}>
+                }}
+              >
                 <TextInput
                   style={styles.input}
                   editable={false}
@@ -383,7 +395,8 @@ class EditAddress extends Component {
                   paddingBottom: 20,
                   borderRadius: 10,
                   alignSelf: 'center',
-                }}>
+                }}
+              >
                 <TextInput
                   style={styles.input}
                   multiline={true}
@@ -402,7 +415,8 @@ class EditAddress extends Component {
                     { flexDirection: 'row' },
                   ]}
                   // disabled={!this.checkField()}
-                  onPress={this.saveAddress}>
+                  onPress={this.saveAddress}
+                >
                   {this.state.isCliked && (
                     <Spinner
                       style={s.buttonLoader}
@@ -425,7 +439,8 @@ class EditAddress extends Component {
                     { flexDirection: 'row' },
                   ]}
                   disabled={!this.checkField()}
-                  onPress={this.editAddress}>
+                  onPress={this.editAddress}
+                >
                   {this.state.isCliked && (
                     <Spinner
                       style={s.buttonLoader}

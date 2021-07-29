@@ -131,11 +131,11 @@ class Notification extends React.Component {
   setSeller = async () => {
     const user = await storage._retrieveData('user');
     await this.setState({
-     userName: JSON.parse(user).data.user.name,
-   });
-   await this.setState({
-     image: JSON.parse(user).data.user.photo,
-   });
+      userName: JSON.parse(user).data.user.name,
+    });
+    await this.setState({
+      image: JSON.parse(user).data.user.photo,
+    });
   };
   componentWillMount() {
     this.props.navigation.addListener('focus', () => {
@@ -144,9 +144,8 @@ class Notification extends React.Component {
     });
   }
   getImage = (user) => {
-    console.log(user)
-    return {uri:user.photo}
-   
+    console.log(user);
+    return { uri: user.photo };
   };
   render() {
     return (
@@ -181,8 +180,8 @@ class Notification extends React.Component {
                     </View>
                   </View>
                   <View style={styles.notificationTextView}>
-                  <Text numberOfLines={3} style={s.title_1_bold}>
-                  {item.user.comtact_number}
+                    <Text numberOfLines={3} style={s.title_1_bold}>
+                      Contact No# {item.user.contactNumber}
                     </Text>
                     <Text numberOfLines={3} style={s.subtitle_normal}>
                       {item.message}
@@ -191,7 +190,7 @@ class Notification extends React.Component {
                   <View style={styles.daysView}>
                     <Text style={s.subtitle_general}>
                       {moment(item.created_at).format('DD/MM/YY')}
-                       
+
                       {item.days}
                     </Text>
                   </View>
@@ -237,7 +236,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 15,
     marginLeft: 10,
-      },
+  },
   photoView: {
     width: (18 * s.width) / 100,
     height: (18 * s.width) / 100,

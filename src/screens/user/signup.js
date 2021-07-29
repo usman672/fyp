@@ -59,7 +59,7 @@ class SignUp extends Component {
       isCliked: clicked,
     });
   };
-  pickImage = async() => {
+  pickImage = async () => {
     const options = {
       title: 'Image Picker',
       mediaType: 'photo',
@@ -70,12 +70,12 @@ class SignUp extends Component {
       quality: 0.5,
     };
 
-    ImagePicker.showImagePicker(options, async(response) => {
+    ImagePicker.showImagePicker(options, async (response) => {
       if (response.didCancel) {
       } else if (response.error) {
       } else if (response.customButton) {
       } else {
-      const res_image= await  this.props.imageUploadAction({
+        const res_image = await this.props.imageUploadAction({
           image_type: 'user',
           image: 'data:' + response.type + `;base64,${response.data}`,
         });
@@ -148,13 +148,12 @@ class SignUp extends Component {
   };
 
   checkuser = async () => {
-    console.log( this.state.image_path,)
+    console.log(this.state.image_path);
     this.props.navigation.navigate('Otp', {
       email: this.state.email,
       username: this.state.username,
       password: this.state.password,
       photo: this.state.image_path,
-      
     });
     // this.buttonClicked(true);
     // const res = await this.props.verifyEmailAndUsernameAction({
@@ -186,15 +185,18 @@ class SignUp extends Component {
             style={styles.plusIcon}
             onPress={() => {
               this.pickImage();
-            }}>
+            }}
+          >
             {this.state.image === '' ? (
               <ImageBackground
                 imageStyle={{ borderRadius: 62.5 }}
                 style={[styles.image]}
-                source={this.state.imageDummy}>
+                source={this.state.imageDummy}
+              >
                 <TouchableOpacity
                   style={styles.iconOpacity}
-                  onPress={() => this.pickImage()}>
+                  onPress={() => this.pickImage()}
+                >
                   <Icon2 name="camera" size={20} color={color.brandRed} />
                 </TouchableOpacity>
               </ImageBackground>
@@ -202,10 +204,12 @@ class SignUp extends Component {
               <ImageBackground
                 imageStyle={{ borderRadius: 62.5 }}
                 style={[styles.image]}
-                source={{ uri: this.state.image }}>
+                source={{ uri: this.state.image }}
+              >
                 <TouchableOpacity
                   style={styles.iconOpacity}
-                  onPress={() => this.pickImage()}>
+                  onPress={() => this.pickImage()}
+                >
                   <Icon2 name="camera" size={20} color={color.brandRed} />
                 </TouchableOpacity>
               </ImageBackground>
@@ -244,7 +248,8 @@ class SignUp extends Component {
             { flexDirection: 'row' },
           ]}
           disabled={!this.checkField()}
-          onPress={() => this.checkuser()}>
+          onPress={() => this.checkuser()}
+        >
           <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
             {this.state.isCliked && (
               <Spinner
